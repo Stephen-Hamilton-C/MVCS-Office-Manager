@@ -23,33 +23,9 @@
      <height>20</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="newAction"/>
-   </widget>
-   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="newAction">
-   <property name="checkable">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="MyRes.qrc">
-     <normaloff>:/images/C:/Users/TacticalDesk/Pictures/Tactical Laptop Bag.png</normaloff>:/images/C:/Users/TacticalDesk/Pictures/Tactical Laptop Bag.png</iconset>
-   </property>
-   <property name="text">
-    <string>New</string>
-   </property>
-   <property name="toolTip">
-    <string>New</string>
-   </property>
-  </action>
  </widget>
- <resources>
-  <include location="MyRes.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -13,10 +13,3 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::on_newAction_triggered()
-{
-    QMessageBox msgBox;
-    msgBox.setText("New file");
-    msgBox.exec();
-}
