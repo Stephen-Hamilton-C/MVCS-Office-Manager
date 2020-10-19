@@ -15,6 +15,7 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    constants.h \
     databasehelper.h \
     mainwindow.h
 

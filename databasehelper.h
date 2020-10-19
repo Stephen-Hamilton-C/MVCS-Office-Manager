@@ -2,6 +2,9 @@
 #define DATABASEHELPER_H
 
 #include <QtSql>
+#include <iostream>
+#include <QDebug>
+#include <QMessageBox>
 
 class DatabaseHelper
 {
