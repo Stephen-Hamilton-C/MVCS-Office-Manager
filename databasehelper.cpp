@@ -3,7 +3,9 @@
 #include <QtDebug>
 
 DatabaseHelper::DatabaseHelper() {
-    //hm, check what's available on the laptop. On Windows, I have QSQLITE QODBC QODBC3 QPSQL QPSQL7
+    //Available drivers on Windows, QSQLITE QODBC QODBC3 QPSQL QPSQL7
+    //Available drivers on Manjaro, QIBASE QSQLITE QSQLITE3 QMARIADB QMYSQL QMYSQL3 QODBC QODBC3 QPSQL QPSQL7 QTDS QTDS7 SKGSQLCIPHER QSQLCIPHER
+    //QMYSQL has socket issues on Manjaro and is missing on Windows. I'm gonna stick with QSQLITE as it works on both
     //the article recommended QMYSQL
     cadetDB = QSqlDatabase::addDatabase("QSQLITE", "cadets");
     cadetDB.setHostName("localhost");
