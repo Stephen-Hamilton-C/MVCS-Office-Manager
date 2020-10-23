@@ -1,6 +1,7 @@
 #ifndef CADET_H
 #define CADET_H
 
+#include <QJsonObject>
 #include <QString>
 
 class Cadet {
@@ -71,6 +72,9 @@ public:
     QString notes;
 
     Cadet(int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes);
+
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 
 };
 

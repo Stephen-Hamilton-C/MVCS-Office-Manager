@@ -11,14 +11,12 @@ CONFIG += c++11
 
 SOURCES += \
     cadet.cpp \
-    databasehelper.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     cadet.h \
     constants.h \
-    databasehelper.h \
     mainwindow.h
 
 FORMS += \
