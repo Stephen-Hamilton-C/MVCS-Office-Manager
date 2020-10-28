@@ -7,12 +7,12 @@
 class SupplyItem {
 public:
 
-    SupplyItem(QString name, int count, int lowCountThreshold = 0, std::map<QString, QString> properties = NULL);
+    SupplyItem(QString name, int count, int lowCountThreshold = 0, QMap<QVariant, QVariant> properties = QMap<QVariant, QVariant>());
 
     QString name;
     int count;
     int lowCountThreshold;
-    std::map<QString, QString> properties;
+    QMap<QVariant, QVariant> properties;
 
     void read(const QJsonObject& json);
     void write(QJsonObject& json) const;
