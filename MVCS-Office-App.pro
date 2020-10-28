@@ -11,12 +11,14 @@ CONFIG += c++11
 SOURCES += \
     cadet.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    supplyitem.cpp
 
 HEADERS += \
     cadet.h \
     constants.h \
-    mainwindow.h
+    mainwindow.h \
+    supplyitem.h
 
 FORMS += \
     mainwindow.ui
