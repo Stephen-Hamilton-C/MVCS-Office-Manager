@@ -15,6 +15,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+
+    void on_createCadet_clicked();
+
+    void on_saveCadet_clicked();
+
+    void on_loadCadet_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

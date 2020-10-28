@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "databasehelper.h"
 
 #include <QApplication>
 

@@ -10,6 +10,10 @@ Cadet::Cadet(int capid, GRADE grade, RANK rank, QString firstName, QString lastN
     this->notes = notes;
 }
 
+Cadet::Cadet(){
+    qDebug() << "Empty Cadet created.";
+}
+
 void Cadet::read(const QJsonObject &json) {
     if(json.contains("capid") && json["capid"].isDouble()){
         capid = json["capid"].toInt();

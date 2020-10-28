@@ -72,6 +72,7 @@ public:
     QString notes;
 
     Cadet(int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes);
+    Cadet();
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
