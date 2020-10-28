@@ -10,42 +10,42 @@ Cadet::Cadet(int capid, GRADE grade, RANK rank, QString firstName, QString lastN
     this->notes = notes;
 }
 
-void Cadet::read(const QJsonObject &json) {
-    if(json.contains("capid") && json["capid"].isDouble()){
-        capid = json["capid"].toInt();
+void Cadet::read(const QJsonObject& json) {
+    if(json.contains("cadet_capid") && json["cadet_capid"].isDouble()){
+        capid = json["cadet_capid"].toInt();
     }
 
-    if(json.contains("grade") && json["grade"].isDouble()){
-        grade = GRADE(json["grade"].toInt());
+    if(json.contains("cadet_grade") && json["cadet_grade"].isDouble()){
+        grade = GRADE(json["cadet_grade"].toInt());
     }
 
-    if(json.contains("rank") && json["rank"].isDouble()){
-        rank = RANK(json["rank"].toInt());
+    if(json.contains("cadet_rank") && json["cadet_rank"].isDouble()){
+        rank = RANK(json["cadet_rank"].toInt());
     }
 
-    if(json.contains("firstName") && json["firstName"].isString()){
-        firstName = json["firstName"].toString();
+    if(json.contains("cadet_firstName") && json["cadet_firstName"].isString()){
+        firstName = json["cadet_firstName"].toString();
     }
 
-    if(json.contains("lastName") && json["lastName"].isString()){
-        lastName = json["lastName"].toString();
+    if(json.contains("cadet_lastName") && json["cadet_lastName"].isString()){
+        lastName = json["cadet_lastName"].toString();
     }
 
-    if(json.contains("flight") && json["flight"].isDouble()){
-        flight = FLIGHT(json["flight"].toInt());
+    if(json.contains("cadet_flight") && json["cadet_flight"].isDouble()){
+        flight = FLIGHT(json["cadet_flight"].toInt());
     }
 
-    if(json.contains("notes") && json["notes"].isString()){
-        notes = json["notes"].toString();
+    if(json.contains("cadet_notes") && json["cadet_notes"].isString()){
+        notes = json["cadet_notes"].toString();
     }
 }
 
-void Cadet::write(QJsonObject &json) const {
-    json["capid"] = capid;
-    json["grade"] = grade;
-    json["rank"] = rank;
-    json["firstName"] = firstName;
-    json["lastName"] = lastName;
-    json["flight"] = flight;
-    json["notes"] = notes;
+void Cadet::write(QJsonObject& json) const {
+    json["cadet_capid"] = capid;
+    json["cadet_grade"] = grade;
+    json["cadet_rank"] = rank;
+    json["cadet_firstName"] = firstName;
+    json["cadet_lastName"] = lastName;
+    json["cadet_flight"] = flight;
+    json["cadet_notes"] = notes;
 }
