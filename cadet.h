@@ -13,21 +13,32 @@ public:
     };
 
     enum RANK {
-        BASIC,
-        AMN,
-        A1C,
-        SRA,
-        SSGT,
-        TSGT,
-        MSGT,
-        SMSGT,
-        CMSGT,
-        LT2ND,
-        LT1ST,
-        CAPT,
-        MAJ,
-        LTCOL,
-        COL
+        //Cadet ranks
+        BASIC,   //Airman Basic
+        AMN,     //Airman
+        A1C,     //Airman 1st Class
+        SRA,     //Senior Airman
+        SSGT,    //Staff Sergeant
+        TSGT,    //Technical Sergeant
+        MSGT,    //Master Sergeant
+        SMSGT,   //Senior Master Sergeant
+        CMSGT,   //Chief Master Sergeant
+
+        //Shared with SMs and Cadets
+        LT2ND,   //2nd Lieutenant
+        LT1ST,   //1st Liutenant
+        CAPT,    //Captain
+        MAJ,     //Major
+        LTCOL,   //Lieutenant Colonel
+        COL,     //Colonel
+
+        //SM ranks
+        SM,      //Senior Member
+        FO,      //Flight Officer
+        TFO,     //Technical Flight Officer
+        SFO,     //Senior Flight Officer
+        BRIGGEN, //Brigadier General
+        MAJGEN   //Major General
     };
 
     enum FLIGHT {
@@ -62,7 +73,7 @@ public:
         STAFF,
         UNASSIGNED
     };
-
+    
     int capid;
     GRADE grade;
     RANK rank;
