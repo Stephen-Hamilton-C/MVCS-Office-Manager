@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "cadet.h"
+#include "supplyitem.h"
 
 #include <QFile>
 #include <QJsonDocument>
@@ -33,7 +34,7 @@ void MainWindow::on_createCadet_clicked() {
                 "Cyber Patriot Team Captain"
                 );
 
-    qDebug() << "Created cadet. \n" << &cadet;
+    qDebug() << "Created cadet. \n" << cadet->toString();
 }
 
 
@@ -68,6 +69,53 @@ void MainWindow::on_loadCadet_clicked() {
 
         cadet->read(loadDoc.object());
 
-        qDebug() << "Cadet Loaded: " << &cadet;
+        qDebug() << "Cadet Loaded: " << cadet->toString();
+    }
+}
+
+SupplyItem* item = nullptr;
+
+void MainWindow::on_createItem_clicked() {
+    qDebug() << "Creating item...";
+
+    QVariantMap prop = QVariantMap();
+    prop.insert("Size", "10R");
+
+    item = new SupplyItem("ABU Blouse", 3, 0, prop);
+
+    qDebug() << "Created item. \n" << item->toString();
+}
+
+void MainWindow::on_saveItem_clicked() {
+    if(item != nullptr){
+        qDebug() << "Saving item...";
+
+        QFile saveFile("item.json");
+
+        if(saveFile.open(QIODevice::WriteOnly)){
+            QJsonObject saveObject;
+            item->write(saveObject);
+            saveFile.write(QJsonDocument(saveObject).toJson());
+            qDebug() << "item saved. \n" << saveObject;
+        }
+    }
+}
+
+void MainWindow::on_loadItem_clicked() {
+    qDebug() << "Loading item...";
+
+    QFile loadFile("item.json");
+
+    if(loadFile.open(QIODevice::ReadOnly)){
+        QByteArray saveData = loadFile.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+
+        if(item == nullptr){
+            item = new SupplyItem();
+        }
+
+        item->read(loadDoc.object());
+
+        qDebug() << "Item Loaded: " << item->toString();
     }
 }

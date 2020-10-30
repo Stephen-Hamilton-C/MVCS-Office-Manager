@@ -7,6 +7,10 @@ SupplyItem::SupplyItem(QString name, int count, int lowCountThreshold, QVariantM
     this->properties = properties;
 }
 
+SupplyItem::SupplyItem(){
+    qDebug() << "Created empty SupplyItem";
+}
+
 void SupplyItem::read(const QJsonObject& json) {
     if(json.contains("item_name") && json["item_name"].isString()){
         name = json["item_name"].toString();
@@ -31,4 +35,15 @@ void SupplyItem::write(QJsonObject& json) const {
     json["item_count"] = count;
     json["item_lowCountThreshold"] = lowCountThreshold;
     json["item_properties"] = QJsonObject::fromVariantMap(properties);
+}
+
+QString SupplyItem::toString(){
+    QMapIterator<QString, QVariant> i(properties);
+    QString propStr;
+    while(i.hasNext()){
+        i.next();
+        propStr.append("{"+i.key()+", "+i.value().toString()+"}, ");
+    }
+    propStr.remove(propStr.length()-2, 2);
+    return name+", "+count+", "+lowCountThreshold+", ["+propStr+"]";
 }

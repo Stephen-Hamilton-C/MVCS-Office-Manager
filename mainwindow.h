@@ -23,6 +23,12 @@ private slots:
 
     void on_loadCadet_clicked();
 
+    void on_createItem_clicked();
+
+    void on_saveItem_clicked();
+
+    void on_loadItem_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

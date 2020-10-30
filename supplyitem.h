@@ -6,6 +6,7 @@
 class SupplyItem {
 public:
 
+    SupplyItem();
     SupplyItem(QString name, int count, int lowCountThreshold = 0, QVariantMap properties = QVariantMap());
 
     QString name;
@@ -15,6 +16,8 @@ public:
 
     void read(const QJsonObject& json);
     void write(QJsonObject& json) const;
+
+    QString toString();
 
 };
 

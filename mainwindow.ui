@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="createCadet">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>210</y>
+      <x>60</x>
+      <y>40</y>
       <width>80</width>
       <height>21</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="loadCadet">
     <property name="geometry">
      <rect>
-      <x>460</x>
-      <y>230</y>
+      <x>60</x>
+      <y>100</y>
       <width>80</width>
       <height>21</height>
      </rect>
@@ -43,14 +43,53 @@
    <widget class="QPushButton" name="saveCadet">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>250</y>
+      <x>60</x>
+      <y>70</y>
       <width>80</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string>Save Cadet</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="createItem">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>40</y>
+      <width>80</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create Item</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveItem">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>70</y>
+      <width>80</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save Item</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="loadItem">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>100</y>
+      <width>80</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load Item</string>
     </property>
    </widget>
   </widget>
