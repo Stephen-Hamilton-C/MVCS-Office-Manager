@@ -53,3 +53,7 @@ void Cadet::write(QJsonObject& json) const {
     json["cadet_flight"] = flight;
     json["cadet_notes"] = notes;
 }
+
+QString Cadet::toString() {
+    return QString(capid)+", "+grade+", "+rank+", "+firstName+", "+lastName+", "+flight+", "+notes;
+}

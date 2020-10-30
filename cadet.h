@@ -88,6 +88,8 @@ public:
     void read(const QJsonObject& json);
     void write(QJsonObject& json) const;
 
+    QString toString();
+
 };
 
 #endif // CADET_H
