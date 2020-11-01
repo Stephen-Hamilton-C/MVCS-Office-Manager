@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     cadet.cpp \
+    inspectioncard.cpp \
     main.cpp \
     mainwindow.cpp \
     supplyitem.cpp
@@ -17,6 +18,7 @@ SOURCES += \
 HEADERS += \
     cadet.h \
     constants.h \
+    inspectioncard.h \
     mainwindow.h \
     supplyitem.h
 
