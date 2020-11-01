@@ -54,6 +54,19 @@ void Cadet::write(QJsonObject& json) const {
     json["cadet_notes"] = notes;
 }
 
+int Cadet::getPhase() {
+    if(rank == RANK::AMN || rank == RANK::A1C || rank == RANK::SRA){
+        return 1;
+    } else if(rank == RANK::SSGT || rank == RANK::TSGT || rank == RANK::MSGT || rank == RANK::SMSGT || rank == RANK::CMSGT){
+        return 2;
+    } else if(rank == RANK::LT2ND || rank == RANK::LT1ST){
+        return 3;
+    } else if(rank == RANK::CAPT || rank == RANK::MAJ || rank == RANK::LTCOL || rank == RANK::COL){
+        return 4;
+    }
+    return 1;
+}
+
 QString Cadet::toString() {
     return QString(capid)+", "+grade+", "+rank+", "+firstName+", "+lastName+", "+flight+", "+notes;
 }
