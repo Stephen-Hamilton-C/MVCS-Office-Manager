@@ -6,6 +6,8 @@
 #include "supplyitem.h"
 
 #include <QJsonObject>
+#include <QJsonDocument>
+#include <QFile>
 
 class DataManager {
 public:
@@ -16,8 +18,11 @@ public:
     static QMap<QString, SupplyItem*> items;
     static QMap<int, InspectionCard*> insCards;
 
-    void read(const QJsonObject& json);
+    static void read(const QJsonObject& json);
     void write(QJsonObject& json) const;
+
+    static void readFromFile();
+    void writeToFile() const;
 
 };
 

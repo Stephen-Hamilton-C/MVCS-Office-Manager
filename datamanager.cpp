@@ -9,6 +9,7 @@ DataManager::DataManager() {
 }
 
 void DataManager::read(const QJsonObject &json){
+
     if(json.contains("cadets") && json["cadets"].isArray()){
         cadets.clear();
         for(auto cadet : json["cadets"].toArray()){
@@ -35,9 +36,11 @@ void DataManager::read(const QJsonObject &json){
             insCards.insert(newCard.cadetID, &newCard);
         }
     }
+
 }
 
 void DataManager::write(QJsonObject &json) const {
+
     QJsonArray jCadets;
     auto iCadets = QMapIterator<int, Cadet*>(cadets);
     while(iCadets.hasNext()){
@@ -67,4 +70,32 @@ void DataManager::write(QJsonObject &json) const {
         jCards.append(cardJson);
     }
     json["inspectioncards"] = jCards;
+
+}
+
+void DataManager::readFromFile() {
+
+    QFile loadFile("MVCS-Manager-Data.json");
+
+    if(loadFile.open(QIODevice::ReadOnly)){
+        QByteArray saveData = loadFile.readAll();
+        QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+
+        read(loadDoc.object());
+    }
+
+}
+
+void DataManager::writeToFile() const {
+
+    QFile saveFile("MVCS-Manager-Data.json");
+
+    if(saveFile.open(QIODevice::WriteOnly)){
+        QJsonObject saveObject;
+        write(saveObject);
+        saveFile.write(QJsonDocument(saveObject).toJson());
+    } else {
+        //Make an error dialog
+    }
+
 }
