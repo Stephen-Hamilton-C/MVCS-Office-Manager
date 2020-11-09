@@ -5,8 +5,8 @@
 
 namespace Constants {
 
-    const QString appName = "MVCS Office Manager";
-    const QString appNameShort = "Manager";
+    const QString name = "Office Manager";
+    const QString version = "0.0.1";
 
 };
 

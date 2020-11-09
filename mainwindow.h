@@ -29,6 +29,18 @@ private slots:
 
     void on_loadItem_clicked();
 
+    void on_actionCadets_triggered();
+
+    void on_actionSupply_triggered();
+
+    void on_actionInspections_triggered();
+
+    void on_actionFlights_Staff_triggered();
+
+    void on_action_About_triggered();
+
+    void on_actionAbout_Qt_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

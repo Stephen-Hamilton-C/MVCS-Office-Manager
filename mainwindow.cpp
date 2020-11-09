@@ -2,15 +2,19 @@
 #include "ui_mainwindow.h"
 #include "cadet.h"
 #include "supplyitem.h"
+#include "constants.h"
+#include "form.h"
 
 #include <QFile>
 #include <QJsonDocument>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setWindowTitle(Constants::name);
 }
 
 MainWindow::~MainWindow()
@@ -118,4 +122,39 @@ void MainWindow::on_loadItem_clicked() {
 
         qDebug() << "Item Loaded: " << item->toString();
     }
+}
+
+void MainWindow::on_actionCadets_triggered() {
+    ui->logo->hide();
+}
+
+void MainWindow::on_actionSupply_triggered() {
+    ui->logo->hide();
+}
+
+void MainWindow::on_actionInspections_triggered() {
+    ui->logo->hide();
+}
+
+void MainWindow::on_actionFlights_Staff_triggered() {
+    ui->logo->hide();
+}
+
+const QString aboutHTML =
+        "<HTML>"
+        "<p><b>"+Constants::name+" "+Constants::version+"</b></p>\n"
+        "<p>"+Constants::name+" was designed for Civil Air Patrol's Mount Vernon Composite Squadron in the National Capital Wing, but may be used for other squadrons if desired.<p>\n"
+        "<p>"+Constants::name+" helps office staff keep track of supply and which cadets or senior members have taken certain items. "
+        "It also can show which cadets and flights are doing well with inspections.</p>"
+        "<p>"+Constants::name+" was developed as an open source project under the <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GPL-3.0 License</a>.</p>"
+        "<p>You can access the source code here:<br>"
+        "<a href=\"https://github.com/Stephen-Hamilton-C/MVCS-Office-Manager\">https://github.com/Stephen-Hamilton-C/MVCS-Office-Manager</a></p>"
+        "</HTML>";
+
+void MainWindow::on_action_About_triggered() {
+    QMessageBox::about(this, "About "+Constants::name, aboutHTML);
+}
+
+void MainWindow::on_actionAbout_Qt_triggered() {
+    QApplication::aboutQt();
 }

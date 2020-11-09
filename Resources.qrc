@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/imgs">
+	<file alias="squadron-logo">imgs/DC045_Logo.png</file>
+    </qresource>
+</RCC>
