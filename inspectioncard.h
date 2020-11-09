@@ -2,6 +2,7 @@
 #define INSPECTIONCARD_H
 
 #include "cadet.h"
+
 #include <QJsonArray>
 
 class InspectionCard {
