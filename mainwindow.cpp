@@ -124,19 +124,19 @@ void MainWindow::on_loadItem_clicked() {
 }
 
 void MainWindow::on_actionCadets_triggered() {
-    ui->logo->hide();
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() == 1 ? 0 : 1);
 }
 
 void MainWindow::on_actionSupply_triggered() {
-    ui->logo->hide();
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() == 2 ? 0 : 2);
 }
 
 void MainWindow::on_actionInspections_triggered() {
-    ui->logo->hide();
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() == 3 ? 0 : 3);
 }
 
 void MainWindow::on_actionFlights_Staff_triggered() {
-    ui->logo->hide();
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() == 4 ? 0 : 4);
 }
 
 const QString aboutHTML =
