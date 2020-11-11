@@ -11,7 +11,7 @@ int InspectionCard::getTotalPoints(){
 
 InspectionCard::RATING InspectionCard::getOverallRating(){
     int overallPoints = getTotalPoints();
-    if(DataManager::cadets[cadetID]->getPhase() == 1){
+	if(DataManager::cadets[cadetID].getPhase() == 1){
         if(overallPoints <= 3){
             return RATING::NEEDSIMPROVEMENT;
         } else if(overallPoints == 4 || overallPoints == 5){

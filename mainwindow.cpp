@@ -3,10 +3,13 @@
 #include "cadet.h"
 #include "supplyitem.h"
 #include "constants.h"
+#include "datamanager.h"
+#include "cadeteditor.h"
 
 #include <QFile>
 #include <QJsonDocument>
 #include <QMessageBox>
+#include <QStandardItemModel>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,15 +17,21 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle(Constants::name);
+    this->showMaximized();
+
+	DataManager::readFromFile();
+	//qDebug() << "Cadets:" << DataManager::cadets.first().toString();
 }
 
 MainWindow::~MainWindow()
 {
+	delete editor;
     delete ui;
 }
 
 Cadet* cadet = nullptr;
 
+/* Create and Save test code
 void MainWindow::on_createCadet_clicked() {
     qDebug() << "Creating cadet...";
 
@@ -122,21 +131,106 @@ void MainWindow::on_loadItem_clicked() {
         qDebug() << "Item Loaded: " << item->toString();
     }
 }
+*/
+
+void MainWindow::changeView(int stackIndex, QString subTitle){
+    bool goHome = ui->stackedWidget->currentIndex() == stackIndex;
+    ui->stackedWidget->setCurrentIndex(goHome ? 0 : stackIndex);
+    this->setWindowTitle(Constants::name+(goHome ? "" : " - "+subTitle));
+}
 
 void MainWindow::on_actionCadets_triggered() {
-    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() == 1 ? 0 : 1);
+    changeView(1, "Cadets");
+    QStandardItemModel *model = new QStandardItemModel();
+
+    model->setHorizontalHeaderLabels(Cadet::tableHeader);
+
+    ui->cadetsView->setModel(model);
+    ui->cadetsView->verticalHeader()->setVisible(false);
+    ui->cadetsView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+    ui->cadetsView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
+	/*
+    model->appendRow(QList<QStandardItem*>() <<
+                     new QStandardItem("585448") << new QStandardItem("Cadet") << new QStandardItem("2nd Lieutenant")
+                     << new QStandardItem("Hamilton, Stephen Christopher") << new QStandardItem("Staff")
+                     << new QStandardItem("Executive Officer \nCyber Patriot Captain"));
+					 */
+
+	QMapIterator<int, Cadet> i(DataManager::cadets);
+    while(i.hasNext()){
+        i.next();
+		model->appendRow(QList<QStandardItem*>() << new QStandardItem(QString::number(i.value().capid)) <<
+						 new QStandardItem(i.value().getGradeStr()) <<
+						 new QStandardItem(i.value().getRankStr()) <<
+						 new QStandardItem(i.value().getFormattedName()) <<
+						 new QStandardItem(i.value().getFlightStr()) <<
+						 new QStandardItem(i.value().notes));
+    }
+
+	/*
+	if(!DataManager::cadets.isEmpty()){
+		Cadet i = DataManager::cadets.first();
+		model->appendRow(QList<QStandardItem*>() << new QStandardItem(QString(i.capid)) <<
+						 new QStandardItem(i.getGradeStr(i.grade)) <<
+						 new QStandardItem(i.getRankStr(i.rank)) <<
+						 new QStandardItem(i.lastName+", "+i.firstName) <<
+						 new QStandardItem(i.getFlightStr(i.flight)) <<
+						 new QStandardItem(i.notes));
+	}
+	*/
+
+    ui->cadetsView->setWordWrap(true);
+    ui->cadetsView->setTextElideMode(Qt::ElideMiddle);
+    ui->cadetsView->resizeRowsToContents();
+    ui->cadetsView->resizeColumnsToContents();
+}
+
+void MainWindow::getSelectedID(QItemSelectionModel *selection, int &id) const {
+	if(selection->hasSelection()){
+		//Have to do some gymnastics to get the CAPID of the selected role
+		QAbstractItemModel *model = ui->cadetsView->model();
+
+		//Since the selection mode is single selection, there should always be only one selected row.
+		//Find the index of that row and then get the data at column 0 (the CAPID) and convert it into an int.
+		//Now that we have the CAPID, we can use DataManager to find the cadet pointer.
+		int rowIndex = selection->selectedRows()[0].row();
+		QModelIndex index = model->index(rowIndex, 0);
+		id = model->data(index).toInt();
+		qDebug() << id << "selected";
+	}
+}
+
+void MainWindow::on_editCadet_clicked() {
+	int id = 0;
+	getSelectedID(ui->cadetsView->selectionModel(), id);
+	if(id != 0){
+		if(editor != nullptr){
+			delete editor;
+		}
+		editor = new CadetEditor(id);
+		editor->show();
+		editor->setWindowTitle("Edit Cadet "+DataManager::cadets[id].lastName);
+	}
+}
+
+void MainWindow::on_deleteCadet_clicked() {
+	int id = 0;
+	getSelectedID(ui->cadetsView->selectionModel(), id);
+	if(id != 0){
+		DataManager::cadets.remove(id);
+	}
 }
 
 void MainWindow::on_actionSupply_triggered() {
-    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() == 2 ? 0 : 2);
+    changeView(2, "Supply");
 }
 
 void MainWindow::on_actionInspections_triggered() {
-    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() == 3 ? 0 : 3);
+    changeView(3, "Inspections");
 }
 
 void MainWindow::on_actionFlights_Staff_triggered() {
-    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() == 4 ? 0 : 4);
+    changeView(4, "Flights & Staff");
 }
 
 const QString aboutHTML =
@@ -156,4 +250,18 @@ void MainWindow::on_action_About_triggered() {
 
 void MainWindow::on_actionAbout_Qt_triggered() {
     QApplication::aboutQt();
+}
+
+void MainWindow::on_action_Save_triggered() {
+    DataManager::writeToFile();
+}
+
+void MainWindow::on_newCadet_clicked() {
+    //Make new cadet dialog appear
+	if(editor != nullptr){
+		delete editor;
+	}
+	editor = new CadetEditor();
+    editor->show();
+	editor->setWindowTitle("New Cadet");
 }
