@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTableView>
+#include "cadeteditor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,18 +19,6 @@ public:
 
 private slots:
 
-    void on_createCadet_clicked();
-
-    void on_saveCadet_clicked();
-
-    void on_loadCadet_clicked();
-
-    void on_createItem_clicked();
-
-    void on_saveItem_clicked();
-
-    void on_loadItem_clicked();
-
     void on_actionCadets_triggered();
 
     void on_actionSupply_triggered();
@@ -41,7 +31,22 @@ private slots:
 
     void on_actionAbout_Qt_triggered();
 
+    void on_editCadet_clicked();
+
+    void on_action_Save_triggered();
+
+    void on_newCadet_clicked();
+
+	void on_deleteCadet_clicked();
+
 private:
+
+    void changeView(int stackIndex, QString subTitle);
+
+	void getSelectedID(QItemSelectionModel *selection, int &id) const;
+
+	CadetEditor *editor;
+
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
