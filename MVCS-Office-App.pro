@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     cadet.cpp \
+    cadeteditor.cpp \
     datamanager.cpp \
     inspectioncard.cpp \
     main.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     cadet.h \
+    cadeteditor.h \
     constants.h \
     datamanager.h \
     inspectioncard.h \
@@ -25,6 +27,7 @@ HEADERS += \
     supplyitem.h
 
 FORMS += \
+    cadeteditor.ui \
     mainwindow.ui
 
 # Default rules for deployment.
