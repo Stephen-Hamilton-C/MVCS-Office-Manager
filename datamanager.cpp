@@ -1,6 +1,6 @@
 #include "datamanager.h"
 
-QMap<int, Cadet*> DataManager::cadets = QMap<int, Cadet*>();
+QMap<int, Cadet> DataManager::cadets = QMap<int, Cadet>();
 QMap<QString, SupplyItem*> DataManager::items = QMap<QString, SupplyItem*>();
 QMap<int, InspectionCard*> DataManager::insCards = QMap<int, InspectionCard*>();
 
@@ -15,7 +15,8 @@ void DataManager::read(const QJsonObject &json){
         for(auto cadet : json["cadets"].toArray()){
             Cadet newCadet;
             newCadet.read(cadet.toObject());
-            cadets.insert(newCadet.capid, &newCadet);
+			cadets.insert(newCadet.capid, newCadet);
+			qDebug() << "Loaded Cadet:" << newCadet.toString();
         }
     }
 
@@ -39,14 +40,14 @@ void DataManager::read(const QJsonObject &json){
 
 }
 
-void DataManager::write(QJsonObject &json) const {
+void DataManager::write(QJsonObject &json) {
 
     QJsonArray jCadets;
-    auto iCadets = QMapIterator<int, Cadet*>(cadets);
+	auto iCadets = QMapIterator<int, Cadet>(cadets);
     while(iCadets.hasNext()){
         iCadets.next();
         QJsonObject cadetJson;
-        iCadets.value()->write(cadetJson);
+		iCadets.value().write(cadetJson);
         jCadets.append(cadetJson);
     }
     json["cadets"] = jCadets;
@@ -86,7 +87,7 @@ void DataManager::readFromFile() {
 
 }
 
-void DataManager::writeToFile() const {
+void DataManager::writeToFile() {
 
     QFile saveFile("MVCS-Manager-Data.json");
 

@@ -14,15 +14,15 @@ public:
 
     DataManager();
 
-    static QMap<int, Cadet*> cadets;
+	static QMap<int, Cadet> cadets;
     static QMap<QString, SupplyItem*> items;
     static QMap<int, InspectionCard*> insCards;
 
     static void read(const QJsonObject& json);
-    void write(QJsonObject& json) const;
+    static void write(QJsonObject& json);
 
     static void readFromFile();
-    void writeToFile() const;
+    static void writeToFile();
 
 };
 
