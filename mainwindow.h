@@ -45,7 +45,7 @@ private:
 
 	void getSelectedID(QItemSelectionModel *selection, int &id) const;
 
-	CadetEditor *editor;
+	CadetEditor *editor = nullptr;
 
     Ui::MainWindow *ui;
 };

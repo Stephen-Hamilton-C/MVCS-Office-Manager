@@ -20,12 +20,10 @@ MainWindow::MainWindow(QWidget *parent)
     this->showMaximized();
 
 	DataManager::readFromFile();
-	//qDebug() << "Cadets:" << DataManager::cadets.first().toString();
 }
 
 MainWindow::~MainWindow()
 {
-	delete editor;
     delete ui;
 }
 
@@ -204,12 +202,10 @@ void MainWindow::on_editCadet_clicked() {
 	int id = 0;
 	getSelectedID(ui->cadetsView->selectionModel(), id);
 	if(id != 0){
-		if(editor != nullptr){
-			delete editor;
-		}
+		Cadet *cadet = &DataManager::cadets[id];
 		editor = new CadetEditor(id);
 		editor->show();
-		editor->setWindowTitle("Edit Cadet "+DataManager::cadets[id].lastName);
+		editor->setWindowTitle("Edit "+QString(cadet->grade == Cadet::GRADE::CADET ? "Cadet" : "Senior Member")+" "+cadet->getFormattedName(Cadet::NAMEFORMAT::FIRSTLAST));
 	}
 }
 
@@ -258,9 +254,6 @@ void MainWindow::on_action_Save_triggered() {
 
 void MainWindow::on_newCadet_clicked() {
     //Make new cadet dialog appear
-	if(editor != nullptr){
-		delete editor;
-	}
 	editor = new CadetEditor();
     editor->show();
 	editor->setWindowTitle("New Cadet");

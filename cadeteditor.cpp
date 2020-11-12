@@ -22,12 +22,14 @@ CadetEditor::CadetEditor(int id, QWidget *parent) :
 		Cadet *cadet = &DataManager::cadets[id];
 		ui->idBox->setText(QString::number(id));
 		ui->gradeBox->setCurrentIndex(cadet->grade);
-		ui->rankBox->setCurrentIndex( cadet->grade == Cadet::GRADE::CADET ?
-										  Cadet::comboBox_CadetRanks[cadet->getGradeStr()] :
-										  Cadet::comboBox_SMRanks[cadet->getGradeStr()]);
+		qDebug() << "Editing a cadet\n";
+		qDebug() << "Grade:" << cadet->grade << "Str:" << cadet->getGradeStr()
+				 << "\nRank:" << cadet->rank << "combo_CadetRanks:" << Cadet::comboBox_CadetRanks[cadet->getGradeStr()]
+				 << "\nFlight:" << cadet->flight << "Str:" << Cadet::comboBox_Flight[cadet->getFlightStr()];
+		ui->rankBox->setCurrentText(cadet->getRankStr());
 		ui->firstNameEdit->setText(cadet->firstName);
 		ui->lastNameEdit->setText(cadet->lastName);
-		ui->flightBox->setCurrentIndex(Cadet::comboBox_Flight[cadet->getFlightStr()]);
+		ui->flightBox->setCurrentText(cadet->getFlightStr());
 		ui->notesEdit->setText(cadet->notes);
 	}
 }
