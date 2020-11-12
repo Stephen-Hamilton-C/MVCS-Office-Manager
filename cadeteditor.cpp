@@ -2,6 +2,7 @@
 #include "ui_cadeteditor.h"
 #include "cadet.h"
 #include "datamanager.h"
+#include "mainwindow.h"
 
 CadetEditor::CadetEditor(int id, QWidget *parent) :
     QMainWindow(parent),
@@ -22,10 +23,7 @@ CadetEditor::CadetEditor(int id, QWidget *parent) :
 		Cadet *cadet = &DataManager::cadets[id];
 		ui->idBox->setText(QString::number(id));
 		ui->gradeBox->setCurrentIndex(cadet->grade);
-		qDebug() << "Editing a cadet\n";
-		qDebug() << "Grade:" << cadet->grade << "Str:" << cadet->getGradeStr()
-				 << "\nRank:" << cadet->rank << "combo_CadetRanks:" << Cadet::comboBox_CadetRanks[cadet->getGradeStr()]
-				 << "\nFlight:" << cadet->flight << "Str:" << Cadet::comboBox_Flight[cadet->getFlightStr()];
+
 		ui->rankBox->setCurrentText(cadet->getRankStr());
 		ui->firstNameEdit->setText(cadet->firstName);
 		ui->lastNameEdit->setText(cadet->lastName);
@@ -59,8 +57,23 @@ void CadetEditor::createCadet(){
 }
 
 void CadetEditor::on_buttonBox_accepted() {
+	if(ui->idBox->text().length() <= 0 || ui->lastNameEdit->text().length() <= 0){
+		MainWindow::getInstance()->showStatusMessage("Please fill required fields");
+		if(ui->idBox->text().length() <= 0){
+			ui->idBox->setStyleSheet("color: rgb(200, 0, 0);");
+		} else {
+			ui->idBox->setStyleSheet("");
+		}
+		if(ui->lastNameEdit->text().length() <= 0){
+			ui->lastNameEdit->setStyleSheet("color: rgb(200, 0, 0);");
+		} else {
+			ui->lastNameEdit->setStyleSheet("");
+		}
+		return;
+	}
 	if(id == 0){
 		createCadet();
+		MainWindow::getInstance()->showStatusMessage("Created "+Cadet::getGradeStr(Cadet::GRADE(ui->gradeBox->currentIndex()))+" "+ui->lastNameEdit->text()+".");
 	} else {
 		Cadet* cadet = &DataManager::cadets[ui->idBox->text().toInt()];
 		if(id == cadet->capid){
@@ -75,6 +88,7 @@ void CadetEditor::on_buttonBox_accepted() {
 			DataManager::cadets.remove(id);
 			createCadet();
 		}
+		MainWindow::getInstance()->showStatusMessage("Edited "+cadet->getGradeStr()+" "+cadet->lastName+".");
 	}
 	delete this;
 }
