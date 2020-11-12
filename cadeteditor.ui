@@ -25,7 +25,7 @@
      <number>75</number>
     </property>
     <property name="bottomMargin">
-     <number>20</number>
+     <number>10</number>
     </property>
     <item row="1" column="4" colspan="2">
      <widget class="QComboBox" name="flightBox">
@@ -40,7 +40,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="editable">
@@ -48,66 +48,11 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="0" colspan="6">
-     <widget class="QLabel" name="notesLabel">
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <underline>true</underline>
-       </font>
-      </property>
-      <property name="text">
-       <string>Notes:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="3">
-     <widget class="QLabel" name="gradeLabel">
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Grade:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0" colspan="6">
-     <widget class="QTextEdit" name="notesEdit">
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="placeholderText">
-       <string>Notes</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="4" colspan="2">
-     <widget class="QLineEdit" name="firstNameEdit">
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="inputMethodHints">
-       <set>Qt::ImhLatinOnly</set>
-      </property>
-      <property name="placeholderText">
-       <string>First Name</string>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="3">
-     <widget class="QLabel" name="firshNameLabel">
+     <widget class="QLabel" name="firstNameLabel">
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="text">
@@ -115,18 +60,15 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QLineEdit" name="lastNameEdit">
+    <item row="1" column="3">
+     <widget class="QLabel" name="flightLabel">
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
-      <property name="inputMethodHints">
-       <set>Qt::ImhLatinOnly</set>
-      </property>
-      <property name="placeholderText">
-       <string>Last Name</string>
+      <property name="text">
+       <string>Flight:</string>
       </property>
      </widget>
     </item>
@@ -134,35 +76,11 @@
      <widget class="QLabel" name="lastNameLabel">
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>Last Name:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="rankLabel">
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Rank:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QLabel" name="flightLabel">
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Flight:</string>
+       <string>*Last Name:</string>
       </property>
      </widget>
     </item>
@@ -179,8 +97,63 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>10</pointsize>
        </font>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="rankLabel">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Rank:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0" colspan="6">
+     <widget class="QTextEdit" name="notesEdit">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="placeholderText">
+       <string>Notes</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="6">
+     <widget class="QLabel" name="notesLabel">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Notes:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4" colspan="2">
+     <widget class="QLineEdit" name="firstNameEdit">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhLatinOnly</set>
+      </property>
+      <property name="placeholderText">
+       <string>First Name</string>
       </property>
      </widget>
     </item>
@@ -194,13 +167,26 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>CapID:</string>
+       <string>*CapID:</string>
       </property>
      </widget>
+    </item>
+    <item row="1" column="2">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
     </item>
     <item row="0" column="1">
      <widget class="QLineEdit" name="idBox">
@@ -218,7 +204,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="inputMethodHints">
@@ -235,19 +221,6 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
     <item row="0" column="4" colspan="2">
      <widget class="QComboBox" name="gradeBox">
       <property name="sizePolicy">
@@ -258,11 +231,38 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="placeholderText">
        <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QLabel" name="gradeLabel">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Grade:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="lastNameEdit">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhLatinOnly</set>
+      </property>
+      <property name="placeholderText">
+       <string>Last Name</string>
       </property>
      </widget>
     </item>
@@ -284,6 +284,19 @@
       </property>
       <property name="centerButtons">
        <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0" colspan="6">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>6</pointsize>
+        <italic>true</italic>
+       </font>
+      </property>
+      <property name="text">
+       <string>*Required field</string>
       </property>
      </widget>
     </item>
