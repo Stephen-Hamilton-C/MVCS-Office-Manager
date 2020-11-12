@@ -17,6 +17,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+	void showStatusMessage(QString message, int timeout = 0);
+
+	static MainWindow* getInstance(){
+		return ptrInstance;
+	}
+
 private slots:
 
     void on_actionCadets_triggered();
@@ -41,12 +47,14 @@ private slots:
 
 private:
 
+	Ui::MainWindow *ui;
+
+	static MainWindow *ptrInstance;
+
     void changeView(int stackIndex, QString subTitle);
 
 	void getSelectedID(QItemSelectionModel *selection, int &id) const;
 
 	CadetEditor *editor = nullptr;
-
-    Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

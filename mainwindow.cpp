@@ -11,10 +11,16 @@
 #include <QMessageBox>
 #include <QStandardItemModel>
 
+MainWindow* MainWindow::ptrInstance = nullptr;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+	if(ptrInstance != nullptr){
+		delete this;
+	}
+	ptrInstance = this;
     ui->setupUi(this);
     this->setWindowTitle(Constants::name);
     this->showMaximized();
@@ -147,12 +153,6 @@ void MainWindow::on_actionCadets_triggered() {
     ui->cadetsView->verticalHeader()->setVisible(false);
     ui->cadetsView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
     ui->cadetsView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
-	/*
-    model->appendRow(QList<QStandardItem*>() <<
-                     new QStandardItem("585448") << new QStandardItem("Cadet") << new QStandardItem("2nd Lieutenant")
-                     << new QStandardItem("Hamilton, Stephen Christopher") << new QStandardItem("Staff")
-                     << new QStandardItem("Executive Officer \nCyber Patriot Captain"));
-					 */
 
 	QMapIterator<int, Cadet> i(DataManager::cadets);
     while(i.hasNext()){
@@ -164,18 +164,6 @@ void MainWindow::on_actionCadets_triggered() {
 						 new QStandardItem(i.value().getFlightStr()) <<
 						 new QStandardItem(i.value().notes));
     }
-
-	/*
-	if(!DataManager::cadets.isEmpty()){
-		Cadet i = DataManager::cadets.first();
-		model->appendRow(QList<QStandardItem*>() << new QStandardItem(QString(i.capid)) <<
-						 new QStandardItem(i.getGradeStr(i.grade)) <<
-						 new QStandardItem(i.getRankStr(i.rank)) <<
-						 new QStandardItem(i.lastName+", "+i.firstName) <<
-						 new QStandardItem(i.getFlightStr(i.flight)) <<
-						 new QStandardItem(i.notes));
-	}
-	*/
 
     ui->cadetsView->setWordWrap(true);
     ui->cadetsView->setTextElideMode(Qt::ElideMiddle);
@@ -205,15 +193,19 @@ void MainWindow::on_editCadet_clicked() {
 		Cadet *cadet = &DataManager::cadets[id];
 		editor = new CadetEditor(id);
 		editor->show();
-		editor->setWindowTitle("Edit "+QString(cadet->grade == Cadet::GRADE::CADET ? "Cadet" : "Senior Member")+" "+cadet->getFormattedName(Cadet::NAMEFORMAT::FIRSTLAST));
+		editor->setWindowTitle("Edit "+QString(cadet->grade == Cadet::GRADE::CADET ? "Cadet" : "Senior Member")+" "+cadet->getFormattedName(Cadet::NAMEFORMAT::FIRSTLAST)+".");
 	}
 }
 
 void MainWindow::on_deleteCadet_clicked() {
 	int id = 0;
 	getSelectedID(ui->cadetsView->selectionModel(), id);
-	if(id != 0){
+	if(id != 0 && DataManager::cadets.contains(id)){
+		QString name = DataManager::cadets[id].getGradeStr()+" "+DataManager::cadets[id].lastName;
 		DataManager::cadets.remove(id);
+		showStatusMessage("Deleted "+name+".");
+	} else {
+		showStatusMessage("Failed to delete: No cadet found.");
 	}
 }
 
@@ -249,7 +241,9 @@ void MainWindow::on_actionAbout_Qt_triggered() {
 }
 
 void MainWindow::on_action_Save_triggered() {
+	showStatusMessage("Saving...");
     DataManager::writeToFile();
+	showStatusMessage("Saved.");
 }
 
 void MainWindow::on_newCadet_clicked() {
@@ -257,4 +251,8 @@ void MainWindow::on_newCadet_clicked() {
 	editor = new CadetEditor();
     editor->show();
 	editor->setWindowTitle("New Cadet");
+}
+
+void MainWindow::showStatusMessage(QString message, int timeout){
+	ui->statusBar->showMessage(message, timeout);
 }
