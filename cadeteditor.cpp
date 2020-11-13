@@ -90,6 +90,7 @@ void CadetEditor::on_buttonBox_accepted() {
 		}
 		MainWindow::getInstance()->showStatusMessage("Edited "+cadet->getGradeStr()+" "+cadet->lastName+".");
 	}
+	MainWindow::getInstance()->updateCadetView();
 	delete this;
 }
 
