@@ -149,15 +149,17 @@ void MainWindow::on_actionCadets_triggered() {
 
     model->setHorizontalHeaderLabels(Cadet::tableHeader);
 
-    ui->cadetsView->setModel(model);
-    ui->cadetsView->verticalHeader()->setVisible(false);
-    ui->cadetsView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
-    ui->cadetsView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
+	ui->editorView->setModel(model);
+	ui->editorView->verticalHeader()->setVisible(false);
+	ui->editorView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+	ui->editorView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 
-	QMapIterator<int, Cadet> i(DataManager::cadets);
+	QMapIterator<QString, Cadet> i(DataManager::cadets);
     while(i.hasNext()){
         i.next();
-		model->appendRow(QList<QStandardItem*>() << new QStandardItem(QString::number(i.value().capid)) <<
+		model->appendRow(QList<QStandardItem*>() <<
+						 new QStandardItem(i.value().uuid) <<
+						 new QStandardItem(QString::number(i.value().capid)) <<
 						 new QStandardItem(i.value().getGradeStr()) <<
 						 new QStandardItem(i.value().getRankStr()) <<
 						 new QStandardItem(i.value().getFormattedName()) <<
@@ -165,42 +167,44 @@ void MainWindow::on_actionCadets_triggered() {
 						 new QStandardItem(i.value().notes));
     }
 
-    ui->cadetsView->setWordWrap(true);
-    ui->cadetsView->setTextElideMode(Qt::ElideMiddle);
-    ui->cadetsView->resizeRowsToContents();
-    ui->cadetsView->resizeColumnsToContents();
+	//UUIDs are stored in column 0, so let's hide those since the user isn't concerned about UUIDs
+	ui->editorView->hideColumn(0);
+	ui->editorView->setWordWrap(true);
+	ui->editorView->setTextElideMode(Qt::ElideMiddle);
+	ui->editorView->resizeRowsToContents();
+	ui->editorView->resizeColumnsToContents();
 }
 
-void MainWindow::getSelectedID(QItemSelectionModel *selection, int &id) const {
+void MainWindow::getSelectedID(QItemSelectionModel *selection, QString &id) const {
 	if(selection->hasSelection()){
-		//Have to do some gymnastics to get the CAPID of the selected role
-		QAbstractItemModel *model = ui->cadetsView->model();
+		//Have to do some gymnastics to get the UUID of the selected role
+		QAbstractItemModel *model = ui->editorView->model();
 
 		//Since the selection mode is single selection, there should always be only one selected row.
-		//Find the index of that row and then get the data at column 0 (the CAPID) and convert it into an int.
-		//Now that we have the CAPID, we can use DataManager to find the cadet pointer.
+		//Find the index of that row and then get the data at column 0 (the UUID) and convert it into an int.
+		//Now that we have the UUID, we can use DataManager to find the cadet pointer.
 		int rowIndex = selection->selectedRows()[0].row();
 		QModelIndex index = model->index(rowIndex, 0);
-		id = model->data(index).toInt();
+		id = model->data(index).toString();
 		qDebug() << id << "selected";
 	}
 }
 
-void MainWindow::on_editCadet_clicked() {
-	int id = 0;
-	getSelectedID(ui->cadetsView->selectionModel(), id);
-	if(id != 0){
+void MainWindow::on_editorEdit_clicked() {
+	QString id = "";
+	getSelectedID(ui->editorView->selectionModel(), id);
+	if(!id.isEmpty()){
 		Cadet *cadet = &DataManager::cadets[id];
-		editor = new CadetEditor(id);
-		editor->show();
-		editor->setWindowTitle("Edit "+QString(cadet->grade == Cadet::GRADE::CADET ? "Cadet" : "Senior Member")+" "+cadet->getFormattedName(Cadet::NAMEFORMAT::FIRSTLAST)+".");
+		editorWindow = new CadetEditor(id);
+		editorWindow->show();
+		editorWindow->setWindowTitle("Edit "+QString(cadet->grade == Cadet::GRADE::CADET ? "Cadet" : "Senior Member")+" "+cadet->getFormattedName(Cadet::NAMEFORMAT::FIRSTLAST)+".");
 	}
 }
 
-void MainWindow::on_deleteCadet_clicked() {
-	int id = 0;
-	getSelectedID(ui->cadetsView->selectionModel(), id);
-	if(id != 0 && DataManager::cadets.contains(id)){
+void MainWindow::on_editorDelete_clicked() {
+	QString id = "";
+	getSelectedID(ui->editorView->selectionModel(), id);
+	if(!id.isEmpty() && DataManager::cadets.contains(id)){
 		QString name = DataManager::cadets[id].getGradeStr()+" "+DataManager::cadets[id].lastName;
 		DataManager::cadets.remove(id);
 		showStatusMessage("Deleted "+name+".");
@@ -246,11 +250,11 @@ void MainWindow::on_action_Save_triggered() {
 	showStatusMessage("Saved.");
 }
 
-void MainWindow::on_newCadet_clicked() {
+void MainWindow::on_editorNew_clicked() {
     //Make new cadet dialog appear
-	editor = new CadetEditor();
-    editor->show();
-	editor->setWindowTitle("New Cadet");
+	editorWindow = new CadetEditor();
+	editorWindow->show();
+	editorWindow->setWindowTitle("New Cadet");
 }
 
 void MainWindow::showStatusMessage(QString message, int timeout){
