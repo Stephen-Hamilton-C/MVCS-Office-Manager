@@ -18,7 +18,7 @@ public:
     ~MainWindow();
 
 	void showStatusMessage(QString message, int timeout = 0);
-	void updateCadetView();
+	void updateEditorView();
 
 	static MainWindow* getInstance(){
 		return ptrInstance;
