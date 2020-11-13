@@ -1,7 +1,7 @@
 #include "cadet.h"
 #include "datamanager.h"
 
-QStringList Cadet::tableHeader = QStringList() << "CapID" << "Grade" << "Rank" << "Name" << "Flight" << "Notes";
+QStringList Cadet::tableHeader = QStringList() << "UUID" << "CapID" << "Grade" << "Rank" << "Name" << "Flight" << "Notes";
 QMap<QString, Cadet::RANK> Cadet::comboBox_CadetRanks {
 	{Cadet::getRankStr(Cadet::RANK::VISITOR), Cadet::RANK::VISITOR},
 	{Cadet::getRankStr(Cadet::RANK::BASIC), Cadet::RANK::BASIC},
@@ -68,7 +68,7 @@ QMap<QString, Cadet::FLIGHT> Cadet::comboBox_Flight {
 };
 
 Cadet::Cadet(QString uuid, int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes) {
-	this->uuid;
+	this->uuid = uuid;
     this->capid = capid;
     this->grade = grade;
     this->rank = rank;
@@ -76,6 +76,7 @@ Cadet::Cadet(QString uuid, int capid, GRADE grade, RANK rank, QString firstName,
     this->lastName = lastName;
     this->flight = flight;
     this->notes = notes;
+	qDebug() << "Cadet created:\n" << toString();
 }
 
 Cadet::Cadet(){
@@ -305,6 +306,7 @@ void Cadet::read(const QJsonObject& json) {
 		uuid = QUuid::createUuid().toString();
 		json["cadet_uuid"] = uuid;
 	}
+
     if(json.contains("cadet_capid") && json["cadet_capid"].isDouble()){
         capid = json["cadet_capid"].toInt();
     }
