@@ -15,7 +15,8 @@ public:
         EXCELLENT = 2
     };
 
-    int cadetID;
+	QString uuid;
+	QString cadetUUID;
     QDate date;
 
     RATING appearanceScore;

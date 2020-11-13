@@ -67,7 +67,8 @@ QMap<QString, Cadet::FLIGHT> Cadet::comboBox_Flight {
 	{Cadet::getFlightStr(Cadet::FLIGHT::STAFF), Cadet::FLIGHT::STAFF}
 };
 
-Cadet::Cadet(int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes) {
+Cadet::Cadet(QString uuid, int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes) {
+	this->uuid;
     this->capid = capid;
     this->grade = grade;
     this->rank = rank;
@@ -298,6 +299,12 @@ QString Cadet::getID() const {
 }
 
 void Cadet::read(const QJsonObject& json) {
+	if(json.contains("cadet_uuid") && json["cadet_uuid"].isString()){
+		uuid = json["cadet_uuid"].toString();
+	} else {
+		uuid = QUuid::createUuid().toString();
+		json["cadet_uuid"] = uuid;
+	}
     if(json.contains("cadet_capid") && json["cadet_capid"].isDouble()){
         capid = json["cadet_capid"].toInt();
     }
@@ -328,6 +335,7 @@ void Cadet::read(const QJsonObject& json) {
 }
 
 void Cadet::write(QJsonObject& json) const {
+	json["cadet_uuid"] = uuid;
     json["cadet_capid"] = capid;
     json["cadet_grade"] = grade;
     json["cadet_rank"] = rank;
@@ -351,5 +359,5 @@ int Cadet::getPhase() const{
 }
 
 QString Cadet::toString() {
-	return QString::number(capid)+", "+getGradeStr(grade)+", "+getRankStr(rank)+", "+firstName+", "+lastName+", "+getFlightStr(flight)+", "+notes;
+	return uuid+", "+QString::number(capid)+", "+getGradeStr(grade)+", "+getRankStr(rank)+", "+firstName+", "+lastName+", "+getFlightStr(flight)+", "+notes;
 }

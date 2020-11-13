@@ -219,6 +219,9 @@
       <property name="placeholderText">
        <string>CapID</string>
       </property>
+      <property name="cadet_uuid" stdset="0">
+       <string/>
+      </property>
      </widget>
     </item>
     <item row="0" column="4" colspan="2">

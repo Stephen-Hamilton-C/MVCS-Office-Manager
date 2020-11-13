@@ -7,8 +7,9 @@ class SupplyItem {
 public:
 
     SupplyItem();
-    SupplyItem(QString name, int count, int lowCountThreshold = 0, QVariantMap properties = QVariantMap());
+	SupplyItem(QString uuid, QString name, int count, int lowCountThreshold = 0, QVariantMap properties = QVariantMap());
 
+	QString uuid;
     QString name;
     int count;
     int lowCountThreshold;
