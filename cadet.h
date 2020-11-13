@@ -86,6 +86,7 @@ public:
 	static QMap<QString, RANK> comboBox_SMRanks;
 	static QMap<QString, FLIGHT> comboBox_Flight;
 
+	QString uuid;
     int capid;
     GRADE grade;
     RANK rank;
@@ -94,7 +95,7 @@ public:
     FLIGHT flight;
     QString notes;
 
-    Cadet(int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes);
+	Cadet(QString uuid, int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes);
     Cadet();
 
     static QString getRankStr(RANK rank);

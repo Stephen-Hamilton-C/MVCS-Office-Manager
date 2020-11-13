@@ -13,7 +13,7 @@ class CadetEditor : public QMainWindow
     Q_OBJECT
 
 public:
-	explicit CadetEditor(int id = 0, QWidget *parent = nullptr);
+	explicit CadetEditor(QString id = "", QWidget *parent = nullptr);
     ~CadetEditor();
 
 private slots:
@@ -27,9 +27,9 @@ private slots:
 private:
     Ui::CadetEditor *ui;
 
-	int id = 0;
+	QString id = "";
 
-	void createCadet();
+	void createCadet(QString uuid);
 };
 
 #endif // CADETEDITOR_H

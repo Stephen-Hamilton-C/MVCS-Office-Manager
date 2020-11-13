@@ -1,8 +1,8 @@
 #include "datamanager.h"
 
-QMap<int, Cadet> DataManager::cadets = QMap<int, Cadet>();
+QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
 QMap<QString, SupplyItem*> DataManager::items = QMap<QString, SupplyItem*>();
-QMap<int, InspectionCard*> DataManager::insCards = QMap<int, InspectionCard*>();
+QMap<QString, InspectionCard*> DataManager::insCards = QMap<QString, InspectionCard*>();
 
 DataManager::DataManager() {
 
@@ -15,7 +15,7 @@ void DataManager::read(const QJsonObject &json){
         for(auto cadet : json["cadets"].toArray()){
             Cadet newCadet;
             newCadet.read(cadet.toObject());
-			cadets.insert(newCadet.capid, newCadet);
+			cadets.insert(newCadet.uuid, newCadet);
 			qDebug() << "Loaded Cadet:" << newCadet.toString();
         }
     }
@@ -34,7 +34,7 @@ void DataManager::read(const QJsonObject &json){
         for(auto card : json["inspectioncards"].toArray()){
             InspectionCard newCard;
             newCard.read(card.toObject());
-            insCards.insert(newCard.cadetID, &newCard);
+			insCards.insert(newCard.cadetUUID, &newCard);
         }
     }
 
@@ -43,7 +43,7 @@ void DataManager::read(const QJsonObject &json){
 void DataManager::write(QJsonObject &json) {
 
     QJsonArray jCadets;
-	auto iCadets = QMapIterator<int, Cadet>(cadets);
+	auto iCadets = QMapIterator<QString, Cadet>(cadets);
     while(iCadets.hasNext()){
         iCadets.next();
         QJsonObject cadetJson;
@@ -63,7 +63,7 @@ void DataManager::write(QJsonObject &json) {
     json["supplyitems"] = jItems;
 
     QJsonArray jCards;
-    auto iCards = QMapIterator<int, InspectionCard*>(insCards);
+	auto iCards = QMapIterator<QString, InspectionCard*>(insCards);
     while(iCards.hasNext()){
         iCards.next();
         QJsonObject cardJson;

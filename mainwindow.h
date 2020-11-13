@@ -38,13 +38,13 @@ private slots:
 
     void on_actionAbout_Qt_triggered();
 
-    void on_editCadet_clicked();
+	void on_editorEdit_clicked();
 
     void on_action_Save_triggered();
 
-    void on_newCadet_clicked();
+	void on_editorNew_clicked();
 
-	void on_deleteCadet_clicked();
+	void on_editorDelete_clicked();
 
 private:
 
@@ -54,8 +54,8 @@ private:
 
     void changeView(int stackIndex, QString subTitle);
 
-	void getSelectedID(QItemSelectionModel *selection, int &id) const;
+	void getSelectedID(QItemSelectionModel *selection, QString &id) const;
 
-	CadetEditor *editor = nullptr;
+	CadetEditor *editorWindow = nullptr;
 };
 #endif // MAINWINDOW_H
