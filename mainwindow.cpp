@@ -143,32 +143,36 @@ void MainWindow::changeView(int stackIndex, QString subTitle){
     this->setWindowTitle(Constants::name+(goHome ? "" : " - "+subTitle));
 }
 
-void MainWindow::on_actionCadets_triggered() {
-    changeView(1, "Cadets");
-    QStandardItemModel *model = new QStandardItemModel();
+void MainWindow::updateCadetView(){
+	QStandardItemModel *model = new QStandardItemModel();
 
-    model->setHorizontalHeaderLabels(Cadet::tableHeader);
+	model->setHorizontalHeaderLabels(Cadet::tableHeader);
 
-    ui->cadetsView->setModel(model);
-    ui->cadetsView->verticalHeader()->setVisible(false);
-    ui->cadetsView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
-    ui->cadetsView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
+	ui->cadetsView->setModel(model);
+	ui->cadetsView->verticalHeader()->setVisible(false);
+	ui->cadetsView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+	ui->cadetsView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 
 	QMapIterator<int, Cadet> i(DataManager::cadets);
-    while(i.hasNext()){
-        i.next();
+	while(i.hasNext()){
+		i.next();
 		model->appendRow(QList<QStandardItem*>() << new QStandardItem(QString::number(i.value().capid)) <<
 						 new QStandardItem(i.value().getGradeStr()) <<
 						 new QStandardItem(i.value().getRankStr()) <<
 						 new QStandardItem(i.value().getFormattedName()) <<
 						 new QStandardItem(i.value().getFlightStr()) <<
 						 new QStandardItem(i.value().notes));
-    }
+	}
 
-    ui->cadetsView->setWordWrap(true);
-    ui->cadetsView->setTextElideMode(Qt::ElideMiddle);
-    ui->cadetsView->resizeRowsToContents();
-    ui->cadetsView->resizeColumnsToContents();
+	ui->cadetsView->setWordWrap(true);
+	ui->cadetsView->setTextElideMode(Qt::ElideMiddle);
+	ui->cadetsView->resizeRowsToContents();
+	ui->cadetsView->resizeColumnsToContents();
+}
+
+void MainWindow::on_actionCadets_triggered() {
+    changeView(1, "Cadets");
+	updateCadetView();
 }
 
 void MainWindow::getSelectedID(QItemSelectionModel *selection, int &id) const {
@@ -204,6 +208,7 @@ void MainWindow::on_deleteCadet_clicked() {
 		QString name = DataManager::cadets[id].getGradeStr()+" "+DataManager::cadets[id].lastName;
 		DataManager::cadets.remove(id);
 		showStatusMessage("Deleted "+name+".");
+		updateCadetView();
 	} else {
 		showStatusMessage("Failed to delete: No cadet found.");
 	}

@@ -18,6 +18,7 @@ public:
     ~MainWindow();
 
 	void showStatusMessage(QString message, int timeout = 0);
+	void updateCadetView();
 
 	static MainWindow* getInstance(){
 		return ptrInstance;
