@@ -28,8 +28,6 @@ private:
     Ui::CadetEditor *ui;
 
 	QString id = "";
-
-	void createCadet(QString uuid);
 };
 
 #endif // CADETEDITOR_H

@@ -51,18 +51,6 @@ void CadetEditor::on_gradeBox_currentIndexChanged(int index) {
     }
 }
 
-void CadetEditor::createCadet(QString uuid){
-	Cadet newCadet(uuid,
-				   ui->idBox->text().toInt(),
-				   Cadet::GRADE(ui->gradeBox->currentIndex()),
-				   ui->gradeBox->currentIndex() == 0 ? Cadet::comboBox_CadetRanks[ui->rankBox->currentText()] : Cadet::comboBox_SMRanks[ui->rankBox->currentText()],
-				   ui->firstNameEdit->text(),
-				   ui->lastNameEdit->text(),
-				   Cadet::comboBox_Flight[ui->flightBox->currentText()],
-				   ui->notesEdit->toPlainText());
-	DataManager::cadets.insert(uuid, newCadet);
-}
-
 void CadetEditor::on_buttonBox_accepted() {
 	if(ui->idBox->text().length() <= 0 || ui->lastNameEdit->text().length() <= 0){
 		MainWindow::getInstance()->showStatusMessage("Please fill required fields");
@@ -78,8 +66,18 @@ void CadetEditor::on_buttonBox_accepted() {
 		}
 		return;
 	}
+
 	if(id.isEmpty()){
-		createCadet(QUuid::createUuid().toString());
+		Cadet newCadet(QUuid::createUuid().toString(),
+					   ui->idBox->text().toInt(),
+					   Cadet::GRADE(ui->gradeBox->currentIndex()),
+					   ui->gradeBox->currentIndex() == 0 ? Cadet::comboBox_CadetRanks[ui->rankBox->currentText()] : Cadet::comboBox_SMRanks[ui->rankBox->currentText()],
+					   ui->firstNameEdit->text(),
+					   ui->lastNameEdit->text(),
+					   Cadet::comboBox_Flight[ui->flightBox->currentText()],
+					   ui->notesEdit->toPlainText());
+		DataManager::cadets.insert(newCadet.uuid, newCadet);
+
 		MainWindow::getInstance()->showStatusMessage("Created "+Cadet::getGradeStr(Cadet::GRADE(ui->gradeBox->currentIndex()))+" "+ui->lastNameEdit->text()+".");
 	} else {
 		Cadet* cadet = &DataManager::cadets[ui->idBox->property("cadet_uuid").toString()];
@@ -94,7 +92,7 @@ void CadetEditor::on_buttonBox_accepted() {
 
 		MainWindow::getInstance()->showStatusMessage("Edited "+cadet->getGradeStr()+" "+cadet->lastName+".");
 	}
-	MainWindow::getInstance()->updateCadetView();
+	MainWindow::getInstance()->updateEditorView();
 	delete this;
 }
 
