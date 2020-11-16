@@ -35,136 +35,39 @@ MainWindow::~MainWindow()
 
 Cadet* cadet = nullptr;
 
-/* Create and Save test code
-void MainWindow::on_createCadet_clicked() {
-    qDebug() << "Creating cadet...";
-
-    cadet = new Cadet(
-                585448,
-                Cadet::GRADE::CADET,
-                Cadet::RANK::LT2ND,
-                "Stephen",
-                "Hamilton",
-                Cadet::FLIGHT::STAFF,
-                "Executive Officer\n"
-                "Cyber Patriot Team Captain"
-                );
-
-    qDebug() << "Created cadet. \n" << cadet->toString();
-}
-
-
-
-void MainWindow::on_saveCadet_clicked() {
-    if(cadet != nullptr){
-        qDebug() << "Saving cadet...";
-
-        QFile saveFile("cadet.json");
-
-        if(saveFile.open(QIODevice::WriteOnly)){
-            QJsonObject saveObject;
-            cadet->write(saveObject);
-            saveFile.write(QJsonDocument(saveObject).toJson());
-            qDebug() << "Cadet saved. \n" << saveObject;
-        }
-    }
-}
-
-void MainWindow::on_loadCadet_clicked() {
-    qDebug() << "Loading cadet...";
-
-    QFile loadFile("cadet.json");
-
-    if(loadFile.open(QIODevice::ReadOnly)){
-        QByteArray saveData = loadFile.readAll();
-        QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
-
-        if(cadet == nullptr){
-            cadet = new Cadet();
-        }
-
-        cadet->read(loadDoc.object());
-
-        qDebug() << "Cadet Loaded: " << cadet->toString();
-    }
-}
-
-SupplyItem* item = nullptr;
-
-void MainWindow::on_createItem_clicked() {
-    qDebug() << "Creating item...";
-
-    QVariantMap prop = QVariantMap();
-    prop.insert("Size", "10R");
-
-    item = new SupplyItem("ABU Blouse", 3, 0, prop);
-
-    qDebug() << "Created item. \n" << item->toString();
-}
-
-void MainWindow::on_saveItem_clicked() {
-    if(item != nullptr){
-        qDebug() << "Saving item...";
-
-        QFile saveFile("item.json");
-
-        if(saveFile.open(QIODevice::WriteOnly)){
-            QJsonObject saveObject;
-            item->write(saveObject);
-            saveFile.write(QJsonDocument(saveObject).toJson());
-            qDebug() << "item saved. \n" << saveObject;
-        }
-    }
-}
-
-void MainWindow::on_loadItem_clicked() {
-    qDebug() << "Loading item...";
-
-    QFile loadFile("item.json");
-
-    if(loadFile.open(QIODevice::ReadOnly)){
-        QByteArray saveData = loadFile.readAll();
-        QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
-
-        if(item == nullptr){
-            item = new SupplyItem();
-        }
-
-        item->read(loadDoc.object());
-
-        qDebug() << "Item Loaded: " << item->toString();
-    }
-}
-*/
-
 void MainWindow::changeView(int stackIndex, QString subTitle){
     bool goHome = ui->stackedWidget->currentIndex() == stackIndex;
     ui->stackedWidget->setCurrentIndex(goHome ? 0 : stackIndex);
     this->setWindowTitle(Constants::name+(goHome ? "" : " - "+subTitle));
 }
 
-void MainWindow::updateEditorView(){
+void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 	QStandardItemModel *model = new QStandardItemModel();
 
-	model->setHorizontalHeaderLabels(Cadet::tableHeader);
+	switch (editorType) {
+		case MainWindow::EDITORTYPE::CADET:
+			model->setHorizontalHeaderLabels(Cadet::tableHeader);
+
+			QMapIterator<QString, Cadet> i(DataManager::cadets);
+			while(i.hasNext()){
+				i.next();
+				model->appendRow(QList<QStandardItem*>() <<
+								 new QStandardItem(i.value().uuid) <<
+								 new QStandardItem(QString::number(i.value().capid)) <<
+								 new QStandardItem(i.value().getGradeStr()) <<
+								 new QStandardItem(i.value().getRankStr()) <<
+								 new QStandardItem(i.value().getFormattedName()) <<
+								 new QStandardItem(i.value().getFlightStr()) <<
+								 new QStandardItem(i.value().notes));
+			}
+		break;
+	}
+
 
 	ui->editorView->setModel(model);
 	ui->editorView->verticalHeader()->setVisible(false);
 	ui->editorView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 	ui->editorView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
-
-	QMapIterator<QString, Cadet> i(DataManager::cadets);
-    while(i.hasNext()){
-        i.next();
-		model->appendRow(QList<QStandardItem*>() <<
-						 new QStandardItem(i.value().uuid) <<
-						 new QStandardItem(QString::number(i.value().capid)) <<
-						 new QStandardItem(i.value().getGradeStr()) <<
-						 new QStandardItem(i.value().getRankStr()) <<
-						 new QStandardItem(i.value().getFormattedName()) <<
-						 new QStandardItem(i.value().getFlightStr()) <<
-						 new QStandardItem(i.value().notes));
-	}
 
 	//UUIDs are stored in column 0, so let's hide those since the user isn't concerned about UUIDs
 	ui->editorView->hideColumn(0);
@@ -176,7 +79,7 @@ void MainWindow::updateEditorView(){
 
 void MainWindow::on_actionCadets_triggered() {
     changeView(1, "Cadets");
-	updateEditorView();
+	updateEditorView(MainWindow::EDITORTYPE::CADET);
 }
 
 void MainWindow::getSelectedID(QItemSelectionModel *selection, QString &id) const {
@@ -212,7 +115,7 @@ void MainWindow::on_editorDelete_clicked() {
 		QString name = DataManager::cadets[id].getGradeStr()+" "+DataManager::cadets[id].lastName;
 		DataManager::cadets.remove(id);
 		showStatusMessage("Deleted "+name+".");
-		updateEditorView();
+		updateEditorView(MainWindow::EDITORTYPE::CADET);
 	} else {
 		showStatusMessage("Failed to delete: No cadet found.");
 	}

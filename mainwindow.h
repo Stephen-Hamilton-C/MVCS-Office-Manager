@@ -17,8 +17,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+	enum EDITORTYPE {
+		CADET,
+		SUPPLY
+	};
+
 	void showStatusMessage(QString message, int timeout = 0);
-	void updateEditorView();
+	void updateEditorView(EDITORTYPE editorType);
 
 	static MainWindow* getInstance(){
 		return ptrInstance;
@@ -52,7 +57,7 @@ private:
 
 	static MainWindow *ptrInstance;
 
-    void changeView(int stackIndex, QString subTitle);
+	void changeView(int stackIndex, QString subTitle);
 
 	void getSelectedID(QItemSelectionModel *selection, QString &id) const;
 
