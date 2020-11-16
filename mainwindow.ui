@@ -31,7 +31,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="logoPage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -71,13 +71,13 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>64</width>
+            <width>96</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>64</width>
+            <width>96</width>
             <height>16777215</height>
            </size>
           </property>
@@ -102,13 +102,13 @@
          <widget class="QPushButton" name="editorEdit">
           <property name="minimumSize">
            <size>
-            <width>64</width>
+            <width>96</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>64</width>
+            <width>96</width>
             <height>16777215</height>
            </size>
           </property>
@@ -137,13 +137,13 @@
          <widget class="QPushButton" name="editorDelete">
           <property name="minimumSize">
            <size>
-            <width>64</width>
+            <width>96</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>64</width>
+            <width>96</width>
             <height>16777215</height>
            </size>
           </property>
@@ -227,7 +227,7 @@
      <x>0</x>
      <y>0</y>
      <width>758</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Save">
