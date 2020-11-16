@@ -1,8 +1,8 @@
 #include "datamanager.h"
 
 QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
-QMap<QString, SupplyItem*> DataManager::items = QMap<QString, SupplyItem*>();
-QMap<QString, InspectionCard*> DataManager::insCards = QMap<QString, InspectionCard*>();
+QMap<QString, SupplyItem> DataManager::items = QMap<QString, SupplyItem>();
+QMap<QString, InspectionCard> DataManager::insCards = QMap<QString, InspectionCard>();
 
 DataManager::DataManager() {
 
@@ -25,7 +25,7 @@ void DataManager::read(const QJsonObject &json){
         for(auto item : json["supplyitems"].toArray()){
             SupplyItem newItem;
             newItem.read(item.toObject());
-            items.insert(newItem.name, &newItem);
+			items.insert(newItem.name, newItem);
         }
     }
 
@@ -34,7 +34,7 @@ void DataManager::read(const QJsonObject &json){
         for(auto card : json["inspectioncards"].toArray()){
             InspectionCard newCard;
             newCard.read(card.toObject());
-			insCards.insert(newCard.cadetUUID, &newCard);
+			insCards.insert(newCard.cadetUUID, newCard);
         }
     }
 
@@ -53,21 +53,21 @@ void DataManager::write(QJsonObject &json) {
     json["cadets"] = jCadets;
 
     QJsonArray jItems;
-    auto iItems = QMapIterator<QString, SupplyItem*>(items);
+	auto iItems = QMapIterator<QString, SupplyItem>(items);
     while(iItems.hasNext()){
         iItems.next();
         QJsonObject itemJson;
-        iItems.value()->write(itemJson);
+		iItems.value().write(itemJson);
         jItems.append(itemJson);
     }
     json["supplyitems"] = jItems;
 
     QJsonArray jCards;
-	auto iCards = QMapIterator<QString, InspectionCard*>(insCards);
+	auto iCards = QMapIterator<QString, InspectionCard>(insCards);
     while(iCards.hasNext()){
         iCards.next();
         QJsonObject cardJson;
-        iCards.value()->write(cardJson);
+		iCards.value().write(cardJson);
         jCards.append(cardJson);
     }
     json["inspectioncards"] = jCards;
@@ -96,7 +96,7 @@ void DataManager::writeToFile() {
         write(saveObject);
         saveFile.write(QJsonDocument(saveObject).toJson());
     } else {
-        //Make an error dialog
+		//TODO: Make an error dialog
     }
 
 }

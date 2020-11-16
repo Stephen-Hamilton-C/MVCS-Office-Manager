@@ -15,8 +15,8 @@ public:
     DataManager();
 
 	static QMap<QString, Cadet> cadets;
-    static QMap<QString, SupplyItem*> items;
-	static QMap<QString, InspectionCard*> insCards;
+	static QMap<QString, SupplyItem> items;
+	static QMap<QString, InspectionCard> insCards;
 
     static void read(const QJsonObject& json);
     static void write(QJsonObject& json);
