@@ -17,14 +17,10 @@ ItemEditor::ItemEditor(QString id, QWidget *parent) :
 		this->id = id;
 		SupplyItem *item = &DataManager::items[id];
 
-		qDebug() << "Contains:" << DataManager::items.contains(id);
-
-		qDebug() << "Item:" << item->toString();
-
 		ui->nameEdit->setProperty("item_uuid", id);
-		ui->nameEdit->setText(item->getName());
-		ui->countBox->setValue(item->getCount());
-		ui->lowCountBox->setValue(item->getLowCount());
+		ui->nameEdit->setText(item->name);
+		ui->countBox->setValue(item->count);
+		ui->lowCountBox->setValue(item->lowCountThreshold);
 
 		QStandardItemModel* model = new QStandardItemModel();
 		QMapIterator<QString, QVariant> i(item->properties);
@@ -37,14 +33,15 @@ ItemEditor::ItemEditor(QString id, QWidget *parent) :
 
 		model->setHorizontalHeaderLabels(propertyTableHeaders);
 		ui->propertiesView->setModel(model);
-		ui->propertiesView->verticalHeader()->setVisible(false);
-		ui->propertiesView->setWordWrap(true);
-		ui->propertiesView->setTextElideMode(Qt::ElideMiddle);
-		ui->propertiesView->resizeColumnsToContents();
-		ui->propertiesView->resizeRowsToContents();
 	} else {
 		ui->nameEdit->setProperty("item_uuid", QUuid::createUuid().toString());
 	}
+	ui->propertiesView->verticalHeader()->setVisible(false);
+	ui->propertiesView->setWordWrap(true);
+	ui->propertiesView->setTextElideMode(Qt::ElideMiddle);
+	ui->propertiesView->resizeColumnsToContents();
+	ui->propertiesView->resizeRowsToContents();
+	ui->propertiesView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 }
 
 
@@ -103,26 +100,7 @@ void ItemEditor::on_buttonBox_accepted() {
 }
 
 void ItemEditor::on_createProperty_clicked() {
-	QAbstractItemModel* model = ui->propertiesView->model();
-
-	if(id.isEmpty()){
-		QStandardItemModel* smodel = new QStandardItemModel();
-		smodel->appendRow(QList<QStandardItem*>() <<
-						 new QStandardItem("New Property") <<
-						 new QStandardItem("Value"));
-
-		smodel->setHorizontalHeaderLabels(propertyTableHeaders);
-		ui->propertiesView->setModel(smodel);
-		ui->propertiesView->verticalHeader()->setVisible(false);
-		ui->propertiesView->setWordWrap(true);
-		ui->propertiesView->setTextElideMode(Qt::ElideMiddle);
-		ui->propertiesView->resizeColumnsToContents();
-		ui->propertiesView->resizeRowsToContents();
-	} else {
-
-	}
-
-	/*
+	//TODO: This crashes, likely because model->rowCount is freaking gay
 	QAbstractItemModel* model = ui->propertiesView->model();
 	QStandardItemModel* smodel = new QStandardItemModel();
 
@@ -140,9 +118,13 @@ void ItemEditor::on_createProperty_clicked() {
 					  new QStandardItem("Value"));
 
 	ui->propertiesView->setModel(smodel);
-	*/
 }
 
 void ItemEditor::on_deleteProperty_clicked() {
+	QItemSelectionModel* selection = ui->propertiesView->selectionModel();
+	if(selection->hasSelection()){
+		QAbstractItemModel* model = ui->propertiesView->model();
 
+		model->removeRow(selection->selectedRows()[0].row());
+	}
 }
