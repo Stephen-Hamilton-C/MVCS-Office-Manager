@@ -60,7 +60,6 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 								 new QStandardItem(i.value().getFormattedName()) <<
 								 new QStandardItem(i.value().getFlightStr()) <<
 								 new QStandardItem(i.value().notes));
-				model->setProperty(QString::number(model->rowCount()-1).toLocal8Bit().data(), i.value().uuid);
 			}
 			break;
 		}
@@ -85,7 +84,6 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 								 new QStandardItem(i.value().name) <<
 								 new QStandardItem(QString::number(i.value().count)) <<
 								 new QStandardItem(propertiesStr));
-				model->setProperty(QString::number(model->rowCount()-1).toLocal8Bit().data(), i.value().uuid);
 			}
 			break;
 		}
@@ -120,9 +118,8 @@ void MainWindow::getSelectedID(QItemSelectionModel *selection, QString &id) cons
 		//Find the index of that row and then get the data at column 0 (the UUID) and convert it into an int.
 		//Now that we have the UUID, we can use DataManager to find the cadet pointer.
 		int rowIndex = selection->selectedRows()[0].row();
-		id = model->property(QString::number(rowIndex).toLocal8Bit().data()).toString();
-		//QModelIndex index = model->index(rowIndex, 0);
-		//id = model->data(index).toString();
+		QModelIndex index = model->index(rowIndex, 0);
+		id = model->data(index).toString();
 		qDebug() << id << "selected";
 	}
 }
@@ -140,18 +137,9 @@ void MainWindow::on_editorEdit_clicked() {
 				break;
 			}
 			case MainWindow::EDITORTYPE::SUPPLY: {
-				qDebug() << "Opening editor with ID:" << id;
-				qDebug() << "Editing:" << DataManager::items[id].toString();
-				QMapIterator<QString, SupplyItem> i(DataManager::items);
-				while(i.hasNext()){
-					i.next();
-					qDebug() << "Item in iterator:" << i.value().toString();
-				}
 				itemEditorWindow = new ItemEditor(id);
 				itemEditorWindow->show();
 				itemEditorWindow->setWindowTitle("Edit "+DataManager::items[id].name+".");
-				//{4f9a365e-7d2d-48f9-8510-4bd51ca19c08}
-				//{4f9a365e-7d2d-48f9-8510-4bd51ca19c08}
 				break;
 			}
 		}

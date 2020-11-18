@@ -40,22 +40,6 @@ void SupplyItem::read(const QJsonObject& json) {
     }
 }
 
-QString SupplyItem::getName() const {
-	return this->name;
-}
-
-int SupplyItem::getCount() const {
-	return this->count;
-}
-
-int SupplyItem::getLowCount() const {
-	return this->lowCountThreshold;
-}
-
-QVariantMap SupplyItem::getProperties() const {
-	return this->properties;
-}
-
 void SupplyItem::write(QJsonObject& json) const {
 	json["item_uuid"] = uuid;
     json["item_name"] = name;

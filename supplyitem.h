@@ -17,11 +17,6 @@ public:
     int lowCountThreshold;
     QVariantMap properties;
 
-	QString getName() const;
-	int getCount() const;
-	int getLowCount() const;
-	QVariantMap getProperties() const;
-
     void read(const QJsonObject& json);
     void write(QJsonObject& json) const;
 
