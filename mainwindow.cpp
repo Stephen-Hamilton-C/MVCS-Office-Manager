@@ -5,6 +5,7 @@
 #include "constants.h"
 #include "datamanager.h"
 #include "cadeteditor.h"
+#include "itemeditor.h"
 
 #include <QFile>
 #include <QJsonDocument>
@@ -33,19 +34,19 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-Cadet* cadet = nullptr;
-
 void MainWindow::changeView(int stackIndex, QString subTitle){
-    bool goHome = ui->stackedWidget->currentIndex() == stackIndex;
+	bool goHome = false; //ui->stackedWidget->currentIndex() == stackIndex;
     ui->stackedWidget->setCurrentIndex(goHome ? 0 : stackIndex);
     this->setWindowTitle(Constants::name+(goHome ? "" : " - "+subTitle));
 }
 
 void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
+	currentEditorType = editorType;
+
 	QStandardItemModel *model = new QStandardItemModel();
 
 	switch (editorType) {
-		case MainWindow::EDITORTYPE::CADET:
+		case MainWindow::EDITORTYPE::CADET: {
 			model->setHorizontalHeaderLabels(Cadet::tableHeader);
 
 			QMapIterator<QString, Cadet> i(DataManager::cadets);
@@ -59,8 +60,35 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 								 new QStandardItem(i.value().getFormattedName()) <<
 								 new QStandardItem(i.value().getFlightStr()) <<
 								 new QStandardItem(i.value().notes));
+				model->setProperty(QString::number(model->rowCount()-1).toLocal8Bit().data(), i.value().uuid);
 			}
-		break;
+			break;
+		}
+		case MainWindow::EDITORTYPE::SUPPLY: {
+			model->setHorizontalHeaderLabels(SupplyItem::tableHeader);
+
+			QMapIterator<QString, SupplyItem> i(DataManager::items);
+			while(i.hasNext()){
+				i.next();
+
+				//Convert that properties list into a human-readable string
+				QString propertiesStr;
+				QMapIterator<QString, QVariant> j(i.value().properties);
+				while (j.hasNext()) {
+					j.next();
+					propertiesStr += j.key() + ": "+j.value().toString() + "\n";
+				}
+
+				qDebug() << "Item inserting:" << i.value().toString();
+				model->appendRow(QList<QStandardItem*>() <<
+								 new QStandardItem(i.value().uuid) <<
+								 new QStandardItem(i.value().name) <<
+								 new QStandardItem(QString::number(i.value().count)) <<
+								 new QStandardItem(propertiesStr));
+				model->setProperty(QString::number(model->rowCount()-1).toLocal8Bit().data(), i.value().uuid);
+			}
+			break;
+		}
 	}
 
 
@@ -70,7 +98,7 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 	ui->editorView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 
 	//UUIDs are stored in column 0, so let's hide those since the user isn't concerned about UUIDs
-	ui->editorView->hideColumn(0);
+	//ui->editorView->hideColumn(0);
 	ui->editorView->setWordWrap(true);
 	ui->editorView->setTextElideMode(Qt::ElideMiddle);
 	ui->editorView->resizeRowsToContents();
@@ -79,6 +107,7 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 
 void MainWindow::on_actionCadets_triggered() {
     changeView(1, "Cadets");
+	deleteItemEditor();
 	updateEditorView(MainWindow::EDITORTYPE::CADET);
 }
 
@@ -91,8 +120,9 @@ void MainWindow::getSelectedID(QItemSelectionModel *selection, QString &id) cons
 		//Find the index of that row and then get the data at column 0 (the UUID) and convert it into an int.
 		//Now that we have the UUID, we can use DataManager to find the cadet pointer.
 		int rowIndex = selection->selectedRows()[0].row();
-		QModelIndex index = model->index(rowIndex, 0);
-		id = model->data(index).toString();
+		id = model->property(QString::number(rowIndex).toLocal8Bit().data()).toString();
+		//QModelIndex index = model->index(rowIndex, 0);
+		//id = model->data(index).toString();
 		qDebug() << id << "selected";
 	}
 }
@@ -101,28 +131,82 @@ void MainWindow::on_editorEdit_clicked() {
 	QString id = "";
 	getSelectedID(ui->editorView->selectionModel(), id);
 	if(!id.isEmpty()){
-		Cadet *cadet = &DataManager::cadets[id];
-		editorWindow = new CadetEditor(id);
-		editorWindow->show();
-		editorWindow->setWindowTitle("Edit "+QString(cadet->grade == Cadet::GRADE::CADET ? "Cadet" : "Senior Member")+" "+cadet->getFormattedName(Cadet::NAMEFORMAT::FIRSTLAST)+".");
+		switch(currentEditorType){
+			case MainWindow::EDITORTYPE::CADET: {
+				Cadet* cadet = &DataManager::cadets[id];
+				cadetEditorWindow = new CadetEditor(id);
+				cadetEditorWindow->show();
+				cadetEditorWindow->setWindowTitle("Edit "+QString(cadet->grade == Cadet::GRADE::CADET ? "Cadet" : "Senior Member")+" "+cadet->getFormattedName(Cadet::NAMEFORMAT::FIRSTLAST)+".");
+				break;
+			}
+			case MainWindow::EDITORTYPE::SUPPLY: {
+				qDebug() << "Opening editor with ID:" << id;
+				qDebug() << "Editing:" << DataManager::items[id].toString();
+				QMapIterator<QString, SupplyItem> i(DataManager::items);
+				while(i.hasNext()){
+					i.next();
+					qDebug() << "Item in iterator:" << i.value().toString();
+				}
+				itemEditorWindow = new ItemEditor(id);
+				itemEditorWindow->show();
+				itemEditorWindow->setWindowTitle("Edit "+DataManager::items[id].name+".");
+				//{4f9a365e-7d2d-48f9-8510-4bd51ca19c08}
+				//{4f9a365e-7d2d-48f9-8510-4bd51ca19c08}
+				break;
+			}
+		}
 	}
 }
 
 void MainWindow::on_editorDelete_clicked() {
 	QString id = "";
 	getSelectedID(ui->editorView->selectionModel(), id);
-	if(!id.isEmpty() && DataManager::cadets.contains(id)){
-		QString name = DataManager::cadets[id].getGradeStr()+" "+DataManager::cadets[id].lastName;
-		DataManager::cadets.remove(id);
-		showStatusMessage("Deleted "+name+".");
-		updateEditorView(MainWindow::EDITORTYPE::CADET);
-	} else {
-		showStatusMessage("Failed to delete: No cadet found.");
+	if(!id.isEmpty()){
+		switch(currentEditorType){
+			case MainWindow::EDITORTYPE::CADET: {
+				if(DataManager::cadets.contains(id)){
+					QString name = DataManager::cadets[id].getGradeStr()+" "+DataManager::cadets[id].lastName;
+					DataManager::cadets.remove(id);
+					showStatusMessage("Deleted "+name+".");
+					updateEditorView(currentEditorType);
+				} else {
+					showStatusMessage("Failed to delete: No cadet found.");
+				}
+				break;
+			}
+			case MainWindow::EDITORTYPE::SUPPLY: {
+				if(DataManager::items.contains(id)){
+					QString name = DataManager::items[id].name;
+					DataManager::items.remove(id);
+					showStatusMessage("Deleted "+name+".");
+					updateEditorView(currentEditorType);
+				} else {
+					showStatusMessage("Failed to delete: No item found.");
+				}
+				break;
+			}
+		}
+	}
+}
+
+void MainWindow::deleteCadetEditor(){
+	if(cadetEditorWindow != nullptr){
+		delete cadetEditorWindow;
+		cadetEditorWindow = nullptr;
+	}
+}
+
+void MainWindow::deleteItemEditor(){
+	if(itemEditorWindow != nullptr){
+		delete itemEditorWindow;
+		itemEditorWindow = nullptr;
 	}
 }
 
 void MainWindow::on_actionSupply_triggered() {
-    changeView(2, "Supply");
+	changeView(1, "Supply");
+	updateEditorView(MainWindow::EDITORTYPE::SUPPLY);
+	deleteCadetEditor();
 }
 
 void MainWindow::on_actionInspections_triggered() {
@@ -159,10 +243,21 @@ void MainWindow::on_action_Save_triggered() {
 }
 
 void MainWindow::on_editorNew_clicked() {
-    //Make new cadet dialog appear
-	editorWindow = new CadetEditor();
-	editorWindow->show();
-	editorWindow->setWindowTitle("New Cadet");
+	switch(currentEditorType){
+		case MainWindow::EDITORTYPE::CADET: {
+			//Make new cadet dialog appear
+			cadetEditorWindow = new CadetEditor();
+			cadetEditorWindow->show();
+			cadetEditorWindow->setWindowTitle("New Cadet");
+			break;
+		}
+		case MainWindow::EDITORTYPE::SUPPLY: {
+			//Make new item dialog appear
+			itemEditorWindow = new ItemEditor();
+			itemEditorWindow->show();
+			itemEditorWindow->setWindowTitle("New Item");
+		}
+	}
 }
 
 void MainWindow::showStatusMessage(QString message, int timeout){

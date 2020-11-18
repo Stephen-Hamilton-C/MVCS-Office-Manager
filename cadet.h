@@ -81,7 +81,7 @@ public:
         FIRSTLAST,
     };
 
-    static QStringList tableHeader;
+	static QStringList tableHeader;
 	static QMap<QString, RANK> comboBox_CadetRanks;
 	static QMap<QString, RANK> comboBox_SMRanks;
 	static QMap<QString, FLIGHT> comboBox_Flight;

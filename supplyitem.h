@@ -6,6 +6,8 @@
 class SupplyItem {
 public:
 
+	static QStringList tableHeader;
+
     SupplyItem();
 	SupplyItem(QString uuid, QString name, int count, int lowCountThreshold = 0, QVariantMap properties = QVariantMap());
 
@@ -15,10 +17,15 @@ public:
     int lowCountThreshold;
     QVariantMap properties;
 
+	QString getName() const;
+	int getCount() const;
+	int getLowCount() const;
+	QVariantMap getProperties() const;
+
     void read(const QJsonObject& json);
     void write(QJsonObject& json) const;
 
-    QString toString();
+	QString toString() const;
 
 };
 

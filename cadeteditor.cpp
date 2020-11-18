@@ -93,9 +93,9 @@ void CadetEditor::on_buttonBox_accepted() {
 		MainWindow::getInstance()->showStatusMessage("Edited "+cadet->getGradeStr()+" "+cadet->lastName+".");
 	}
 	MainWindow::getInstance()->updateEditorView(MainWindow::EDITORTYPE::CADET);
-	delete this;
+	MainWindow::getInstance()->deleteCadetEditor();
 }
 
 void CadetEditor::on_buttonBox_rejected() {
-	delete this;
+	MainWindow::getInstance()->deleteCadetEditor();
 }

@@ -1,5 +1,7 @@
 #include "supplyitem.h"
 
+QStringList SupplyItem::tableHeader = QStringList() << "UUID" << "Name" << "Count" << "Properties";
+
 SupplyItem::SupplyItem(QString uuid, QString name, int count, int lowCountThreshold, QVariantMap properties){
 	this->uuid = uuid;
     this->name = name;
@@ -38,6 +40,22 @@ void SupplyItem::read(const QJsonObject& json) {
     }
 }
 
+QString SupplyItem::getName() const {
+	return this->name;
+}
+
+int SupplyItem::getCount() const {
+	return this->count;
+}
+
+int SupplyItem::getLowCount() const {
+	return this->lowCountThreshold;
+}
+
+QVariantMap SupplyItem::getProperties() const {
+	return this->properties;
+}
+
 void SupplyItem::write(QJsonObject& json) const {
 	json["item_uuid"] = uuid;
     json["item_name"] = name;
@@ -46,7 +64,7 @@ void SupplyItem::write(QJsonObject& json) const {
     json["item_properties"] = QJsonObject::fromVariantMap(properties);
 }
 
-QString SupplyItem::toString(){
+QString SupplyItem::toString() const {
     QMapIterator<QString, QVariant> i(properties);
     QString propStr;
     while(i.hasNext()){
@@ -54,5 +72,5 @@ QString SupplyItem::toString(){
         propStr.append("{"+i.key()+", "+i.value().toString()+"}, ");
     }
     propStr.remove(propStr.length()-2, 2);
-	return uuid+", "+name+", "+count+", "+lowCountThreshold+", ["+propStr+"]";
+	return uuid+", "+name+", "+QString::number(count)+", "+QString::number(lowCountThreshold)+", ["+propStr+"]";
 }

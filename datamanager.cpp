@@ -26,6 +26,7 @@ void DataManager::read(const QJsonObject &json){
             SupplyItem newItem;
             newItem.read(item.toObject());
 			items.insert(newItem.name, newItem);
+			qDebug() << "Supply Item Read:" << newItem.toString();
         }
     }
 

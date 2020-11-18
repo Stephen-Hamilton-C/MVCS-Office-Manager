@@ -13,6 +13,7 @@ SOURCES += \
     cadeteditor.cpp \
     datamanager.cpp \
     inspectioncard.cpp \
+    itemeditor.cpp \
     main.cpp \
     mainwindow.cpp \
     supplyitem.cpp
@@ -23,11 +24,13 @@ HEADERS += \
     constants.h \
     datamanager.h \
     inspectioncard.h \
+    itemeditor.h \
     mainwindow.h \
     supplyitem.h
 
 FORMS += \
     cadeteditor.ui \
+    itemeditor.ui \
     mainwindow.ui
 
 # Default rules for deployment.

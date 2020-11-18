@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTableView>
 #include "cadeteditor.h"
+#include "itemeditor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,6 +25,9 @@ public:
 
 	void showStatusMessage(QString message, int timeout = 0);
 	void updateEditorView(EDITORTYPE editorType);
+
+	void deleteItemEditor();
+	void deleteCadetEditor();
 
 	static MainWindow* getInstance(){
 		return ptrInstance;
@@ -61,6 +65,9 @@ private:
 
 	void getSelectedID(QItemSelectionModel *selection, QString &id) const;
 
-	CadetEditor *editorWindow = nullptr;
+	CadetEditor* cadetEditorWindow = nullptr;
+	ItemEditor* itemEditorWindow = nullptr;
+
+	EDITORTYPE currentEditorType;
 };
 #endif // MAINWINDOW_H
