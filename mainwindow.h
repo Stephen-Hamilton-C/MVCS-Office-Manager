@@ -55,6 +55,8 @@ private slots:
 
 	void on_editorDelete_clicked();
 
+	void on_editorView_doubleClicked(const QModelIndex &index);
+
 private:
 
 	Ui::MainWindow *ui;

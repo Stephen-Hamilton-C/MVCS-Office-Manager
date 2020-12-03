@@ -96,7 +96,7 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 	ui->editorView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 
 	//UUIDs are stored in column 0, so let's hide those since the user isn't concerned about UUIDs
-	//ui->editorView->hideColumn(0);
+	ui->editorView->hideColumn(0);
 	ui->editorView->setWordWrap(true);
 	ui->editorView->setTextElideMode(Qt::ElideMiddle);
 	ui->editorView->resizeRowsToContents();
@@ -133,13 +133,13 @@ void MainWindow::on_editorEdit_clicked() {
 				Cadet* cadet = &DataManager::cadets[id];
 				cadetEditorWindow = new CadetEditor(id);
 				cadetEditorWindow->show();
-				cadetEditorWindow->setWindowTitle("Edit "+QString(cadet->grade == Cadet::GRADE::CADET ? "Cadet" : "Senior Member")+" "+cadet->getFormattedName(Cadet::NAMEFORMAT::FIRSTLAST)+".");
+				cadetEditorWindow->setWindowTitle("Edit "+QString(cadet->grade == Cadet::GRADE::CADET ? "Cadet" : "Senior Member")+" "+cadet->getFormattedName(Cadet::NAMEFORMAT::FIRSTLAST));
 				break;
 			}
 			case MainWindow::EDITORTYPE::SUPPLY: {
 				itemEditorWindow = new ItemEditor(id);
 				itemEditorWindow->show();
-				itemEditorWindow->setWindowTitle("Edit "+DataManager::items[id].name+".");
+				itemEditorWindow->setWindowTitle("Edit "+DataManager::items[id].name);
 				break;
 			}
 		}
@@ -250,4 +250,8 @@ void MainWindow::on_editorNew_clicked() {
 
 void MainWindow::showStatusMessage(QString message, int timeout){
 	ui->statusBar->showMessage(message, timeout);
+}
+
+void MainWindow::on_editorView_doubleClicked(const QModelIndex &index) {
+	on_editorEdit_clicked();
 }

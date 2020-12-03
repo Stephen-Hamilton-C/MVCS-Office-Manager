@@ -31,7 +31,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="logoPage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -59,7 +59,11 @@
       <widget class="QWidget" name="editorPage">
        <layout class="QGridLayout" name="gridLayout">
         <item row="1" column="0" colspan="5">
-         <widget class="QTableView" name="editorView"/>
+         <widget class="QTableView" name="editorView">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+         </widget>
         </item>
         <item row="2" column="4">
          <widget class="QPushButton" name="editorNew">
