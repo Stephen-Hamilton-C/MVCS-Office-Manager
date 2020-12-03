@@ -42,6 +42,7 @@ ItemEditor::ItemEditor(QString id, QWidget *parent) :
 	ui->propertiesView->resizeColumnsToContents();
 	ui->propertiesView->resizeRowsToContents();
 	ui->propertiesView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+	ui->propertiesView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 }
 
 
@@ -100,11 +101,20 @@ void ItemEditor::on_buttonBox_accepted() {
 }
 
 void ItemEditor::on_createProperty_clicked() {
-	//TODO: This crashes, likely because model->rowCount is freaking gay
 	QAbstractItemModel* model = ui->propertiesView->model();
 	QStandardItemModel* smodel = new QStandardItemModel();
 
-	for(int row = 0; row < model->rowCount(); row++){
+	smodel->setHorizontalHeaderLabels(propertyTableHeaders);
+
+	//model->rowCount is freaking gay
+	int rows;
+	try {
+		rows = model->rowCount();
+	}  catch (int e) {
+		rows = 0;
+	}
+
+	for(int row = 0; row < rows; row++){
 		QModelIndex propNameIndex = model->index(row, 0);
 		QModelIndex propValIndex = model->index(row, 1);
 
@@ -118,6 +128,9 @@ void ItemEditor::on_createProperty_clicked() {
 					  new QStandardItem("Value"));
 
 	ui->propertiesView->setModel(smodel);
+
+	ui->propertiesView->resizeColumnsToContents();
+	ui->propertiesView->resizeRowsToContents();
 }
 
 void ItemEditor::on_deleteProperty_clicked() {
@@ -126,5 +139,8 @@ void ItemEditor::on_deleteProperty_clicked() {
 		QAbstractItemModel* model = ui->propertiesView->model();
 
 		model->removeRow(selection->selectedRows()[0].row());
+
+		ui->propertiesView->resizeColumnsToContents();
+		ui->propertiesView->resizeRowsToContents();
 	}
 }
