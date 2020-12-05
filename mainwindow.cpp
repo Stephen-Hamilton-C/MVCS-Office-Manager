@@ -149,7 +149,7 @@ void MainWindow::on_editorEdit_clicked() {
 void MainWindow::on_editorDelete_clicked() {
 	QString id = "";
 	getSelectedID(ui->editorView->selectionModel(), id);
-	if(!id.isEmpty()){
+	if(!id.isEmpty() && QMessageBox::question(this, "Confirm Delete", "Are you sure you want to delete this item?") == QMessageBox::Yes){
 		switch(currentEditorType){
 			case MainWindow::EDITORTYPE::CADET: {
 				if(DataManager::cadets.contains(id)){
