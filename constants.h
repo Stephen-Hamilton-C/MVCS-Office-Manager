@@ -6,7 +6,7 @@
 namespace Constants {
 
     const QString name = "Office Manager";
-    const QString version = "0.0.1";
+	const QString version = "DEV";
 
 };
 
