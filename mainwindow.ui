@@ -31,7 +31,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="logoPage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -193,7 +193,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="Resources.qrc">
+           <iconset>
             <normaloff>:/imgs/imgs/search.png</normaloff>:/imgs/imgs/search.png</iconset>
           </property>
           <property name="iconSize">
