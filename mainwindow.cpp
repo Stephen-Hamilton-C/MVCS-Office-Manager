@@ -40,6 +40,10 @@ void MainWindow::changeView(int stackIndex, QString subTitle){
     this->setWindowTitle(Constants::name+(goHome ? "" : " - "+subTitle));
 }
 
+void MainWindow::updateEditorView(){
+	updateEditorView(currentEditorType);
+}
+
 void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 	currentEditorType = editorType;
 
@@ -78,12 +82,32 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 					propertiesStr += j.key() + ": "+j.value().toString() + "\n";
 				}
 
-				qDebug() << "Item inserting:" << i.value().toString();
 				model->appendRow(QList<QStandardItem*>() <<
 								 new QStandardItem(i.value().uuid) <<
 								 new QStandardItem(i.value().name) <<
 								 new QStandardItem(QString::number(i.value().count)) <<
 								 new QStandardItem(propertiesStr));
+			}
+			break;
+		}
+		case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
+			model->setHorizontalHeaderLabels(InspectionCard::tableHeader);
+
+			QMapIterator<QString, InspectionCard> i(DataManager::insCards);
+			while(i.hasNext()){
+				i.next();
+
+				model->appendRow(QList<QStandardItem*>() <<
+								 new QStandardItem(i.value().uuid) <<
+								 new QStandardItem(i.value().getCadet()->getFlightStr()) <<
+								 new QStandardItem(i.value().getCadet()->getFormattedName()) <<
+								 new QStandardItem(i.value().date.toString()) <<
+								 new QStandardItem(i.value().getRatingString(i.value().appearanceScore)) <<
+								 new QStandardItem(i.value().getRatingString(i.value().garmentsScore)) <<
+								 new QStandardItem(i.value().getRatingString(i.value().accountrementsScore)) <<
+								 new QStandardItem(i.value().getRatingString(i.value().footwearScore)) <<
+								 new QStandardItem(i.value().getRatingString(i.value().bearingScore)) <<
+								 new QStandardItem(i.value().getRatingString(i.value().getOverallRating())));
 			}
 			break;
 		}
@@ -95,18 +119,12 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 	ui->editorView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 	ui->editorView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 
-	//UUIDs are stored in column 0, so let's hide those since the user isn't concerned about UUIDs
+	//UUIDs are stored in column 0, let's hide those since the user isn't concerned about UUIDs
 	ui->editorView->hideColumn(0);
 	ui->editorView->setWordWrap(true);
 	ui->editorView->setTextElideMode(Qt::ElideMiddle);
 	ui->editorView->resizeRowsToContents();
 	ui->editorView->resizeColumnsToContents();
-}
-
-void MainWindow::on_actionCadets_triggered() {
-    changeView(1, "Cadets");
-	deleteItemEditor();
-	updateEditorView(MainWindow::EDITORTYPE::CADET);
 }
 
 void MainWindow::getSelectedID(QItemSelectionModel *selection, QString &id) const {
@@ -142,6 +160,10 @@ void MainWindow::on_editorEdit_clicked() {
 				itemEditorWindow->setWindowTitle("Edit "+DataManager::items[id].name);
 				break;
 			}
+			case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
+				//TODO: Create Inspection editor window
+				break;
+			}
 		}
 	}
 }
@@ -156,7 +178,7 @@ void MainWindow::on_editorDelete_clicked() {
 					QString name = DataManager::cadets[id].getGradeStr()+" "+DataManager::cadets[id].lastName;
 					DataManager::cadets.remove(id);
 					showStatusMessage("Deleted "+name+".");
-					updateEditorView(currentEditorType);
+					updateEditorView();
 				} else {
 					showStatusMessage("Failed to delete: No cadet found.");
 				}
@@ -167,11 +189,23 @@ void MainWindow::on_editorDelete_clicked() {
 					QString name = DataManager::items[id].name;
 					DataManager::items.remove(id);
 					showStatusMessage("Deleted "+name+".");
-					updateEditorView(currentEditorType);
+					updateEditorView();
 				} else {
 					showStatusMessage("Failed to delete: No item found.");
 				}
 				break;
+			}
+			case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
+				if(DataManager::insCards.contains(id)){
+					QString cadetName = DataManager::insCards[id].getCadet()->lastName;
+					QDate date = DataManager::insCards[id].date;
+					DataManager::insCards.remove(id);
+					QString s = cadetName.endsWith("s") ? "'" : "'s";
+					showStatusMessage("Deleted "+cadetName+s+" inspection from "+date.toString());
+					updateEditorView();
+				} else {
+					showStatusMessage("Failed to delete: No inspection entry found.");
+				}
 			}
 		}
 	}
@@ -191,14 +225,29 @@ void MainWindow::deleteItemEditor(){
 	}
 }
 
+void MainWindow::deleteCardEditor(){
+	//TODO: Create Inspection editor window
+}
+
+void MainWindow::on_actionCadets_triggered() {
+	changeView(1, "Cadets");
+	updateEditorView(MainWindow::EDITORTYPE::CADET);
+	deleteItemEditor();
+	deleteCardEditor();
+}
+
 void MainWindow::on_actionSupply_triggered() {
 	changeView(1, "Supply");
 	updateEditorView(MainWindow::EDITORTYPE::SUPPLY);
 	deleteCadetEditor();
+	deleteCardEditor();
 }
 
 void MainWindow::on_actionInspections_triggered() {
-    changeView(3, "Inspections");
+	changeView(1, "Inspection Logs");
+	updateEditorView(MainWindow::EDITORTYPE::INSPECTIONLOGS);
+	deleteCadetEditor();
+	deleteItemEditor();
 }
 
 void MainWindow::on_actionFlights_Staff_triggered() {
@@ -244,6 +293,9 @@ void MainWindow::on_editorNew_clicked() {
 			itemEditorWindow = new ItemEditor();
 			itemEditorWindow->show();
 			itemEditorWindow->setWindowTitle("New Item");
+		}
+		case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
+			//TODO: Create Inspection editor window
 		}
 	}
 }

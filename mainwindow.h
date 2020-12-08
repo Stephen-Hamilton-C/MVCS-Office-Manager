@@ -20,14 +20,17 @@ public:
 
 	enum EDITORTYPE {
 		CADET,
-		SUPPLY
+		SUPPLY,
+		INSPECTIONLOGS
 	};
 
 	void showStatusMessage(QString message, int timeout = 0);
 	void updateEditorView(EDITORTYPE editorType);
+	void updateEditorView();
 
 	void deleteItemEditor();
 	void deleteCadetEditor();
+	void deleteCardEditor();
 
 	static MainWindow* getInstance(){
 		return ptrInstance;
