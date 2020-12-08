@@ -11,6 +11,7 @@
 #include <QJsonDocument>
 #include <QMessageBox>
 #include <QStandardItemModel>
+#include <QSortFilterProxyModel>
 
 MainWindow* MainWindow::ptrInstance = nullptr;
 
@@ -48,6 +49,10 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 	currentEditorType = editorType;
 
 	QStandardItemModel *model = new QStandardItemModel();
+	//QSortFilterProxyModel filterModel;
+	//filterModel.setSourceModel(model);
+
+	int sortColumn = 1;
 
 	switch (editorType) {
 		case MainWindow::EDITORTYPE::CADET: {
@@ -65,6 +70,8 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 								 new QStandardItem(i.value().getFlightStr()) <<
 								 new QStandardItem(i.value().notes));
 			}
+
+			sortColumn = 4;
 			break;
 		}
 		case MainWindow::EDITORTYPE::SUPPLY: {
@@ -109,12 +116,15 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 								 new QStandardItem(i.value().getRatingString(i.value().bearingScore)) <<
 								 new QStandardItem(i.value().getRatingString(i.value().getOverallRating())));
 			}
+
+			sortColumn = 3;
 			break;
 		}
 	}
 
-
 	ui->editorView->setModel(model);
+	ui->editorView->setSortingEnabled(true);
+	ui->editorView->sortByColumn(sortColumn, Qt::SortOrder::AscendingOrder);
 	ui->editorView->verticalHeader()->setVisible(false);
 	ui->editorView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 	ui->editorView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
