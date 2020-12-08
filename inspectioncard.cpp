@@ -1,17 +1,19 @@
 ﻿#include "inspectioncard.h"
 #include "datamanager.h"
 
+QStringList InspectionCard::tableHeader = QStringList() << "UUID" << "Flight" << "Cadet" << "Date" << "Appearance" << "Garments" << "Accountrements" << "Footwear" << "Bearing" << "Overall";
+
 InspectionCard::InspectionCard() {
     qDebug() << "Creating empty Inspection Card";
 }
 
-int InspectionCard::getTotalPoints(){
+int InspectionCard::getTotalPoints() const {
     return appearanceScore + garmentsScore + accountrementsScore + footwearScore + bearingScore;
 }
 
-InspectionCard::RATING InspectionCard::getOverallRating(){
+InspectionCard::RATING InspectionCard::getOverallRating() const {
     int overallPoints = getTotalPoints();
-	if(DataManager::cadets[cadetUUID].getPhase() == 1){
+	if(cadetPhaseAtInspect == 1){
         if(overallPoints <= 3){
             return RATING::NEEDSIMPROVEMENT;
         } else if(overallPoints == 4 || overallPoints == 5){
@@ -30,6 +32,27 @@ InspectionCard::RATING InspectionCard::getOverallRating(){
     }
 }
 
+QString InspectionCard::getRatingString(int score) const {
+	switch(score){
+		case 0:
+			return "0 - Needs Improvement";
+		case 1:
+			return "1 - Satisfactory";
+		case 2:
+			return "2 - Excellent";
+		default:
+			return "N/A";
+	}
+}
+
+QString InspectionCard::getRatingString(RATING rating) const {
+	return getRatingString(rating);
+}
+
+Cadet* InspectionCard::getCadet() const {
+	return &DataManager::cadets[cadetUUID];
+}
+
 void InspectionCard::read(const QJsonObject& json){
 	if(json.contains("card_uuid") && json["card_uuid"].isString()){
 		uuid = json["card_uuid"].toString();
@@ -38,9 +61,13 @@ void InspectionCard::read(const QJsonObject& json){
 		json["card_uuid"] = uuid;
 	}
 
-	if(json.contains("card_cadetUUID") && json["card_cadetUUID"].isDouble()){
-		cadetUUID = json["card_cadetUUID"].toInt();
+	if(json.contains("card_cadetUUID") && json["card_cadetUUID"].isString()){
+		cadetUUID = json["card_cadetUUID"].toString();
     }
+
+	if(json.contains("card_cadetPhase") && json["card_cadetPhase"].isDouble()){
+		cadetPhaseAtInspect = json["card_cadetPhase"].toInt();
+	}
 
     if(json.contains("card_date") && json["card_date"].isArray()){
         //Year, Month, Day
@@ -76,6 +103,7 @@ void InspectionCard::read(const QJsonObject& json){
 void InspectionCard::write(QJsonObject &json) const {
 	json["card_uuid"] = uuid;
 	json["card_cadetID"] = cadetUUID;
+	json["card_cadetPhase"] = cadetPhaseAtInspect;
 
     QJsonArray dateArray;
     dateArray.append(date.year());
@@ -93,7 +121,7 @@ void InspectionCard::write(QJsonObject &json) const {
 }
 
 QString InspectionCard::toString(){
-	return  uuid+", "+cadetUUID+", "+QString::number(appearanceScore)
+	return  uuid+", "+cadetUUID+" ("+getCadet()->getFormattedName()+"), "+QString::number(appearanceScore)
 			+", "+QString::number(garmentsScore)+", "+QString::number(accountrementsScore)
 			+", "+QString::number(footwearScore)+", "+QString::number(bearingScore)
 			+", "+QString::number(getTotalPoints())+", "+QString::number(getOverallRating());

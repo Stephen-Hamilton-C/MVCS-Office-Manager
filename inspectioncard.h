@@ -15,8 +15,11 @@ public:
         EXCELLENT = 2
     };
 
+	static QStringList tableHeader;
+
 	QString uuid;
 	QString cadetUUID;
+	int cadetPhaseAtInspect;
     QDate date;
 
     RATING appearanceScore;
@@ -27,8 +30,11 @@ public:
 
     QString notes;
 
-    int getTotalPoints();
-    RATING getOverallRating();
+	int getTotalPoints() const;
+	RATING getOverallRating() const;
+	QString getRatingString(int score) const;
+	QString getRatingString(RATING rating) const;
+	Cadet* getCadet() const;
 
     void read(const QJsonObject& json);
     void write(QJsonObject& json) const;
