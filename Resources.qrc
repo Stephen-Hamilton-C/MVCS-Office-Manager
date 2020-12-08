@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/imgs">
         <file alias="squadron-logo">imgs/DC045_Logo.png</file>
-        <file>imgs/search.png</file>
+        <file alias="search">imgs/search.png</file>
     </qresource>
 </RCC>
