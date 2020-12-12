@@ -1,8 +1,6 @@
 ﻿#include "inspectioncard.h"
 #include "datamanager.h"
 
-QStringList InspectionCard::tableHeader = QStringList() << "UUID" << "Flight" << "Cadet" << "Date" << "Appearance" << "Garments" << "Accountrements" << "Footwear" << "Bearing" << "Overall";
-
 InspectionCard::InspectionCard() {
     qDebug() << "Creating empty Inspection Card";
 }
@@ -46,7 +44,7 @@ QString InspectionCard::getRatingString(int score) const {
 }
 
 QString InspectionCard::getRatingString(RATING rating) const {
-	return getRatingString(rating);
+	return getRatingString((int)rating);
 }
 
 Cadet* InspectionCard::getCadet() const {
