@@ -16,7 +16,7 @@ InspectionCard::InspectionCard(QString uuid, QString cadetUUID, QDate date,
 	this->footwearScore = footwearScore;
 	this->bearingScore = bearingScore;
 
-	Cadet* cadet = &DataManager::cadets[cadetUUID];
+	Cadet* cadet = getCadet();
 	this->cadetPhaseAtInspect = cadet->getPhase();
 	this->cadetFlightAtInspect = cadet->flight;
 }
@@ -116,7 +116,7 @@ void InspectionCard::read(const QJsonObject& json){
 
 void InspectionCard::write(QJsonObject &json) const {
 	json["card_uuid"] = uuid;
-	json["card_cadetID"] = cadetUUID;
+	json["card_cadetUUID"] = cadetUUID;
 	json["card_cadetPhase"] = cadetPhaseAtInspect;
 	json["card_cadetFlight"] = cadetFlightAtInspect;
 
