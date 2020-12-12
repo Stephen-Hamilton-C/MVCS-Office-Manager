@@ -21,6 +21,8 @@ public:
 private slots:
 	void on_buttonBox_accepted();
 
+	void on_cadetBox_currentTextChanged(const QString &arg1);
+
 private:
 	Ui::InspectionEditor *ui;
 

@@ -30,7 +30,7 @@ InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
 		InspectionCard* card = &DataManager::insCards[id];
 
 		ui->flightBox->setCurrentText(Cadet::getFlightStr(card->cadetFlightAtInspect));
-		ui->cadetBox->setCurrentText(DataManager::cadets[card->cadetUUID].getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
+		ui->cadetBox->setCurrentText(card->getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
 		ui->dateEdit->setDate(card->date);
 
 		setRadioCheck("appearance", card->appearanceScore);
@@ -54,7 +54,7 @@ void InspectionEditor::setRadioCheck(QString radioName, int score){
 InspectionCard::RATING InspectionEditor::getScoreFromRadio(QString radioName){
 	InspectionCard::RATING rating = InspectionCard::NEEDSIMPROVEMENT;
 
-	for(int i = 1; i <= 3; i++){
+	for(int i = 0; i <= 2; i++){
 		if(InspectionEditor::findChild<QRadioButton*>(radioName+QString::number(i))->isChecked()){
 			rating = InspectionCard::RATING(i);
 			break;
@@ -68,6 +68,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 	//Check if cadet, flight, date, and scores are valid
 
 	if(id.isEmpty()){
+		qDebug() << "creating log...";
 		InspectionCard card(QUuid::createUuid().toString(),
 							cadetMap[ui->cadetBox->currentText()],
 							ui->dateEdit->date(),
@@ -78,8 +79,9 @@ void InspectionEditor::on_buttonBox_accepted() {
 							getScoreFromRadio("bearing")
 							);
 
+		qDebug() << "Log created";
 		DataManager::insCards.insert(card.uuid, card);
-		MainWindow::getInstance()->showStatusMessage("Created inspection log for "+DataManager::cadets[card.cadetUUID].getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
+		MainWindow::getInstance()->showStatusMessage("Created inspection log for "+card.getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
 	} else {
 		InspectionCard* card = &DataManager::insCards[id];
 		Cadet* cadet = &DataManager::cadets[cadetMap[ui->cadetBox->currentText()]];
@@ -97,9 +99,16 @@ void InspectionEditor::on_buttonBox_accepted() {
 		card->footwearScore = getScoreFromRadio("footwear");
 		card->bearingScore = getScoreFromRadio("bearing");
 
-		MainWindow::getInstance()->showStatusMessage("Edited inspection log for "+DataManager::cadets[card->cadetUUID].getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
+		MainWindow::getInstance()->showStatusMessage("Edited inspection log for "+card->getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
 	}
 
 	MainWindow::getInstance()->updateEditorView(MainWindow::EDITORTYPE::INSPECTIONLOGS);
 	MainWindow::getInstance()->deleteCardEditor();
+}
+
+void InspectionEditor::on_cadetBox_currentTextChanged(const QString &arg1) {
+	if(DataManager::cadets.contains(cadetMap[arg1])){
+		Cadet* cadet = &DataManager::cadets[cadetMap[arg1]];
+		ui->flightBox->setCurrentText(cadet->getFlightStr());
+	}
 }
