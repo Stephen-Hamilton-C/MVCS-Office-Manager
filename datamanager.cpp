@@ -16,7 +16,7 @@ void DataManager::read(const QJsonObject &json){
             Cadet newCadet;
             newCadet.read(cadet.toObject());
 			cadets.insert(newCadet.uuid, newCadet);
-			qDebug() << "Loaded Cadet:" << newCadet.toString();
+			qDebug() << "Cadet Read:" << newCadet.toString();
         }
     }
 
@@ -35,7 +35,8 @@ void DataManager::read(const QJsonObject &json){
         for(auto card : json["inspectioncards"].toArray()){
             InspectionCard newCard;
             newCard.read(card.toObject());
-			insCards.insert(newCard.cadetUUID, newCard);
+			insCards.insert(newCard.uuid, newCard);
+			qDebug() << "Inspection Log Entry Read:" << newCard.toString();
         }
     }
 
