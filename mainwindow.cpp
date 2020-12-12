@@ -36,7 +36,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::changeView(int stackIndex, QString subTitle){
-	bool goHome = false; //ui->stackedWidget->currentIndex() == stackIndex;
+	bool goHome = ui->stackedWidget->currentIndex() == stackIndex && this->windowTitle() == Constants::name+" - "+subTitle;
     ui->stackedWidget->setCurrentIndex(goHome ? 0 : stackIndex);
     this->setWindowTitle(Constants::name+(goHome ? "" : " - "+subTitle));
 }
@@ -49,8 +49,6 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 	currentEditorType = editorType;
 
 	QStandardItemModel *model = new QStandardItemModel();
-	//QSortFilterProxyModel filterModel;
-	//filterModel.setSourceModel(model);
 
 	int sortColumn = 1;
 
@@ -161,7 +159,7 @@ void MainWindow::on_editorEdit_clicked() {
 				Cadet* cadet = &DataManager::cadets[id];
 				cadetEditorWindow = new CadetEditor(id);
 				cadetEditorWindow->show();
-				cadetEditorWindow->setWindowTitle("Edit "+QString(cadet->grade == Cadet::GRADE::CADET ? "Cadet" : "Senior Member")+" "+cadet->getFormattedName(Cadet::NAMEFORMAT::FIRSTLAST));
+				cadetEditorWindow->setWindowTitle("Edit "+cadet->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
 				break;
 			}
 			case MainWindow::EDITORTYPE::SUPPLY: {
@@ -171,7 +169,9 @@ void MainWindow::on_editorEdit_clicked() {
 				break;
 			}
 			case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
-				//TODO: Create Inspection editor window
+				cardEditorWindow = new InspectionEditor(id);
+				cardEditorWindow->show();
+				cardEditorWindow->setWindowTitle("Edit inspection log for "+DataManager::insCards[id].getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
 				break;
 			}
 		}
@@ -308,7 +308,7 @@ void MainWindow::on_editorNew_clicked() {
 			itemEditorWindow->setWindowTitle("New Item");
 		}
 		case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
-			//TODO: Create Inspection editor window
+			//Make new inspection log appear
 			cardEditorWindow = new InspectionEditor();
 			cardEditorWindow->show();
 			cardEditorWindow->setWindowTitle("New Inspection Log");
