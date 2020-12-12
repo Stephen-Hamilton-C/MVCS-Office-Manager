@@ -1,7 +1,5 @@
 #include "supplyitem.h"
 
-QStringList SupplyItem::tableHeader = QStringList() << "UUID" << "Name" << "Count" << "Properties";
-
 SupplyItem::SupplyItem(QString uuid, QString name, int count, int lowCountThreshold, QVariantMap properties){
 	this->uuid = uuid;
     this->name = name;

@@ -56,7 +56,7 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 
 	switch (editorType) {
 		case MainWindow::EDITORTYPE::CADET: {
-			model->setHorizontalHeaderLabels(Cadet::tableHeader);
+			model->setHorizontalHeaderLabels(Constants::cadetTableHeader);
 
 			QMapIterator<QString, Cadet> i(DataManager::cadets);
 			while(i.hasNext()){
@@ -75,7 +75,7 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 			break;
 		}
 		case MainWindow::EDITORTYPE::SUPPLY: {
-			model->setHorizontalHeaderLabels(SupplyItem::tableHeader);
+			model->setHorizontalHeaderLabels(Constants::itemTableHeader);
 
 			QMapIterator<QString, SupplyItem> i(DataManager::items);
 			while(i.hasNext()){
@@ -98,7 +98,7 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 			break;
 		}
 		case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
-			model->setHorizontalHeaderLabels(InspectionCard::tableHeader);
+			model->setHorizontalHeaderLabels(Constants::cardTableHeader);
 
 			QMapIterator<QString, InspectionCard> i(DataManager::insCards);
 			while(i.hasNext()){

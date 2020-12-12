@@ -6,8 +6,6 @@
 class SupplyItem {
 public:
 
-	static QStringList tableHeader;
-
     SupplyItem();
 	SupplyItem(QString uuid, QString name, int count, int lowCountThreshold = 0, QVariantMap properties = QVariantMap());
 

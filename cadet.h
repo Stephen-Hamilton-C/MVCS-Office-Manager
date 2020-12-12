@@ -81,11 +81,6 @@ public:
         FIRSTLAST,
     };
 
-	static QStringList tableHeader;
-	static QMap<QString, RANK> comboBox_CadetRanks;
-	static QMap<QString, RANK> comboBox_SMRanks;
-	static QMap<QString, FLIGHT> comboBox_Flight;
-
 	QString uuid;
     int capid;
     GRADE grade;
@@ -98,15 +93,15 @@ public:
 	Cadet(QString uuid, int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes);
     Cadet();
 
-    static QString getRankStr(RANK rank);
+	static QString getRankStr(RANK rank);
 	QString getRankStr() const;
-    static QString getShortRankStr(RANK rank);
+	static QString getShortRankStr(RANK rank);
 	QString getShortRankStr() const;
-    static QString getFlightStr(FLIGHT flight);
+	static QString getFlightStr(FLIGHT flight);
 	QString getFlightStr() const;
-    static QString getGradeStr(GRADE grade);
+	static QString getGradeStr(GRADE grade);
 	QString getGradeStr() const;
-    static QString getShortGradeStr(GRADE grade, bool slash = true);
+	static QString getShortGradeStr(GRADE grade, bool slash = true);
 	QString getShortGradeStr(bool slash = true) const;
 	QString getFormattedName(NAMEFORMAT format = NAMEFORMAT::LASTFIRST) const;
 	QString getID() const;

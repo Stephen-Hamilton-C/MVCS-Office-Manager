@@ -3,6 +3,7 @@
 #include "cadet.h"
 #include "datamanager.h"
 #include "mainwindow.h"
+#include "constants.h"
 
 CadetEditor::CadetEditor(QString id, QWidget *parent) :
     QMainWindow(parent),
@@ -14,7 +15,7 @@ CadetEditor::CadetEditor(QString id, QWidget *parent) :
 	ui->gradeBox->addItem(Cadet::getGradeStr(Cadet::GRADE::SENIORMEMBER));
 
 	ui->flightBox->clear();
-	ui->flightBox->addItems(Cadet::comboBox_Flight.keys());
+	ui->flightBox->addItems(Constants::comboBox_Flight.keys());
 
 	ui->idBox->setValidator(new QIntValidator(0, 999999, this));
 
@@ -45,9 +46,9 @@ CadetEditor::~CadetEditor() {
 void CadetEditor::on_gradeBox_currentIndexChanged(int index) {
 	ui->rankBox->clear();
     if(index == Cadet::GRADE::CADET){
-		ui->rankBox->addItems(Cadet::comboBox_CadetRanks.keys());
+		ui->rankBox->addItems(Constants::comboBox_CadetRanks.keys());
     } else {
-		ui->rankBox->addItems(Cadet::comboBox_SMRanks.keys());
+		ui->rankBox->addItems(Constants::comboBox_SMRanks.keys());
     }
 }
 
@@ -71,10 +72,10 @@ void CadetEditor::on_buttonBox_accepted() {
 		Cadet newCadet(QUuid::createUuid().toString(),
 					   ui->idBox->text().toInt(),
 					   Cadet::GRADE(ui->gradeBox->currentIndex()),
-					   ui->gradeBox->currentIndex() == 0 ? Cadet::comboBox_CadetRanks[ui->rankBox->currentText()] : Cadet::comboBox_SMRanks[ui->rankBox->currentText()],
+					   ui->gradeBox->currentIndex() == 0 ? Constants::comboBox_CadetRanks[ui->rankBox->currentText()] : Constants::comboBox_SMRanks[ui->rankBox->currentText()],
 					   ui->firstNameEdit->text(),
 					   ui->lastNameEdit->text(),
-					   Cadet::comboBox_Flight[ui->flightBox->currentText()],
+					   Constants::comboBox_Flight[ui->flightBox->currentText()],
 					   ui->notesEdit->toPlainText());
 		DataManager::cadets.insert(newCadet.uuid, newCadet);
 
@@ -83,11 +84,11 @@ void CadetEditor::on_buttonBox_accepted() {
 		Cadet* cadet = &DataManager::cadets[ui->idBox->property("cadet_uuid").toString()];
 		cadet->capid = ui->idBox->text().toInt();
 		cadet->grade = Cadet::GRADE(ui->gradeBox->currentIndex());
-		cadet->rank = cadet->grade == Cadet::GRADE::CADET ? Cadet::comboBox_CadetRanks[ui->rankBox->currentText()] :
-															Cadet::comboBox_SMRanks[ui->rankBox->currentText()];
+		cadet->rank = cadet->grade == Cadet::GRADE::CADET ? Constants::comboBox_CadetRanks[ui->rankBox->currentText()] :
+															Constants::comboBox_SMRanks[ui->rankBox->currentText()];
 		cadet->firstName = ui->firstNameEdit->text();
 		cadet->lastName = ui->lastNameEdit->text();
-		cadet->flight = Cadet::comboBox_Flight[ui->flightBox->currentText()];
+		cadet->flight = Constants::comboBox_Flight[ui->flightBox->currentText()];
 		cadet->notes = ui->notesEdit->toPlainText();
 
 		MainWindow::getInstance()->showStatusMessage("Edited "+cadet->getGradeStr()+" "+cadet->lastName+".");

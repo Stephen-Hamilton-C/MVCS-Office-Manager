@@ -15,8 +15,6 @@ public:
         EXCELLENT = 2
     };
 
-	static QStringList tableHeader;
-
 	QString uuid;
 	QString cadetUUID;
 	int cadetPhaseAtInspect;
