@@ -79,6 +79,8 @@ public:
     enum NAMEFORMAT {
         LASTFIRST,
         FIRSTLAST,
+		GRADELASTFIRST,
+		GRADEFIRSTLAST
     };
 
 	QString uuid;

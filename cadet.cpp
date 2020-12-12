@@ -224,8 +224,12 @@ QString Cadet::getFormattedName(NAMEFORMAT format) const{
     switch (format) {
         case NAMEFORMAT::FIRSTLAST:
 			return firstName+" "+lastName;
-		default:
+		case NAMEFORMAT::LASTFIRST:
 			return lastName+", "+firstName;
+		case NAMEFORMAT::GRADEFIRSTLAST:
+			return getShortGradeStr()+getShortRankStr()+" "+getFormattedName(NAMEFORMAT::FIRSTLAST);
+		case NAMEFORMAT::GRADELASTFIRST:
+			return getShortGradeStr()+getShortRankStr()+" "+getFormattedName(NAMEFORMAT::LASTFIRST);
     }
 }
 
