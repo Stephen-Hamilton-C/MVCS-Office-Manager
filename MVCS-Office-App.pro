@@ -13,10 +13,12 @@ SOURCES += \
     cadeteditor.cpp \
     datamanager.cpp \
     inspectioncard.cpp \
+    inspectioneditor.cpp \
     itemeditor.cpp \
     main.cpp \
     mainwindow.cpp \
-    supplyitem.cpp
+    supplyitem.cpp \
+    verticallabel.cpp
 
 HEADERS += \
     cadet.h \
@@ -24,12 +26,15 @@ HEADERS += \
     constants.h \
     datamanager.h \
     inspectioncard.h \
+    inspectioneditor.h \
     itemeditor.h \
     mainwindow.h \
-    supplyitem.h
+    supplyitem.h \
+    verticallabel.h
 
 FORMS += \
     cadeteditor.ui \
+    inspectioneditor.ui \
     itemeditor.ui \
     mainwindow.ui
 
