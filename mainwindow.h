@@ -5,6 +5,7 @@
 #include <QTableView>
 #include "cadeteditor.h"
 #include "itemeditor.h"
+#include "inspectioneditor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -72,6 +73,7 @@ private:
 
 	CadetEditor* cadetEditorWindow = nullptr;
 	ItemEditor* itemEditorWindow = nullptr;
+	InspectionEditor*  cardEditorWindow = nullptr;
 
 	EDITORTYPE currentEditorType;
 };

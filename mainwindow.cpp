@@ -236,7 +236,10 @@ void MainWindow::deleteItemEditor(){
 }
 
 void MainWindow::deleteCardEditor(){
-	//TODO: Create Inspection editor window
+	if(cardEditorWindow != nullptr){
+		delete cardEditorWindow;
+		cardEditorWindow = nullptr;
+	}
 }
 
 void MainWindow::on_actionCadets_triggered() {
@@ -306,6 +309,9 @@ void MainWindow::on_editorNew_clicked() {
 		}
 		case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
 			//TODO: Create Inspection editor window
+			cardEditorWindow = new InspectionEditor();
+			cardEditorWindow->show();
+			cardEditorWindow->setWindowTitle("New Inspection Log");
 		}
 	}
 }
