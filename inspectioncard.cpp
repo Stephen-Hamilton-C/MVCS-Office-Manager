@@ -5,6 +5,22 @@ InspectionCard::InspectionCard() {
     qDebug() << "Creating empty Inspection Card";
 }
 
+InspectionCard::InspectionCard(QString uuid, QString cadetUUID, QDate date,
+							   RATING appearanceScore, RATING garmentsScore, RATING accountrementsScore, RATING footwearScore, RATING bearingScore) {
+	this->uuid = uuid;
+	this->cadetUUID = cadetUUID;
+	this->date = date;
+	this->appearanceScore = appearanceScore;
+	this->garmentsScore = garmentsScore;
+	this->accountrementsScore = accountrementsScore;
+	this->footwearScore = footwearScore;
+	this->bearingScore = bearingScore;
+
+	Cadet* cadet = &DataManager::cadets[cadetUUID];
+	this->cadetPhaseAtInspect = cadet->getPhase();
+	this->cadetFlightAtInspect = cadet->flight;
+}
+
 int InspectionCard::getTotalPoints() const {
     return appearanceScore + garmentsScore + accountrementsScore + footwearScore + bearingScore;
 }
@@ -67,6 +83,10 @@ void InspectionCard::read(const QJsonObject& json){
 		cadetPhaseAtInspect = json["card_cadetPhase"].toInt();
 	}
 
+	if(json.contains("card_cadetFlight") && json["card_cadetFlight"].isDouble()){
+		cadetFlightAtInspect = Cadet::FLIGHT(json["card_cadetFlight"].toInt());
+	}
+
     if(json.contains("card_date") && json["card_date"].isArray()){
         //Year, Month, Day
         QJsonArray dateArray = json["card_date"].toArray();
@@ -92,18 +112,15 @@ void InspectionCard::read(const QJsonObject& json){
     if(json.contains("card_bearingScore") && json["card_bearingScore"].isDouble()){
         bearingScore = RATING(json["card_bearingScore"].toInt());
     }
-
-    if(json.contains("card_notes") && json["card_notes"].isString()){
-        notes = json["card_notes"].toString();
-    }
 }
 
 void InspectionCard::write(QJsonObject &json) const {
 	json["card_uuid"] = uuid;
 	json["card_cadetID"] = cadetUUID;
 	json["card_cadetPhase"] = cadetPhaseAtInspect;
+	json["card_cadetFlight"] = cadetFlightAtInspect;
 
-    QJsonArray dateArray;
+	QJsonArray dateArray;
     dateArray.append(date.year());
     dateArray.append(date.month());
     dateArray.append(date.day());
@@ -114,7 +131,6 @@ void InspectionCard::write(QJsonObject &json) const {
     json["card_accountrementsScore"] = accountrementsScore;
     json["card_footwearScore"] = footwearScore;
     json["card_bearingScore"] = bearingScore;
-    json["card_notes"] = notes;
 
 }
 

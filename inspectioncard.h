@@ -7,17 +7,20 @@
 
 class InspectionCard {
 public:
-    InspectionCard();
+	enum RATING {
+		NEEDSIMPROVEMENT = 0,
+		SATISFACTORY = 1,
+		EXCELLENT = 2
+	};
 
-    enum RATING {
-        NEEDSIMPROVEMENT = 0,
-        SATISFACTORY = 1,
-        EXCELLENT = 2
-    };
+	InspectionCard(QString uuid, QString cadetUUID, QDate date,
+				   RATING appearanceScore, RATING garmentsScore, RATING accountrementsScore, RATING footwearScore, RATING bearingScore);
+    InspectionCard();
 
 	QString uuid;
 	QString cadetUUID;
 	int cadetPhaseAtInspect;
+	Cadet::FLIGHT cadetFlightAtInspect;
     QDate date;
 
     RATING appearanceScore;
@@ -25,8 +28,6 @@ public:
     RATING accountrementsScore;
     RATING footwearScore;
     RATING bearingScore;
-
-    QString notes;
 
 	int getTotalPoints() const;
 	RATING getOverallRating() const;
