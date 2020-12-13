@@ -31,6 +31,7 @@ private:
 
 	void setRadioCheck(QString radioName, int score);
 	InspectionCard::RATING getScoreFromRadio(QString radioName);
+	bool radioHasScore(QString radioName);
 };
 
 #endif // INSPECTIONEDITOR_H

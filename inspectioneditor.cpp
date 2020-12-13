@@ -64,11 +64,74 @@ InspectionCard::RATING InspectionEditor::getScoreFromRadio(QString radioName){
 	return rating;
 }
 
+bool InspectionEditor::radioHasScore(QString radioName){
+	for(int i = 0; i <= 2; i++){
+		if(InspectionEditor::findChild<QRadioButton*>(radioName+QString::number(i))->isChecked()){
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void InspectionEditor::on_buttonBox_accepted() {
-	//Check if cadet, flight, date, and scores are valid
+	bool valid = true;
+
+	if(ui->cadetBox->currentText() == "---Select One---" || !DataManager::cadets.contains(cadetMap[ui->cadetBox->currentText()])){
+		ui->cadetBox->setStyleSheet("color: rgb(200, 0, 0);");
+		valid = false;
+	} else {
+		ui->cadetBox->setStyleSheet("");
+	}
+
+	if(ui->dateEdit->date().toJulianDay() > QDate::currentDate().toJulianDay()){
+		ui->dateEdit->setStyleSheet("color: rgb(200, 0, 0);");
+		MainWindow::getInstance()->showStatusMessage("Date invalid: must be before today's date.");
+		valid = false;
+	} else {
+		ui->dateEdit->setStyleSheet("");
+	}
+
+	if(!radioHasScore("appearance")){
+		ui->appearanceLabel->setStyleSheet("color: rgb(200, 0, 0);");
+		valid = false;
+	} else {
+		ui->appearanceLabel->setStyleSheet("");
+	}
+
+	if(!radioHasScore("garments")){
+		ui->garmentsLabel->setStyleSheet("color: rgb(200, 0, 0);");
+		valid = false;
+	} else {
+		ui->garmentsLabel->setStyleSheet("");
+	}
+
+	if(!radioHasScore("accountrements")){
+		ui->accountrementsLabel->setStyleSheet("color: rgb(200, 0, 0);");
+		valid = false;
+	} else {
+		ui->accountrementsLabel->setStyleSheet("");
+	}
+
+	if(!radioHasScore("footwear")){
+		ui->footwearLabel->setStyleSheet("color: rgb(200, 0, 0);");
+		valid = false;
+	} else {
+		ui->footwearLabel->setStyleSheet("");
+	}
+
+	if(!radioHasScore("bearing")){
+		ui->bearingLabel->setStyleSheet("color: rgb(200, 0, 0);");
+		valid = false;
+	} else {
+		ui->bearingLabel->setStyleSheet("");
+	}
+
+	if(!valid){
+		return;
+	}
 
 	if(id.isEmpty()){
-		qDebug() << "creating log...";
 		InspectionCard card(QUuid::createUuid().toString(),
 							cadetMap[ui->cadetBox->currentText()],
 							ui->dateEdit->date(),
@@ -79,7 +142,6 @@ void InspectionEditor::on_buttonBox_accepted() {
 							getScoreFromRadio("bearing")
 							);
 
-		qDebug() << "Log created";
 		DataManager::insCards.insert(card.uuid, card);
 		MainWindow::getInstance()->showStatusMessage("Created inspection log for "+card.getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
 	} else {
