@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>518</width>
-    <height>487</height>
+    <height>527</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -246,6 +246,9 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
         </property>
        </widget>
       </item>
@@ -519,6 +522,9 @@
         <property name="text">
          <string>Date:</string>
         </property>
+        <property name="buddy">
+         <cstring>dateEdit</cstring>
+        </property>
        </widget>
       </item>
       <item row="7" column="0">
@@ -682,6 +688,9 @@
         <property name="text">
          <string>Cadet:</string>
         </property>
+        <property name="buddy">
+         <cstring>cadetBox</cstring>
+        </property>
        </widget>
       </item>
       <item row="13" column="0" colspan="7">
@@ -811,6 +820,26 @@
    <header>verticallabel.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>cadetBox</tabstop>
+  <tabstop>dateEdit</tabstop>
+  <tabstop>appearance0</tabstop>
+  <tabstop>appearance1</tabstop>
+  <tabstop>appearance2</tabstop>
+  <tabstop>garments0</tabstop>
+  <tabstop>garments1</tabstop>
+  <tabstop>garments2</tabstop>
+  <tabstop>accountrements0</tabstop>
+  <tabstop>accountrements1</tabstop>
+  <tabstop>accountrements2</tabstop>
+  <tabstop>footwear0</tabstop>
+  <tabstop>footwear1</tabstop>
+  <tabstop>footwear2</tabstop>
+  <tabstop>bearing0</tabstop>
+  <tabstop>bearing1</tabstop>
+  <tabstop>bearing2</tabstop>
+  <tabstop>flightBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

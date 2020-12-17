@@ -58,6 +58,9 @@
       <property name="text">
        <string>First Name:</string>
       </property>
+      <property name="buddy">
+       <cstring>firstNameEdit</cstring>
+      </property>
      </widget>
     </item>
     <item row="1" column="3">
@@ -70,6 +73,9 @@
       <property name="text">
        <string>Flight:</string>
       </property>
+      <property name="buddy">
+       <cstring>flightBox</cstring>
+      </property>
      </widget>
     </item>
     <item row="2" column="0">
@@ -81,6 +87,9 @@
       </property>
       <property name="text">
        <string>*Last Name:</string>
+      </property>
+      <property name="buddy">
+       <cstring>lastNameEdit</cstring>
       </property>
      </widget>
     </item>
@@ -112,6 +121,9 @@
       <property name="text">
        <string>Rank:</string>
       </property>
+      <property name="buddy">
+       <cstring>rankBox</cstring>
+      </property>
      </widget>
     </item>
     <item row="5" column="0" colspan="6">
@@ -139,6 +151,9 @@
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+      <property name="buddy">
+       <cstring>notesEdit</cstring>
       </property>
      </widget>
     </item>
@@ -172,6 +187,9 @@
       </property>
       <property name="text">
        <string>*CapID:</string>
+      </property>
+      <property name="buddy">
+       <cstring>idBox</cstring>
       </property>
      </widget>
     </item>
@@ -252,6 +270,9 @@
       <property name="text">
        <string>Grade:</string>
       </property>
+      <property name="buddy">
+       <cstring>gradeBox</cstring>
+      </property>
      </widget>
     </item>
     <item row="2" column="1">
@@ -306,6 +327,15 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>idBox</tabstop>
+  <tabstop>gradeBox</tabstop>
+  <tabstop>rankBox</tabstop>
+  <tabstop>flightBox</tabstop>
+  <tabstop>lastNameEdit</tabstop>
+  <tabstop>firstNameEdit</tabstop>
+  <tabstop>notesEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
