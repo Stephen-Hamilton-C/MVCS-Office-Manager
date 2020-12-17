@@ -13,7 +13,7 @@
 #include <QString>
 
 /**
- * @brief The Cadet class
+ * @brief Holds all data related to a single CAP Cadet or Senior Member
  */
 class Cadet {
 public:
