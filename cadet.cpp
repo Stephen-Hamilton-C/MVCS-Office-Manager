@@ -228,17 +228,20 @@ QString Cadet::getFormattedName(NAMEFORMAT format) const{
 			return getShortGradeStr()+getShortRankStr()+" "+getFormattedName(NAMEFORMAT::FIRSTLAST);
 		case NAMEFORMAT::GRADELASTFIRST:
 			return getShortGradeStr()+getShortRankStr()+" "+getFormattedName(NAMEFORMAT::LASTFIRST);
-		default:
+		default: //NAMEFORMAT::LASTFIRST
 			return lastName+", "+firstName;
     }
 }
 
 void Cadet::read(const QJsonObject& json) {
+	//All of these if statements are to check if the value actually exists in file.
+
+	//If a UUID is not found, generate one.
+	//Setting it to the object will do nothing as the DataManager won't write to file if this function is being called
 	if(json.contains("cadet_uuid") && json["cadet_uuid"].isString()){
 		uuid = json["cadet_uuid"].toString();
 	} else {
 		uuid = QUuid::createUuid().toString();
-		json["cadet_uuid"] = uuid;
 	}
 
     if(json.contains("cadet_capid") && json["cadet_capid"].isDouble()){
