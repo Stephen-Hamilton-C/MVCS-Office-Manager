@@ -7,6 +7,7 @@
  * C/2Lt Stephen Hamilton, Civil Air Patrol
 */
 #include "datamanager.h"
+#include "constants.h"
 
 QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
 QMap<QString, SupplyItem> DataManager::items = QMap<QString, SupplyItem>();
@@ -19,6 +20,7 @@ DataManager::DataManager() {
 void DataManager::read(const QJsonObject &json){
 
     if(json.contains("cadets") && json["cadets"].isArray()){
+		//Read cadets array and store each cadet
         cadets.clear();
         for(auto cadet : json["cadets"].toArray()){
             Cadet newCadet;
@@ -29,6 +31,7 @@ void DataManager::read(const QJsonObject &json){
     }
 
     if(json.contains("supplyitems") && json["supplyitems"].isArray()){
+		//Read supply items array and store each item
         items.clear();
         for(auto item : json["supplyitems"].toArray()){
             SupplyItem newItem;
@@ -39,6 +42,7 @@ void DataManager::read(const QJsonObject &json){
     }
 
     if(json.contains("inspectioncards") && json["inspectioncards"].isArray()){
+		//Read inspection logs array and store each log
         insCards.clear();
         for(auto card : json["inspectioncards"].toArray()){
             InspectionCard newCard;
@@ -52,6 +56,7 @@ void DataManager::read(const QJsonObject &json){
 
 void DataManager::write(QJsonObject &json) {
 
+	//Convert cadets to a QJsonObject
     QJsonArray jCadets;
 	auto iCadets = QMapIterator<QString, Cadet>(cadets);
     while(iCadets.hasNext()){
@@ -60,8 +65,10 @@ void DataManager::write(QJsonObject &json) {
 		iCadets.value().write(cadetJson);
         jCadets.append(cadetJson);
     }
+	//Set the QJsonObject to the main QJsonObject that will be written to file
     json["cadets"] = jCadets;
 
+	//Convert items to a QJsonObject
     QJsonArray jItems;
 	auto iItems = QMapIterator<QString, SupplyItem>(items);
     while(iItems.hasNext()){
@@ -70,8 +77,10 @@ void DataManager::write(QJsonObject &json) {
 		iItems.value().write(itemJson);
         jItems.append(itemJson);
     }
+	//Set the QJsonObject to the main QJsonObject that will be written to file
     json["supplyitems"] = jItems;
 
+	//Convert inspection logs to a QJsonObject
     QJsonArray jCards;
 	auto iCards = QMapIterator<QString, InspectionCard>(insCards);
     while(iCards.hasNext()){
@@ -80,15 +89,18 @@ void DataManager::write(QJsonObject &json) {
 		iCards.value().write(cardJson);
         jCards.append(cardJson);
     }
+	//Set the QJsonObject to the main QJsonObject that will be written to file
     json["inspectioncards"] = jCards;
 
 }
 
 void DataManager::readFromFile() {
 
-    QFile loadFile("MVCS-Manager-Data.json");
+	//Prepare to write to file
+	QFile loadFile(Constants::defaultSaveFileName);
 
     if(loadFile.open(QIODevice::ReadOnly)){
+		//Load it into a QJsonDocemunt and read
         QByteArray saveData = loadFile.readAll();
         QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
 
@@ -99,9 +111,11 @@ void DataManager::readFromFile() {
 
 void DataManager::writeToFile() {
 
-    QFile saveFile("MVCS-Manager-Data.json");
+	//Prepare to save to file
+	QFile saveFile(Constants::defaultSaveFileName);
 
     if(saveFile.open(QIODevice::WriteOnly)){
+		//Load data into a QJsonDocument and write the raw JSON to file
         QJsonObject saveObject;
         write(saveObject);
         saveFile.write(QJsonDocument(saveObject).toJson());
