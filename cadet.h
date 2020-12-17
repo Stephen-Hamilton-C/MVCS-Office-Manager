@@ -187,7 +187,7 @@ public:
     void write(QJsonObject& json) const;
 
 	/**
-	 * @brief Debug purposes. Spits out all variables to the qDebug.
+	 * @brief Debug purposes.
 	 */
     QString toString();
 
