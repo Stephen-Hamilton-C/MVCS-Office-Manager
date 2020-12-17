@@ -18,22 +18,25 @@ CadetEditor::CadetEditor(QString id, QWidget *parent) :
     ui(new Ui::CadetEditor)
 {
     ui->setupUi(this);
+
+	//Setup gradeBox selections
 	ui->gradeBox->clear();
 	ui->gradeBox->addItem(Cadet::getGradeStr(Cadet::GRADE::CADET));
 	ui->gradeBox->addItem(Cadet::getGradeStr(Cadet::GRADE::SENIORMEMBER));
 
+	//Setup flightBox selections
 	ui->flightBox->clear();
 	ui->flightBox->addItems(Constants::comboBox_Flight.keys());
 
+	//Set idBox to only take numbers as an input
 	ui->idBox->setValidator(new QIntValidator(0, 999999, this));
 
-	if(!id.isEmpty()){
+	//If editing an existing cadet
+	if(!id.isEmpty() && DataManager::cadets.contains(id)){
+		//Setup UI so it matches the current data for the cadet
 		this->id = id;
 		Cadet *cadet = &DataManager::cadets[id];
 		ui->idBox->setText(QString::number(cadet->capid));
-
-		//I don't want the user to care about UUIDs, so I'm just gonna stuff it into a property
-		ui->idBox->setProperty("cadet_uuid", id);
 
 		ui->gradeBox->setCurrentIndex(cadet->grade);
 
@@ -42,8 +45,6 @@ CadetEditor::CadetEditor(QString id, QWidget *parent) :
 		ui->lastNameEdit->setText(cadet->lastName);
 		ui->flightBox->setCurrentText(cadet->getFlightStr());
 		ui->notesEdit->setText(cadet->notes);
-	} else {
-		ui->idBox->setProperty("cadet_uuid", QUuid::createUuid().toString());
 	}
 }
 
@@ -52,6 +53,7 @@ CadetEditor::~CadetEditor() {
 }
 
 void CadetEditor::on_gradeBox_currentIndexChanged(int index) {
+	//Cadets and Senior Members have different ranks, so update the rankBox if the gradeBox is changed
 	ui->rankBox->clear();
     if(index == Cadet::GRADE::CADET){
 		ui->rankBox->addItems(Constants::comboBox_CadetRanks.keys());
@@ -61,22 +63,33 @@ void CadetEditor::on_gradeBox_currentIndexChanged(int index) {
 }
 
 void CadetEditor::on_buttonBox_accepted() {
-	if(ui->idBox->text().length() <= 0 || ui->lastNameEdit->text().length() <= 0){
+	//Check if required fields have been filled
+	bool valid = true;
+
+	//Is CapID filled?
+	if(ui->idBox->text().length() <= 0){
+		ui->idBox->setStyleSheet("color: rgb(200, 0, 0);");
+		valid = false;
+	} else {
+		ui->idBox->setStyleSheet("");
+	}
+
+	//Is last name filled?
+	if(ui->lastNameEdit->text().length() <= 0){
+		ui->lastNameEdit->setStyleSheet("color: rgb(200, 0, 0);");
+		valid = false;
+	} else {
+		ui->lastNameEdit->setStyleSheet("");
+	}
+
+	if(!valid){
 		MainWindow::getInstance()->showStatusMessage("Please fill required fields");
-		if(ui->idBox->text().length() <= 0){
-			ui->idBox->setStyleSheet("color: rgb(200, 0, 0);");
-		} else {
-			ui->idBox->setStyleSheet("");
-		}
-		if(ui->lastNameEdit->text().length() <= 0){
-			ui->lastNameEdit->setStyleSheet("color: rgb(200, 0, 0);");
-		} else {
-			ui->lastNameEdit->setStyleSheet("");
-		}
 		return;
 	}
 
+	//If creating a new cadet
 	if(id.isEmpty()){
+		//Create a cadet object using a complete constructor and insert into the DataManager
 		Cadet newCadet(QUuid::createUuid().toString(),
 					   ui->idBox->text().toInt(),
 					   Cadet::GRADE(ui->gradeBox->currentIndex()),
@@ -89,7 +102,8 @@ void CadetEditor::on_buttonBox_accepted() {
 
 		MainWindow::getInstance()->showStatusMessage("Created "+Cadet::getGradeStr(Cadet::GRADE(ui->gradeBox->currentIndex()))+" "+ui->lastNameEdit->text()+".");
 	} else {
-		Cadet* cadet = &DataManager::cadets[ui->idBox->property("cadet_uuid").toString()];
+		//Edit the existing cadet and update it with current values from the editor
+		Cadet* cadet = &DataManager::cadets[id];
 		cadet->capid = ui->idBox->text().toInt();
 		cadet->grade = Cadet::GRADE(ui->gradeBox->currentIndex());
 		cadet->rank = cadet->grade == Cadet::GRADE::CADET ? Constants::comboBox_CadetRanks[ui->rankBox->currentText()] :
@@ -101,6 +115,8 @@ void CadetEditor::on_buttonBox_accepted() {
 
 		MainWindow::getInstance()->showStatusMessage("Edited "+cadet->getGradeStr()+" "+cadet->lastName+".");
 	}
+
+	//Refresh Cadets display and close editor window
 	MainWindow::getInstance()->updateEditorView(MainWindow::EDITORTYPE::CADET);
 	MainWindow::getInstance()->deleteCadetEditor();
 }
