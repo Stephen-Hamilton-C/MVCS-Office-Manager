@@ -25,6 +25,10 @@ namespace Constants {
 	 * @brief The current version of the application
 	 */
 	const QString version = "DEV";
+	/**
+	 * @brief The default name and extension that the data file is named
+	 */
+	const QString defaultSaveFileName = "MVCS-Manager-Data.json";
 
 	/**
 	 * @brief The labels that show at the top of the cadet view
