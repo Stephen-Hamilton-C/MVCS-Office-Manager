@@ -1,9 +1,15 @@
+/*
+ * This file is a part of {{ dc045.manager }}.
+ *
+ * Developed for MVCS Office Manager.
+ * See the LICENSE file at the top-level directory of this distribution for license details.
+ * Licensed under the GNU General Public License V3
+ * C/2Lt Stephen Hamilton, Civil Air Patrol
+*/
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "constants.h"
 #include "datamanager.h"
-#include "cadeteditor.h"
-#include "itemeditor.h"
 
 #include <QFile>
 #include <QJsonDocument>
