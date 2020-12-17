@@ -12,15 +12,36 @@
 #include <QString>
 #include "cadet.h"
 
+/**
+ * @brief Contains several constant variables that are used across the entire application.
+ */
 namespace Constants {
 
+	/**
+	 * @brief The display name of the application
+	 */
     const QString name = "Office Manager";
+	/**
+	 * @brief The current version of the application
+	 */
 	const QString version = "DEV";
 
+	/**
+	 * @brief The labels that show at the top of the cadet view
+	 */
 	const QStringList cadetTableHeader = QStringList() << "UUID" << "CapID" << "Grade" << "Rank" << "Name" << "Flight" << "Notes";
+	/**
+	 * @brief The labels that show at the top of the insepction log view
+	 */
 	const QStringList cardTableHeader = QStringList() << "UUID" << "Flight" << "Cadet" << "Date" << "Appearance" << "Garments" << "Accountrements" << "Footwear" << "Bearing" << "Overall";
+	/**
+	 * @brief The labels that show at the top of the supply item view
+	 */
 	const QStringList itemTableHeader = QStringList() << "UUID" << "Name" << "Count" << "Properties";
 
+	/**
+	 * @brief The selections for a comboBox that lists cadet ranks
+	 */
 	const QMap<QString, Cadet::RANK> comboBox_CadetRanks {
 		{Cadet::getRankStr(Cadet::RANK::VISITOR), Cadet::RANK::VISITOR},
 		{Cadet::getRankStr(Cadet::RANK::BASIC), Cadet::RANK::BASIC},
@@ -39,6 +60,9 @@ namespace Constants {
 		{Cadet::getRankStr(Cadet::RANK::LTCOL), Cadet::RANK::LTCOL},
 		{Cadet::getRankStr(Cadet::RANK::COL), Cadet::RANK::COL}
 	};
+	/**
+	 * @brief The selections for a comboBox that lists senior member ranks
+	 */
 	const QMap<QString, Cadet::RANK> comboBox_SMRanks {
 		{Cadet::getRankStr(Cadet::RANK::VISITOR), Cadet::RANK::VISITOR},
 		{Cadet::getRankStr(Cadet::RANK::SM), Cadet::RANK::SM},
@@ -54,6 +78,9 @@ namespace Constants {
 		{Cadet::getRankStr(Cadet::RANK::BRIGGEN), Cadet::RANK::BRIGGEN},
 		{Cadet::getRankStr(Cadet::RANK::MAJGEN), Cadet::RANK::MAJGEN}
 	};
+	/**
+	 * @brief The selections for a comboBox that lists flights
+	 */
 	const QMap<QString, Cadet::FLIGHT> comboBox_Flight {
 		{Cadet::getFlightStr(Cadet::FLIGHT::UNASSIGNED), Cadet::FLIGHT::UNASSIGNED},
 		{Cadet::getFlightStr(Cadet::FLIGHT::ALPHA), Cadet::FLIGHT::ALPHA},
