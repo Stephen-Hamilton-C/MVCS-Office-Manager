@@ -224,17 +224,13 @@ QString Cadet::getFormattedName(NAMEFORMAT format) const{
     switch (format) {
         case NAMEFORMAT::FIRSTLAST:
 			return firstName+" "+lastName;
-		case NAMEFORMAT::LASTFIRST:
-			return lastName+", "+firstName;
 		case NAMEFORMAT::GRADEFIRSTLAST:
 			return getShortGradeStr()+getShortRankStr()+" "+getFormattedName(NAMEFORMAT::FIRSTLAST);
 		case NAMEFORMAT::GRADELASTFIRST:
 			return getShortGradeStr()+getShortRankStr()+" "+getFormattedName(NAMEFORMAT::LASTFIRST);
+		default:
+			return lastName+", "+firstName;
     }
-}
-
-QString Cadet::getID() const {
-	return QString::number(capid);
 }
 
 void Cadet::read(const QJsonObject& json) {
