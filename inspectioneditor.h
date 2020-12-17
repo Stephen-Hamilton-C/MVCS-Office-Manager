@@ -1,7 +1,6 @@
 #ifndef INSPECTIONEDITOR_H
 #define INSPECTIONEDITOR_H
 
-#include "constants.h"
 #include "datamanager.h"
 
 #include <QDialog>

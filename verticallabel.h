@@ -4,6 +4,7 @@
 #define VERTICALLABEL_H
 
 #include <QLabel>
+#include <QPainter>
 
 class VerticalLabel : public QLabel
 {

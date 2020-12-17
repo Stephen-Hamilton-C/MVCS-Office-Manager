@@ -1,7 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "cadet.h"
-#include "supplyitem.h"
 #include "constants.h"
 #include "datamanager.h"
 #include "cadeteditor.h"

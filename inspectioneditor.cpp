@@ -1,6 +1,7 @@
 #include "inspectioneditor.h"
 #include "ui_inspectioneditor.h"
 #include "mainwindow.h"
+#include "constants.h"
 
 InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
 	QDialog(parent),

@@ -2,7 +2,6 @@
 #define CADETEDITOR_H
 
 #include <QMainWindow>
-#include "cadet.h"
 
 namespace Ui {
 class CadetEditor;
