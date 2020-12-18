@@ -101,10 +101,14 @@ public:
 		GRADEFIRSTLAST
     };
 
-	///The identifier used in the /class DataManager that indexes this member
+	/**
+	 * @brief The identifier used in the `DataManager` that indexes this member
+	 */
 	QString uuid;
     int capid;
-	///Cadet or Senior Member
+	/**
+	 * @brief Cadet or Senior Member
+	 */
     GRADE grade;
     RANK rank;
 	QString firstName;
@@ -112,9 +116,17 @@ public:
     FLIGHT flight;
     QString notes;
 
-	///Complete setup constructor
+	/**
+	 * @brief The Complete Setup constructor.
+	 * @param uuid A generated QUuid converted to QString. This is indexed in the `DataManager`.
+	 * @param capid The member's CapID.
+	 * @param grade The member's grade (Cadet or Senior Member).
+	 * @param rank The member's current rank.
+	 * @param firstName The member's first name.
+	 * @param lastName The member's last name.
+	 * @param flight The flight this member is currently in.
+	 */
 	Cadet(QString uuid, int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes);
-	///Empty constructor
     Cadet();
 
 	/**
