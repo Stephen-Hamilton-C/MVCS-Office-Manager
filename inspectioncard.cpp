@@ -35,6 +35,7 @@ int InspectionCard::getTotalPoints() const {
 
 InspectionCard::RATING InspectionCard::getOverallRating() const {
     int overallPoints = getTotalPoints();
+	//If in the learning phase, points are more lenient
 	if(cadetPhaseAtInspect == 1){
         if(overallPoints <= 3){
             return RATING::NEEDSIMPROVEMENT;
@@ -76,11 +77,14 @@ Cadet* InspectionCard::getCadet() const {
 }
 
 void InspectionCard::read(const QJsonObject& json){
+	//All of these if statements are to check if the value actually exists in file.
+
+	//If a UUID is not found, generate one.
+	//Setting it to the object will do nothing as the DataManager won't write to file if this function is being called
 	if(json.contains("card_uuid") && json["card_uuid"].isString()){
 		uuid = json["card_uuid"].toString();
 	} else {
 		uuid = QUuid::createUuid().toString();
-		json["card_uuid"] = uuid;
 	}
 
 	if(json.contains("card_cadetUUID") && json["card_cadetUUID"].isString()){
@@ -128,6 +132,7 @@ void InspectionCard::write(QJsonObject &json) const {
 	json["card_cadetPhase"] = cadetPhaseAtInspect;
 	json["card_cadetFlight"] = cadetFlightAtInspect;
 
+	//Convert the QDate into a year, month, day array
 	QJsonArray dateArray;
     dateArray.append(date.year());
     dateArray.append(date.month());
