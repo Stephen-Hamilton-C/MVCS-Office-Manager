@@ -17,9 +17,10 @@ InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	//Setup flightBox selections
 	ui->flightBox->addItems(Constants::comboBox_Flight.keys());
 
-	//cadet grade + rank + name, UUID
+	//Setup cadetMap so cadets have a clean display name, yet can easily still find UUID from the formatted name.
 	cadetMap.clear();
 
 	cadetMap.insert("---Select One---", "");
@@ -32,12 +33,14 @@ InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
 	ui->cadetBox->clear();
 	ui->cadetBox->addItems(cadetMap.keys());
 
-	if(id.isEmpty()){
+	if(id.isEmpty()){ //If creating a new log
+		//QOL: Maybe set it to the most recent Thursday?
 		ui->dateEdit->setDate(QDate::currentDate());
-	} else {
+	} else if(DataManager::insCards.contains(id)){ //If editing an existing log
 		this->id = id;
 		InspectionCard* card = &DataManager::insCards[id];
 
+		//Setup UI so it matches the current data for the inspection log
 		ui->flightBox->setCurrentText(Cadet::getFlightStr(card->cadetFlightAtInspect));
 		ui->cadetBox->setCurrentText(card->getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
 		ui->dateEdit->setDate(card->date);
@@ -63,6 +66,7 @@ void InspectionEditor::setRadioCheck(QString radioName, int score){
 InspectionCard::RATING InspectionEditor::getScoreFromRadio(QString radioName){
 	InspectionCard::RATING rating = InspectionCard::NEEDSIMPROVEMENT;
 
+	//Checks through a set of radioButtons to see which is set.
 	for(int i = 0; i <= 2; i++){
 		if(InspectionEditor::findChild<QRadioButton*>(radioName+QString::number(i))->isChecked()){
 			rating = InspectionCard::RATING(i);
@@ -84,8 +88,10 @@ bool InspectionEditor::radioHasScore(QString radioName){
 }
 
 void InspectionEditor::on_buttonBox_accepted() {
+	//Check if required fields have been filled
 	bool valid = true;
 
+	//Is a valid cadet selected?
 	if(ui->cadetBox->currentText() == "---Select One---" || !DataManager::cadets.contains(cadetMap[ui->cadetBox->currentText()])){
 		ui->cadetBox->setStyleSheet("color: rgb(200, 0, 0);");
 		valid = false;
@@ -93,6 +99,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 		ui->cadetBox->setStyleSheet("");
 	}
 
+	//Is the date before today?
 	if(ui->dateEdit->date().toJulianDay() > QDate::currentDate().toJulianDay()){
 		ui->dateEdit->setStyleSheet("color: rgb(200, 0, 0);");
 		MainWindow::getInstance()->showStatusMessage("Date invalid: must be before today's date.");
@@ -101,6 +108,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 		ui->dateEdit->setStyleSheet("");
 	}
 
+	//Does appearance have a score?
 	if(!radioHasScore("appearance")){
 		ui->appearanceLabel->setStyleSheet("color: rgb(200, 0, 0);");
 		valid = false;
@@ -108,6 +116,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 		ui->appearanceLabel->setStyleSheet("");
 	}
 
+	//Does garments have a score?
 	if(!radioHasScore("garments")){
 		ui->garmentsLabel->setStyleSheet("color: rgb(200, 0, 0);");
 		valid = false;
@@ -115,6 +124,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 		ui->garmentsLabel->setStyleSheet("");
 	}
 
+	//Does accountrements have a score?
 	if(!radioHasScore("accountrements")){
 		ui->accountrementsLabel->setStyleSheet("color: rgb(200, 0, 0);");
 		valid = false;
@@ -122,6 +132,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 		ui->accountrementsLabel->setStyleSheet("");
 	}
 
+	//Does footwear have a score?
 	if(!radioHasScore("footwear")){
 		ui->footwearLabel->setStyleSheet("color: rgb(200, 0, 0);");
 		valid = false;
@@ -129,6 +140,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 		ui->footwearLabel->setStyleSheet("");
 	}
 
+	//Does bearing have a score?
 	if(!radioHasScore("bearing")){
 		ui->bearingLabel->setStyleSheet("color: rgb(200, 0, 0);");
 		valid = false;
@@ -140,7 +152,9 @@ void InspectionEditor::on_buttonBox_accepted() {
 		return;
 	}
 
+	//If creating a new inspection log entry
 	if(id.isEmpty()){
+		//Create an inspection log object using a complete constructor and insert into the DataManager
 		InspectionCard card(QUuid::createUuid().toString(),
 							cadetMap[ui->cadetBox->currentText()],
 							ui->dateEdit->date(),
@@ -154,9 +168,11 @@ void InspectionEditor::on_buttonBox_accepted() {
 		DataManager::insCards.insert(card.uuid, card);
 		MainWindow::getInstance()->showStatusMessage("Created inspection log for "+card.getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
 	} else {
+		//Edit the existing inspection log and update it with current values from the editor
 		InspectionCard* card = &DataManager::insCards[id];
 		Cadet* cadet = &DataManager::cadets[cadetMap[ui->cadetBox->currentText()]];
 
+		//If the assigned cadet to the inspection is different, set the phase and flight at inspect
 		if(cadet->uuid != card->cadetUUID){
 			card->cadetPhaseAtInspect = cadet->getPhase();
 			card->cadetFlightAtInspect = cadet->flight;
@@ -173,6 +189,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 		MainWindow::getInstance()->showStatusMessage("Edited inspection log for "+card->getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
 	}
 
+	//Refresh inspection log display and close editor window
 	MainWindow::getInstance()->updateEditorView(MainWindow::EDITORTYPE::INSPECTIONLOGS);
 	MainWindow::getInstance()->deleteCardEditor();
 }
