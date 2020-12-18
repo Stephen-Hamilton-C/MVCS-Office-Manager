@@ -38,20 +38,20 @@ public:
         CMSGT,   //Chief Master Sergeant
 
         //Shared with SMs and Cadets
-        LT2ND,   //2nd Lieutenant           10
-        LT1ST,   //1st Liutenant            11
-        CAPT,    //Captain                  12
-        MAJ,     //Major                    13
-        LTCOL,   //Lieutenant Colonel       14
-        COL,     //Colonel                  15
+		LT2ND,   //2nd Lieutenant
+		LT1ST,   //1st Liutenant
+		CAPT,    //Captain
+		MAJ,     //Major
+		LTCOL,   //Lieutenant Colonel
+		COL,     //Colonel
 
         //SM ranks
-        SM,      //Senior Member            16
-        FO,      //Flight Officer           17
-        TFO,     //Technical Flight Officer 18
-        SFO,     //Senior Flight Officer    19
-        BRIGGEN, //Brigadier General        20
-        MAJGEN   //Major General            21
+		SM,      //Senior Member
+		FO,      //Flight Officer
+		TFO,     //Technical Flight Officer
+		SFO,     //Senior Flight Officer
+		BRIGGEN, //Brigadier General
+		MAJGEN   //Major General
     };
 
     enum FLIGHT {
