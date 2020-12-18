@@ -34,8 +34,6 @@ private slots:
 private:
 	Ui::ItemEditor *ui;
 
-	const QStringList propertyTableHeaders { "Name", "Value" };
-
 	void constructPropertiesMap(QVariantMap &properties) const;
 
 	QString id;

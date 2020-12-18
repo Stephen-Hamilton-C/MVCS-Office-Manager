@@ -33,15 +33,20 @@ namespace Constants {
 	/**
 	 * @brief The labels that show at the top of the cadet view
 	 */
-	const QStringList cadetTableHeader = QStringList() << "UUID" << "CapID" << "Grade" << "Rank" << "Name" << "Flight" << "Notes";
+	const QStringList cadetTableHeader {"UUID", "CapID", "Grade", "Rank", "Name", "Flight", "Notes"};
 	/**
 	 * @brief The labels that show at the top of the insepction log view
 	 */
-	const QStringList cardTableHeader = QStringList() << "UUID" << "Flight" << "Cadet" << "Date" << "Appearance" << "Garments" << "Accountrements" << "Footwear" << "Bearing" << "Overall";
+	const QStringList cardTableHeader {"UUID", "Flight", "Cadet", "Date", "Appearance", "Garments", "Accountrements", "Footwear", "Bearing", "Overall"};
 	/**
 	 * @brief The labels that show at the top of the supply item view
 	 */
-	const QStringList itemTableHeader = QStringList() << "UUID" << "Name" << "Count" << "Properties";
+	const QStringList itemTableHeader {"UUID", "Name", "Count", "Properties"};
+
+	/**
+	 * @brief The labels that show at the top of the properties view in the supply item editor
+	 */
+	const QStringList itemPropertyTableHeaders { "Name", "Value" };
 
 	/**
 	 * @brief The selections for a comboBox that lists cadet ranks

@@ -10,6 +10,7 @@
 #include "ui_itemeditor.h"
 #include "datamanager.h"
 #include "mainwindow.h"
+#include "constants.h"
 
 #include <QStandardItemModel>
 
@@ -39,7 +40,7 @@ ItemEditor::ItemEditor(QString id, QWidget *parent) :
 							 new QStandardItem(i.value().toString()));
 		}
 
-		model->setHorizontalHeaderLabels(propertyTableHeaders);
+		model->setHorizontalHeaderLabels(Constants::itemPropertyTableHeaders);
 		ui->propertiesView->setModel(model);
 	} else {
 		ui->nameEdit->setProperty("item_uuid", QUuid::createUuid().toString());
