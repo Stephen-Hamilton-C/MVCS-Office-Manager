@@ -53,6 +53,8 @@ ItemEditor::ItemEditor(QString id, QWidget *parent) :
 	ui->propertiesView->resizeRowsToContents();
 	ui->propertiesView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 	ui->propertiesView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
+
+    ui->nameEdit->setFocus(Qt::FocusReason::TabFocusReason);
 }
 
 

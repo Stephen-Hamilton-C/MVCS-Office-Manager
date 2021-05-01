@@ -46,6 +46,8 @@ CadetEditor::CadetEditor(QString id, QWidget *parent) :
 		ui->flightBox->setCurrentText(cadet->getFlightStr());
 		ui->notesEdit->setText(cadet->notes);
 	}
+
+    ui->idBox->setFocus(Qt::FocusReason::TabFocusReason);
 }
 
 CadetEditor::~CadetEditor() {

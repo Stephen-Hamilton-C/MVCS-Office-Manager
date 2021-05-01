@@ -52,6 +52,8 @@ InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
 		setRadioCheck("bearing", card->bearingScore);
 	}
 
+    ui->cadetBox->setFocus(Qt::FocusReason::TabFocusReason);
+
 }
 
 InspectionEditor::~InspectionEditor()
