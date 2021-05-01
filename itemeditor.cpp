@@ -22,6 +22,9 @@ ItemEditor::ItemEditor(QString id, QWidget *parent) :
 
 	qDebug() << "ID received:" << id;
 
+    QStandardItemModel* model = new QStandardItemModel();
+    model->setHorizontalHeaderLabels(Constants::itemPropertyTableHeaders);
+
 	if(!id.isEmpty()){
 		this->id = id;
 		SupplyItem *item = &DataManager::items[id];
@@ -31,7 +34,7 @@ ItemEditor::ItemEditor(QString id, QWidget *parent) :
 		ui->countBox->setValue(item->count);
 		ui->lowCountBox->setValue(item->lowCountThreshold);
 
-		QStandardItemModel* model = new QStandardItemModel();
+
 		QMapIterator<QString, QVariant> i(item->properties);
 		while(i.hasNext()){
 			i.next();
@@ -39,12 +42,10 @@ ItemEditor::ItemEditor(QString id, QWidget *parent) :
 							 new QStandardItem(i.key()) <<
 							 new QStandardItem(i.value().toString()));
 		}
-
-		model->setHorizontalHeaderLabels(Constants::itemPropertyTableHeaders);
-		ui->propertiesView->setModel(model);
 	} else {
 		ui->nameEdit->setProperty("item_uuid", QUuid::createUuid().toString());
 	}
+    ui->propertiesView->setModel(model);
 	ui->propertiesView->verticalHeader()->setVisible(false);
 	ui->propertiesView->setWordWrap(true);
 	ui->propertiesView->setTextElideMode(Qt::ElideMiddle);
@@ -113,7 +114,7 @@ void ItemEditor::on_createProperty_clicked() {
 	QAbstractItemModel* model = ui->propertiesView->model();
 	QStandardItemModel* smodel = new QStandardItemModel();
 
-	smodel->setHorizontalHeaderLabels(propertyTableHeaders);
+    smodel->setHorizontalHeaderLabels(Constants::itemPropertyTableHeaders);
 
 	//model->rowCount is freaking gay
 	int rows;
