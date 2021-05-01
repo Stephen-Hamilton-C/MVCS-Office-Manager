@@ -310,12 +310,14 @@ void MainWindow::on_editorNew_clicked() {
 			itemEditorWindow = new ItemEditor();
 			itemEditorWindow->show();
 			itemEditorWindow->setWindowTitle("New Item");
+            break;
 		}
 		case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
 			//Make new inspection log appear
 			cardEditorWindow = new InspectionEditor();
 			cardEditorWindow->show();
 			cardEditorWindow->setWindowTitle("New Inspection Log");
+            break;
 		}
 	}
 }
