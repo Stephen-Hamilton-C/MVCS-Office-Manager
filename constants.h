@@ -24,7 +24,7 @@ namespace Constants {
 	/**
 	 * @brief The current version of the application
 	 */
-	const QString version = "DEV";
+    const QString version = "DEV";
 	/**
 	 * @brief The default name and extension that the data file is named
 	 */
@@ -41,7 +41,7 @@ namespace Constants {
 	/**
 	 * @brief The labels that show at the top of the supply item view
 	 */
-	const QStringList itemTableHeader {"UUID", "Name", "Count", "Properties"};
+    const QStringList itemTableHeader {"UUID", "Name", "Category", "Count", "Properties"};
 
 	/**
 	 * @brief The labels that show at the top of the properties view in the supply item editor

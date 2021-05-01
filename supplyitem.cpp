@@ -8,9 +8,10 @@
 */
 #include "supplyitem.h"
 
-SupplyItem::SupplyItem(QString uuid, QString name, int count, int lowCountThreshold, QVariantMap properties){
+SupplyItem::SupplyItem(QString uuid, QString name, QString category, int count, int lowCountThreshold, QVariantMap properties){
 	this->uuid = uuid;
     this->name = name;
+    this->category = category;
     this->count = count;
     this->lowCountThreshold = lowCountThreshold;
     this->properties = properties;
@@ -32,6 +33,10 @@ void SupplyItem::read(const QJsonObject& json) {
         name = json["item_name"].toString();
     }
 
+    if(json.contains("item_category") && json["item_category"].isString()){
+        category = json["item_category"].toString();
+    }
+
     if(json.contains("item_count") && json["item_count"].isDouble()){
         count = json["item_count"].toInt();
     }
@@ -49,6 +54,7 @@ void SupplyItem::read(const QJsonObject& json) {
 void SupplyItem::write(QJsonObject& json) const {
 	json["item_uuid"] = uuid;
     json["item_name"] = name;
+    json["item_category"] = category;
     json["item_count"] = count;
     json["item_lowCountThreshold"] = lowCountThreshold;
     json["item_properties"] = QJsonObject::fromVariantMap(properties);
@@ -62,5 +68,5 @@ QString SupplyItem::toString() const {
         propStr.append("{"+i.key()+", "+i.value().toString()+"}, ");
     }
     propStr.remove(propStr.length()-2, 2);
-	return uuid+", "+name+", "+QString::number(count)+", "+QString::number(lowCountThreshold)+", ["+propStr+"]";
+    return uuid+", "+name+", "+category+", "+QString::number(count)+", "+QString::number(lowCountThreshold)+", ["+propStr+"]";
 }

@@ -38,6 +38,8 @@ public:
 	 */
 	static QMap<QString, InspectionCard> insCards;
 
+    static QStringList itemCategories;
+
 	/**
 	 * @brief Reads all data from a QJsonObject and loads it into memory.
 	 * @param The JSON file, converted into a QJsonObject.

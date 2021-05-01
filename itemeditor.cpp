@@ -25,15 +25,21 @@ ItemEditor::ItemEditor(QString id, QWidget *parent) :
     QStandardItemModel* model = new QStandardItemModel();
     model->setHorizontalHeaderLabels(Constants::itemPropertyTableHeaders);
 
+    QStandardItemModel* catModel = new QStandardItemModel();
+    for(int i = 0; i < DataManager::itemCategories.count(); i++){
+        catModel->appendRow(new QStandardItem(DataManager::itemCategories[i]));
+    }
+    ui->categoryBox->setModel(catModel);
+
 	if(!id.isEmpty()){
 		this->id = id;
 		SupplyItem *item = &DataManager::items[id];
 
 		ui->nameEdit->setProperty("item_uuid", id);
 		ui->nameEdit->setText(item->name);
+        ui->categoryBox->setCurrentText(item->category);
 		ui->countBox->setValue(item->count);
 		ui->lowCountBox->setValue(item->lowCountThreshold);
-
 
 		QMapIterator<QString, QVariant> i(item->properties);
 		while(i.hasNext()){
@@ -44,7 +50,9 @@ ItemEditor::ItemEditor(QString id, QWidget *parent) :
 		}
 	} else {
 		ui->nameEdit->setProperty("item_uuid", QUuid::createUuid().toString());
+        ui->categoryBox->setCurrentText("Miscellaneous");
 	}
+
     ui->propertiesView->setModel(model);
 	ui->propertiesView->verticalHeader()->setVisible(false);
 	ui->propertiesView->setWordWrap(true);
@@ -92,6 +100,7 @@ void ItemEditor::on_buttonBox_accepted() {
 	if(id.isEmpty()){
 		SupplyItem item(ui->nameEdit->property("item_uuid").toString(),
 						ui->nameEdit->text(),
+                        ui->categoryBox->currentText(),
 						ui->countBox->value(),
 						ui->lowCountBox->value(),
 						properties);
@@ -101,12 +110,17 @@ void ItemEditor::on_buttonBox_accepted() {
 	} else {
 		SupplyItem* item = &DataManager::items[ui->nameEdit->property("item_uuid").toString()];
 		item->name = ui->nameEdit->text();
+        item->category = ui->categoryBox->currentText();
 		item->count = ui->countBox->value();
 		item->lowCountThreshold = ui->lowCountBox->value();
 		item->properties = properties;
 
 		MainWindow::getInstance()->showStatusMessage("Edited "+item->name+".");
 	}
+
+    if(!DataManager::itemCategories.contains(ui->categoryBox->currentText())){
+        DataManager::itemCategories.append(ui->categoryBox->currentText());
+    }
 
 	MainWindow::getInstance()->updateEditorView(MainWindow::EDITORTYPE::SUPPLY);
 	MainWindow::getInstance()->deleteItemEditor();

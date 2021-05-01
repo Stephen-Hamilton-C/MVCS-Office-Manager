@@ -12,6 +12,7 @@
 QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
 QMap<QString, SupplyItem> DataManager::items = QMap<QString, SupplyItem>();
 QMap<QString, InspectionCard> DataManager::insCards = QMap<QString, InspectionCard>();
+QStringList DataManager::itemCategories = QStringList();
 
 DataManager::DataManager() {
 
@@ -22,7 +23,8 @@ void DataManager::read(const QJsonObject &json){
     if(json.contains("cadets") && json["cadets"].isArray()){
 		//Read cadets array and store each cadet
         cadets.clear();
-        for(auto cadet : json["cadets"].toArray()){
+        for(int i = 0; i < json["cadets"].toArray().count(); i++){
+            auto cadet = json["cadets"].toArray()[i];
             Cadet newCadet;
             newCadet.read(cadet.toObject());
 			cadets.insert(newCadet.uuid, newCadet);
@@ -33,22 +35,28 @@ void DataManager::read(const QJsonObject &json){
     if(json.contains("supplyitems") && json["supplyitems"].isArray()){
 		//Read supply items array and store each item
         items.clear();
-        for(auto item : json["supplyitems"].toArray()){
+        for(int i = 0; i < json["supplyitems"].toArray().count(); i++){
+            auto item = json["supplyitems"].toArray()[i];
             SupplyItem newItem;
             newItem.read(item.toObject());
 			items.insert(newItem.uuid, newItem);
 			qDebug() << "Supply Item Read:" << newItem.toString();
+
+            if(!newItem.category.isEmpty() && !itemCategories.contains(newItem.category)){
+                itemCategories.append(newItem.category);
+            }
         }
     }
 
     if(json.contains("inspectioncards") && json["inspectioncards"].isArray()){
 		//Read inspection logs array and store each log
         insCards.clear();
-        for(auto card : json["inspectioncards"].toArray()){
+        for(int i = 0; i < json["inspectioncards"].toArray().count(); i++){
+            auto card = json["inspectioncards"].toArray()[i];
             InspectionCard newCard;
             newCard.read(card.toObject());
-			insCards.insert(newCard.uuid, newCard);
-			qDebug() << "Inspection Log Entry Read:" << newCard.toString();
+            insCards.insert(newCard.uuid, newCard);
+            qDebug() << "Inspection Log Entry Read:" << newCard.toString();
         }
     }
 

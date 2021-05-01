@@ -14,10 +14,24 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="2" colspan="3">
-    <widget class="QSpinBox" name="countBox"/>
+   <item row="5" column="4">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
    </item>
-   <item row="2" column="0" colspan="2">
+   <item row="0" column="2" colspan="3">
+    <widget class="QLineEdit" name="nameEdit">
+     <property name="placeholderText">
+      <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
     <widget class="QLabel" name="lowCountLabel">
      <property name="text">
       <string>Low Count Alert (-1 to disable):</string>
@@ -27,13 +41,16 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="4">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="5" column="0">
+    <widget class="QPushButton" name="createProperty">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     <property name="text">
+      <string>New Property</string>
      </property>
     </widget>
    </item>
@@ -47,16 +64,19 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="5">
+   <item row="4" column="0" colspan="5">
     <widget class="QTableView" name="propertiesView"/>
    </item>
-   <item row="2" column="2" colspan="3">
-    <widget class="QSpinBox" name="lowCountBox">
-     <property name="minimum">
-      <number>-1</number>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="deleteProperty">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="value">
-      <number>-1</number>
+     <property name="text">
+      <string>Delete Property</string>
      </property>
     </widget>
    </item>
@@ -70,15 +90,18 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="2" colspan="3">
-    <widget class="QLineEdit" name="nameEdit">
-     <property name="placeholderText">
-      <string>Name</string>
+   <item row="3" column="2" colspan="3">
+    <widget class="QSpinBox" name="lowCountBox">
+     <property name="minimum">
+      <number>-1</number>
+     </property>
+     <property name="value">
+      <number>-1</number>
      </property>
     </widget>
    </item>
-   <item row="5" column="0" colspan="5">
-    <widget class="QLabel" name="label">
+   <item row="6" column="0" colspan="5">
+    <widget class="QLabel" name="requiredFieldLabel">
      <property name="font">
       <font>
        <pointsize>6</pointsize>
@@ -90,29 +113,20 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QPushButton" name="createProperty">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="1" column="2" colspan="3">
+    <widget class="QSpinBox" name="countBox"/>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QLabel" name="categoryLabel">
      <property name="text">
-      <string>New Property</string>
+      <string>Category:</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QPushButton" name="deleteProperty">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Delete Property</string>
+   <item row="2" column="2" colspan="3">
+    <widget class="QComboBox" name="categoryBox">
+     <property name="editable">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -121,8 +135,11 @@
  <tabstops>
   <tabstop>nameEdit</tabstop>
   <tabstop>countBox</tabstop>
+  <tabstop>categoryBox</tabstop>
   <tabstop>lowCountBox</tabstop>
+  <tabstop>createProperty</tabstop>
   <tabstop>propertiesView</tabstop>
+  <tabstop>deleteProperty</tabstop>
  </tabstops>
  <resources/>
  <connections>

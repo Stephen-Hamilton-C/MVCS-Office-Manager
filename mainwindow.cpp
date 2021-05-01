@@ -94,6 +94,7 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 				model->appendRow(QList<QStandardItem*>() <<
 								 new QStandardItem(i.value().uuid) <<
 								 new QStandardItem(i.value().name) <<
+                                 new QStandardItem(i.value().category) << //This caused infinite recursion??
 								 new QStandardItem(QString::number(i.value().count)) <<
 								 new QStandardItem(propertiesStr));
 			}
