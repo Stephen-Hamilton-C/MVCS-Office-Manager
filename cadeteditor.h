@@ -11,6 +11,8 @@
 
 #include <QMainWindow>
 
+class MainWindow;
+
 namespace Ui {
 class CadetEditor;
 }
@@ -55,6 +57,11 @@ private:
 	 * @brief The UUID of a Cadet stored in `DataManager` to edit, or blank if creating a new Cadet.
 	 */
 	QString id = "";
+
+    /**
+     * @brief The MainWindow instance
+     */
+    MainWindow* mainWindow;
 };
 
 #endif // CADETEDITOR_H

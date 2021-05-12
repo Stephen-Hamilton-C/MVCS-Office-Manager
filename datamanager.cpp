@@ -16,6 +16,7 @@
 #include <QJsonArray>
 #include <QFile>
 
+//Initialize static vars
 QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
 QMap<QString, SupplyItem> DataManager::items = QMap<QString, SupplyItem>();
 QMap<QString, InspectionCard> DataManager::insCards = QMap<QString, InspectionCard>();
@@ -27,6 +28,7 @@ DataManager::DataManager() {
 
 void DataManager::read(const QJsonObject &json){
 
+    //Cadets
     if(json.contains("cadets") && json["cadets"].isArray()){
 		//Read cadets array and store each cadet
         cadets.clear();
@@ -39,6 +41,7 @@ void DataManager::read(const QJsonObject &json){
         }
     }
 
+    //Supply items
     if(json.contains("supplyitems") && json["supplyitems"].isArray()){
 		//Read supply items array and store each item
         items.clear();
@@ -49,12 +52,14 @@ void DataManager::read(const QJsonObject &json){
 			items.insert(newItem.uuid, newItem);
 			qDebug() << "Supply Item Read:" << newItem.toString();
 
+            //Populate item categories
             if(!newItem.category.isEmpty() && !itemCategories.contains(newItem.category)){
                 itemCategories.append(newItem.category);
             }
         }
     }
 
+    //Inspection cards
     if(json.contains("inspectioncards") && json["inspectioncards"].isArray()){
 		//Read inspection logs array and store each log
         insCards.clear();

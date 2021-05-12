@@ -18,6 +18,7 @@ CadetEditor::CadetEditor(QString id, QWidget *parent) :
     ui(new Ui::CadetEditor)
 {
     ui->setupUi(this);
+    mainWindow = MainWindow::getInstance();
 
 	//Setup gradeBox selections
 	ui->gradeBox->clear();
@@ -84,8 +85,9 @@ void CadetEditor::on_buttonBox_accepted() {
 		ui->lastNameEdit->setStyleSheet("");
 	}
 
+    //Show status message if required fields not filled
 	if(!valid){
-		MainWindow::getInstance()->showStatusMessage("Please fill required fields");
+        mainWindow->showStatusMessage("Please fill required fields");
 		return;
 	}
 
@@ -102,7 +104,8 @@ void CadetEditor::on_buttonBox_accepted() {
 					   ui->notesEdit->toPlainText());
 		DataManager::cadets.insert(newCadet.uuid, newCadet);
 
-		MainWindow::getInstance()->showStatusMessage("Created "+Cadet::getGradeStr(Cadet::GRADE(ui->gradeBox->currentIndex()))+" "+ui->lastNameEdit->text()+".");
+        //Show status message that the cadet was just created
+        mainWindow->showStatusMessage("Created "+Cadet::getGradeStr(Cadet::GRADE(ui->gradeBox->currentIndex()))+" "+ui->lastNameEdit->text()+".");
 	} else {
 		//Edit the existing cadet and update it with current values from the editor
 		Cadet* cadet = &DataManager::cadets[id];
@@ -115,14 +118,15 @@ void CadetEditor::on_buttonBox_accepted() {
 		cadet->flight = Constants::comboBox_Flight[ui->flightBox->currentText()];
 		cadet->notes = ui->notesEdit->toPlainText();
 
-		MainWindow::getInstance()->showStatusMessage("Edited "+cadet->getGradeStr()+" "+cadet->lastName+".");
+        //Show status message that the cadet was just edited
+        mainWindow->showStatusMessage("Edited "+cadet->getGradeStr()+" "+cadet->lastName+".");
 	}
 
 	//Refresh Cadets display and close editor window
-	MainWindow::getInstance()->updateEditorView(MainWindow::EDITORTYPE::CADET);
-	MainWindow::getInstance()->deleteCadetEditor();
+    mainWindow->updateEditorView(MainWindow::EDITORTYPE::CADET);
+    mainWindow->deleteCadetEditor();
 }
 
 void CadetEditor::on_buttonBox_rejected() {
-	MainWindow::getInstance()->deleteCadetEditor();
+    mainWindow->deleteCadetEditor();
 }

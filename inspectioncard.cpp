@@ -9,6 +9,8 @@
 #include "inspectioncard.h"
 #include "datamanager.h"
 
+#include <QJsonArray>
+
 InspectionCard::InspectionCard() {
     qDebug() << "Creating empty Inspection Card";
 }
@@ -87,40 +89,49 @@ void InspectionCard::read(const QJsonObject& json){
 		uuid = QUuid::createUuid().toString();
 	}
 
+    //UUID
 	if(json.contains("card_cadetUUID") && json["card_cadetUUID"].isString()){
 		cadetUUID = json["card_cadetUUID"].toString();
     }
 
+    //Phase
 	if(json.contains("card_cadetPhase") && json["card_cadetPhase"].isDouble()){
 		cadetPhaseAtInspect = json["card_cadetPhase"].toInt();
 	}
 
+    //Flight
 	if(json.contains("card_cadetFlight") && json["card_cadetFlight"].isDouble()){
 		cadetFlightAtInspect = Cadet::FLIGHT(json["card_cadetFlight"].toInt());
 	}
 
+    //Date
     if(json.contains("card_date") && json["card_date"].isArray()){
         //Year, Month, Day
         QJsonArray dateArray = json["card_date"].toArray();
         date = QDate(dateArray[0].toInt(), dateArray[1].toInt(), dateArray[2].toInt());
     }
 
+    //Appearance Score
     if(json.contains("card_appearanceScore") && json["card_appearanceScore"].isDouble()){
        appearanceScore = RATING(json["card_appearanceScore"].toInt());
     }
 
+    //Garments Score
     if(json.contains("card_garmentsScore") && json["card_garmentsScore"].isDouble()){
         garmentsScore = RATING(json["card_garmentsScore"].toInt());
     }
 
+    //Accountrements Score
     if(json.contains("card_accountrementsScore") && json["card_accountrementsScore"].isDouble()){
         accountrementsScore = RATING(json["card_accountrementsScore"].toInt());
     }
 
+    //Footwear Score
     if(json.contains("card_footwearScore") && json["card_footwearScore"].isDouble()){
         footwearScore = RATING(json["card_footwearScore"].toInt());
     }
 
+    //Bearing Score
     if(json.contains("card_bearingScore") && json["card_bearingScore"].isDouble()){
         bearingScore = RATING(json["card_bearingScore"].toInt());
     }
@@ -148,6 +159,7 @@ void InspectionCard::write(QJsonObject &json) const {
 }
 
 QString InspectionCard::toString(){
+    //UUID, name, appearance, garments, accountrements, footwear, bearing, total, overall
 	return  uuid+", "+cadetUUID+" ("+getCadet()->getFormattedName()+"), "+QString::number(appearanceScore)
 			+", "+QString::number(garmentsScore)+", "+QString::number(accountrementsScore)
 			+", "+QString::number(footwearScore)+", "+QString::number(bearingScore)

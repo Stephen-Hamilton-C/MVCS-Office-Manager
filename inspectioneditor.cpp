@@ -24,6 +24,7 @@ InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
 	//Setup cadetMap so cadets have a clean display name, yet can easily still find UUID from the formatted name.
 	cadetMap.clear();
 
+    //Generate the cadet combobox
 	cadetMap.insert("---Select One---", "");
 	QMapIterator<QString, Cadet> i(DataManager::cadets);
 	while(i.hasNext()){
@@ -31,11 +32,12 @@ InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
 		cadetMap.insert(i.value().getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST), i.key());
 	}
 
+    //Update combobox with the map
 	ui->cadetBox->clear();
 	ui->cadetBox->addItems(cadetMap.keys());
 
 	if(id.isEmpty()){ //If creating a new log
-        //Get last meeting day
+        //Set date selector to the last Thursday
         QDate date = QDate::currentDate();
         int dayOfWeek = date.dayOfWeek();
 
@@ -57,6 +59,7 @@ InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
 		ui->cadetBox->setCurrentText(card->getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
 		ui->dateEdit->setDate(card->date);
 
+        //Update radio buttons
 		setRadioCheck("appearance", card->appearanceScore);
 		setRadioCheck("garments", card->garmentsScore);
 		setRadioCheck("accountrements", card->accountrementsScore);

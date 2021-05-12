@@ -252,30 +252,37 @@ void Cadet::read(const QJsonObject& json) {
 		uuid = QUuid::createUuid().toString();
 	}
 
+    //CAP ID
     if(json.contains("cadet_capid") && json["cadet_capid"].isDouble()){
         capid = json["cadet_capid"].toInt();
     }
 
+    //Grade
     if(json.contains("cadet_grade") && json["cadet_grade"].isDouble()){
         grade = GRADE(json["cadet_grade"].toInt());
     }
 
+    //Rank
     if(json.contains("cadet_rank") && json["cadet_rank"].isDouble()){
         rank = RANK(json["cadet_rank"].toInt());
     }
 
+    //First name
 	if(json.contains("cadet_firstName") && json["cadet_firstName"].isString()){
         firstName = json["cadet_firstName"].toString();
     }
 
+    //Last name
 	if(json.contains("cadet_lastName") && json["cadet_lastName"].isString()){
         lastName = json["cadet_lastName"].toString();
     }
 
+    //Flight
     if(json.contains("cadet_flight") && json["cadet_flight"].isDouble()){
         flight = FLIGHT(json["cadet_flight"].toInt());
     }
 
+    //Notes
     if(json.contains("cadet_notes") && json["cadet_notes"].isString()){
         notes = json["cadet_notes"].toString();
     }
@@ -292,19 +299,24 @@ void Cadet::write(QJsonObject& json) const {
     json["cadet_notes"] = notes;
 }
 
-int Cadet::getPhase() const{
-    if(rank == RANK::AMN || rank == RANK::A1C || rank == RANK::SRA){
+int Cadet::getPhase() const {
+    if(rank == RANK::BASIC || rank == RANK::AMN || rank == RANK::A1C || rank == RANK::SRA){
+        //Phase 1: BASIC - SrA
         return 1;
     } else if(rank == RANK::SSGT || rank == RANK::TSGT || rank == RANK::MSGT || rank == RANK::SMSGT || rank == RANK::CMSGT){
+        //Phase 2: SSgt - CMSgt
         return 2;
     } else if(rank == RANK::LT2ND || rank == RANK::LT1ST){
+        //Phase 3: 2Lt - 1Lt
         return 3;
     } else if(rank == RANK::CAPT || rank == RANK::MAJ || rank == RANK::LTCOL || rank == RANK::COL){
+        //Phase 4: Capt - Col
         return 4;
     }
     return 1;
 }
 
 QString Cadet::toString() {
+    //UUID, CAP ID, Grade, Rank, First name, Last name, Flight, Notes
 	return uuid+", "+QString::number(capid)+", "+getGradeStr(grade)+", "+getRankStr(rank)+", "+firstName+", "+lastName+", "+getFlightStr(flight)+", "+notes;
 }
