@@ -34,8 +34,19 @@ InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
 	ui->cadetBox->addItems(cadetMap.keys());
 
 	if(id.isEmpty()){ //If creating a new log
-		//QOL: Maybe set it to the most recent Thursday?
-		ui->dateEdit->setDate(QDate::currentDate());
+        //Get last meeting day
+        QDate date = QDate::currentDate();
+        int dayOfWeek = date.dayOfWeek();
+
+        if(dayOfWeek > Constants::meetingDay){
+            //It's still the same week, go back to the day
+            date = date.addDays(Constants::meetingDay - dayOfWeek);
+        } else if(dayOfWeek < Constants::meetingDay) {
+            //It's a week later, go back a week and forward to the day
+            date = date.addDays(-7 + Constants::meetingDay - dayOfWeek);
+        }
+
+        ui->dateEdit->setDate(date);
 	} else if(DataManager::insCards.contains(id)){ //If editing an existing log
 		this->id = id;
 		InspectionCard* card = &DataManager::insCards[id];
