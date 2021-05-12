@@ -8,6 +8,13 @@
 */
 #include "datamanager.h"
 #include "constants.h"
+#include "supplyitem.h"
+#include "inspectioncard.h"
+
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QFile>
 
 QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
 QMap<QString, SupplyItem> DataManager::items = QMap<QString, SupplyItem>();

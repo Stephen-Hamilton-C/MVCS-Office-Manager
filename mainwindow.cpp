@@ -10,12 +10,14 @@
 #include "ui_mainwindow.h"
 #include "constants.h"
 #include "datamanager.h"
+#include "supplyitem.h"
+#include "inspectioncard.h"
+#include "cadeteditor.h"
+#include "itemeditor.h"
+#include "inspectioneditor.h"
 
-#include <QFile>
-#include <QJsonDocument>
 #include <QMessageBox>
 #include <QStandardItemModel>
-#include <QSortFilterProxyModel>
 
 MainWindow* MainWindow::ptrInstance = nullptr;
 

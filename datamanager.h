@@ -9,13 +9,13 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
 
-#include "cadet.h"
-#include "inspectioncard.h"
-#include "supplyitem.h"
+#include <QString>
 
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QFile>
+class Cadet;
+class InspectionCard;
+class SupplyItem;
+
+class QJsonObject;
 
 /**
  * @brief An interface between the program and the files that store the data for this application.

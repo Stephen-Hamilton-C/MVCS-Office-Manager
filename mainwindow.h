@@ -10,10 +10,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QTableView>
-#include "cadeteditor.h"
-#include "itemeditor.h"
-#include "inspectioneditor.h"
+
+class QItemSelectionModel;
+
+class CadetEditor;
+class ItemEditor;
+class InspectionEditor;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,12 +38,33 @@ public:
 		INSPECTIONLOGS
 	};
 
+    /**
+     * @brief Shows a message on the status bar
+     * @param message The message to display
+     * @param timeout The amount of time the message stays visible
+     */
 	void showStatusMessage(QString message, int timeout = 0);
+    /**
+     * @brief Refreshes the editor with a new data type
+     * @param editorType The information the editor is going to display
+     */
 	void updateEditorView(EDITORTYPE editorType);
+    /**
+     * @brief Refreshes the editor with the current data type
+     */
 	void updateEditorView();
 
+    /**
+     * @brief Closes the supply item editor, if present
+     */
 	void deleteItemEditor();
+    /**
+     * @brief Closes the cadet editor, if present
+     */
 	void deleteCadetEditor();
+    /**
+     * @brief Closes the inspection card editor, if present
+     */
 	void deleteCardEditor();
 
 	static MainWindow* getInstance(){
@@ -78,8 +101,18 @@ private:
 
 	static MainWindow *ptrInstance;
 
+    /**
+     * @brief Changes the index of the stacked widget
+     * @param stackIndex The index to switch to
+     * @param subTitle What to put in the window title when this view is shown
+     */
 	void changeView(int stackIndex, QString subTitle);
 
+    /**
+     * @brief Gets the UUID of the currently selected row from the editor
+     * @param selection The currently selected row
+     * @param id The variable to store the UUID
+     */
 	void getSelectedID(QItemSelectionModel *selection, QString &id) const;
 
 	CadetEditor* cadetEditorWindow = nullptr;

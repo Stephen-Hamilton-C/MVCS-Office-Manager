@@ -10,7 +10,6 @@
 #define ITEMEDITOR_H
 
 #include <QDialog>
-#include <supplyitem.h>
 
 namespace Ui {
 	class ItemEditor;

@@ -11,6 +11,7 @@
 #include "datamanager.h"
 #include "mainwindow.h"
 #include "constants.h"
+#include "supplyitem.h"
 
 #include <QStandardItemModel>
 

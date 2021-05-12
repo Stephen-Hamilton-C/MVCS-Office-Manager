@@ -9,7 +9,7 @@
 #ifndef INSPECTIONEDITOR_H
 #define INSPECTIONEDITOR_H
 
-#include "datamanager.h"
+#include "inspectioncard.h"
 
 #include <QDialog>
 

@@ -9,6 +9,7 @@
 #include "inspectioneditor.h"
 #include "ui_inspectioneditor.h"
 #include "mainwindow.h"
+#include "datamanager.h"
 #include "constants.h"
 
 InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
