@@ -17,6 +17,9 @@ namespace Ui {
 	class InspectionEditor;
 }
 
+/**
+ * @brief Contains UI logic for the inspection editor
+ */
 class InspectionEditor : public QDialog
 {
 	Q_OBJECT

@@ -30,6 +30,11 @@ namespace Constants {
 	 */
 	const QString defaultSaveFileName = "MVCS-Manager-Data.json";
 
+    /**
+     * @brief The day of the week the squadron meets up. 1 = Monday, 7 = Sunday
+     */
+    const int meetingDay = 4;
+
 	/**
 	 * @brief The labels that show at the top of the cadet view
 	 */

@@ -16,6 +16,9 @@ namespace Ui {
 	class ItemEditor;
 }
 
+/**
+ * @brief Contains UI logic for the supply item editor
+ */
 class ItemEditor : public QDialog
 {
 	Q_OBJECT
@@ -34,8 +37,15 @@ private slots:
 private:
 	Ui::ItemEditor *ui;
 
+    /**
+     * @brief Creates a QVariantMap from the properties UI
+     * @param properties The variable to store the map into
+     */
 	void constructPropertiesMap(QVariantMap &properties) const;
 
+    /**
+     * @brief The UUID of the ItemEditor
+     */
 	QString id;
 };
 

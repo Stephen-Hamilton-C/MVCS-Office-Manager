@@ -58,9 +58,9 @@ void CadetEditor::on_gradeBox_currentIndexChanged(int index) {
 	//Cadets and Senior Members have different ranks, so update the rankBox if the gradeBox is changed
 	ui->rankBox->clear();
     if(index == Cadet::GRADE::CADET){
-		ui->rankBox->addItems(Constants::comboBox_CadetRanks.keys());
+        ui->rankBox->addItems(Constants::comboBox_CadetRanks.keys());
     } else {
-		ui->rankBox->addItems(Constants::comboBox_SMRanks.keys());
+        ui->rankBox->addItems(Constants::comboBox_SMRanks.keys());
     }
 }
 

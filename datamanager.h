@@ -37,7 +37,9 @@ public:
 	 * @brief All the inspection logs that have been entered into the program, indexed by their UUID.
 	 */
 	static QMap<QString, InspectionCard> insCards;
-
+    /**
+     * @brief Item categories that were found from loaded items.
+     */
     static QStringList itemCategories;
 
 	/**

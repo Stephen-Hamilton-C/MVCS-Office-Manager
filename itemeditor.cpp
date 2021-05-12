@@ -77,6 +77,7 @@ void ItemEditor::constructPropertiesMap(QVariantMap &properties) const {
 	if(model == nullptr){
 		return;
 	}
+
 	for(int row = 0; row < model->rowCount(); row++){
 		QModelIndex propNameIndex = model->index(row, 0);
 		QModelIndex propValIndex = model->index(row, 1);
@@ -97,6 +98,7 @@ void ItemEditor::on_buttonBox_accepted() {
 
 	QVariantMap properties;
 	constructPropertiesMap(properties);
+
 	if(id.isEmpty()){
 		SupplyItem item(ui->nameEdit->property("item_uuid").toString(),
 						ui->nameEdit->text(),
