@@ -24,13 +24,13 @@ namespace Constants {
 	/**
 	 * @brief The current version of the application
 	 */
-    const QString version = "DEV";
+	const QString version = "Alpha-2105";
 	/**
 	 * @brief The default name and extension that the data file is named
 	 */
 	const QString defaultSaveFileName = "MVCS-Manager-Data.json";
 
-    /**
+	/**
      * @brief The day of the week the squadron meets up. 1 = Monday, 7 = Sunday
      */
     const int meetingDay = 4;
