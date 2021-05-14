@@ -55,3 +55,5 @@ RESOURCES += \
 
 DISTFILES += \
 	TODO.md
+
+RC_ICONS = imgs/MVCS-Office-Manager.ico
