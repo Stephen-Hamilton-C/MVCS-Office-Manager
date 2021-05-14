@@ -10,4 +10,8 @@ Needed and planned features will be placed into this file.
 - [x] Make date picker automatically default to last Thursday
 - [x] Dropdowns for new inspection are tiny compared to new cadet dropdowns
 - [x] Need tabbing for new inspection window
-- [] Try to put ranks in order in combo boxes
+- [x] Try to put ranks in order in combo boxes
+- [] Alphabetize the names for cadet selection in inspections
+- [] Add PT score entering
+- [] Add "save before quitting" 
+- [] Save as and load functionality
