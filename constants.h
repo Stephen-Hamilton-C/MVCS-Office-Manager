@@ -54,44 +54,86 @@ namespace Constants {
 	const QStringList itemPropertyTableHeaders { "Name", "Value" };
 
 	/**
+	  * @brief The display names for each cadet rank, in order.
+	  */
+	const QString cadetRankDisplayNames[] {
+		Cadet::getRankStr(Cadet::RANK::VISITOR),
+		Cadet::getRankStr(Cadet::RANK::BASIC),
+		Cadet::getRankStr(Cadet::RANK::AMN),
+		Cadet::getRankStr(Cadet::RANK::A1C),
+		Cadet::getRankStr(Cadet::RANK::SRA),
+		Cadet::getRankStr(Cadet::RANK::SSGT),
+		Cadet::getRankStr(Cadet::RANK::TSGT),
+		Cadet::getRankStr(Cadet::RANK::MSGT),
+		Cadet::getRankStr(Cadet::RANK::SMSGT),
+		Cadet::getRankStr(Cadet::RANK::CMSGT),
+		Cadet::getRankStr(Cadet::RANK::LT2ND),
+		Cadet::getRankStr(Cadet::RANK::LT1ST),
+		Cadet::getRankStr(Cadet::RANK::CAPT),
+		Cadet::getRankStr(Cadet::RANK::MAJ),
+		Cadet::getRankStr(Cadet::RANK::LTCOL),
+		Cadet::getRankStr(Cadet::RANK::COL),
+	};
+	/**
 	 * @brief The selections for a comboBox that lists cadet ranks
 	 */
 	const QMap<QString, Cadet::RANK> comboBox_CadetRanks {
-		{Cadet::getRankStr(Cadet::RANK::VISITOR), Cadet::RANK::VISITOR},
-		{Cadet::getRankStr(Cadet::RANK::BASIC), Cadet::RANK::BASIC},
-		{Cadet::getRankStr(Cadet::RANK::AMN), Cadet::RANK::AMN},
-		{Cadet::getRankStr(Cadet::RANK::A1C), Cadet::RANK::A1C},
-		{Cadet::getRankStr(Cadet::RANK::SRA), Cadet::RANK::SRA},
-		{Cadet::getRankStr(Cadet::RANK::SSGT), Cadet::RANK::SSGT},
-		{Cadet::getRankStr(Cadet::RANK::TSGT), Cadet::RANK::TSGT},
-		{Cadet::getRankStr(Cadet::RANK::MSGT), Cadet::RANK::MSGT},
-		{Cadet::getRankStr(Cadet::RANK::SMSGT), Cadet::RANK::SMSGT},
-		{Cadet::getRankStr(Cadet::RANK::CMSGT), Cadet::RANK::CMSGT},
-		{Cadet::getRankStr(Cadet::RANK::LT2ND), Cadet::RANK::LT2ND},
-		{Cadet::getRankStr(Cadet::RANK::LT1ST), Cadet::RANK::LT1ST},
-		{Cadet::getRankStr(Cadet::RANK::CAPT), Cadet::RANK::CAPT},
-		{Cadet::getRankStr(Cadet::RANK::MAJ), Cadet::RANK::MAJ},
-		{Cadet::getRankStr(Cadet::RANK::LTCOL), Cadet::RANK::LTCOL},
-		{Cadet::getRankStr(Cadet::RANK::COL), Cadet::RANK::COL}
+		{cadetRankDisplayNames[0], Cadet::RANK::VISITOR},
+		{cadetRankDisplayNames[1], Cadet::RANK::BASIC},
+		{cadetRankDisplayNames[2], Cadet::RANK::AMN},
+		{cadetRankDisplayNames[3], Cadet::RANK::A1C},
+		{cadetRankDisplayNames[4], Cadet::RANK::SRA},
+		{cadetRankDisplayNames[5], Cadet::RANK::SSGT},
+		{cadetRankDisplayNames[6], Cadet::RANK::TSGT},
+		{cadetRankDisplayNames[7], Cadet::RANK::MSGT},
+		{cadetRankDisplayNames[8], Cadet::RANK::SMSGT},
+		{cadetRankDisplayNames[9], Cadet::RANK::CMSGT},
+		{cadetRankDisplayNames[10], Cadet::RANK::LT2ND},
+		{cadetRankDisplayNames[11], Cadet::RANK::LT1ST},
+		{cadetRankDisplayNames[12], Cadet::RANK::CAPT},
+		{cadetRankDisplayNames[13], Cadet::RANK::MAJ},
+		{cadetRankDisplayNames[14], Cadet::RANK::LTCOL},
+		{cadetRankDisplayNames[15], Cadet::RANK::COL}
 	};
+
+	/**
+	  * @brief The display names for each SM rank, in order.
+	  */
+	const QString smRankDisplayNames[] {
+		Cadet::getRankStr(Cadet::RANK::VISITOR),
+		Cadet::getRankStr(Cadet::RANK::SM),
+		Cadet::getRankStr(Cadet::RANK::FO),
+		Cadet::getRankStr(Cadet::RANK::TFO),
+		Cadet::getRankStr(Cadet::RANK::SFO),
+		Cadet::getRankStr(Cadet::RANK::LT2ND),
+		Cadet::getRankStr(Cadet::RANK::LT1ST),
+		Cadet::getRankStr(Cadet::RANK::CAPT),
+		Cadet::getRankStr(Cadet::RANK::MAJ),
+		Cadet::getRankStr(Cadet::RANK::LTCOL),
+		Cadet::getRankStr(Cadet::RANK::COL),
+		Cadet::getRankStr(Cadet::RANK::BRIGGEN),
+		Cadet::getRankStr(Cadet::RANK::MAJGEN),
+	};
+
 	/**
 	 * @brief The selections for a comboBox that lists senior member ranks
 	 */
 	const QMap<QString, Cadet::RANK> comboBox_SMRanks {
-		{Cadet::getRankStr(Cadet::RANK::VISITOR), Cadet::RANK::VISITOR},
-		{Cadet::getRankStr(Cadet::RANK::SM), Cadet::RANK::SM},
-		{Cadet::getRankStr(Cadet::RANK::FO), Cadet::RANK::FO},
-		{Cadet::getRankStr(Cadet::RANK::TFO), Cadet::RANK::TFO},
-		{Cadet::getRankStr(Cadet::RANK::SFO), Cadet::RANK::SFO},
-		{Cadet::getRankStr(Cadet::RANK::LT2ND), Cadet::RANK::LT2ND},
-		{Cadet::getRankStr(Cadet::RANK::LT1ST), Cadet::RANK::LT1ST},
-		{Cadet::getRankStr(Cadet::RANK::CAPT), Cadet::RANK::CAPT},
-		{Cadet::getRankStr(Cadet::RANK::MAJ), Cadet::RANK::MAJ},
-		{Cadet::getRankStr(Cadet::RANK::LTCOL), Cadet::RANK::LTCOL},
-		{Cadet::getRankStr(Cadet::RANK::COL), Cadet::RANK::COL},
-		{Cadet::getRankStr(Cadet::RANK::BRIGGEN), Cadet::RANK::BRIGGEN},
-		{Cadet::getRankStr(Cadet::RANK::MAJGEN), Cadet::RANK::MAJGEN}
+		{smRankDisplayNames[0], Cadet::RANK::VISITOR},
+		{smRankDisplayNames[1], Cadet::RANK::SM},
+		{smRankDisplayNames[2], Cadet::RANK::FO},
+		{smRankDisplayNames[3], Cadet::RANK::TFO},
+		{smRankDisplayNames[4], Cadet::RANK::SFO},
+		{smRankDisplayNames[5], Cadet::RANK::LT2ND},
+		{smRankDisplayNames[6], Cadet::RANK::LT1ST},
+		{smRankDisplayNames[7], Cadet::RANK::CAPT},
+		{smRankDisplayNames[8], Cadet::RANK::MAJ},
+		{smRankDisplayNames[9], Cadet::RANK::LTCOL},
+		{smRankDisplayNames[10], Cadet::RANK::COL},
+		{smRankDisplayNames[11], Cadet::RANK::BRIGGEN},
+		{smRankDisplayNames[12], Cadet::RANK::MAJGEN}
 	};
+
 	/**
 	 * @brief The selections for a comboBox that lists flights
 	 */
