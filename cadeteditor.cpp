@@ -14,7 +14,7 @@
 #include "constants.h"
 
 CadetEditor::CadetEditor(QString id, QWidget *parent) :
-    QMainWindow(parent),
+	QDialog(parent),
     ui(new Ui::CadetEditor)
 {
     ui->setupUi(this);
@@ -59,9 +59,17 @@ void CadetEditor::on_gradeBox_currentIndexChanged(int index) {
 	//Cadets and Senior Members have different ranks, so update the rankBox if the gradeBox is changed
 	ui->rankBox->clear();
     if(index == Cadet::GRADE::CADET){
-        ui->rankBox->addItems(Constants::comboBox_CadetRanks.keys());
+		//I would add by the comboBox_CadetRanks keys constant, but the keys get alphabetically sorted.
+		//This makes selecting rank really awkward, so I had to put the rank display names into their own array.
+		//This keeps the order of the ranks.
+		for(int i = 0; i < 16; i++){
+			ui->rankBox->addItem(Constants::cadetRankDisplayNames[i]);
+		}
     } else {
-        ui->rankBox->addItems(Constants::comboBox_SMRanks.keys());
+		//Same as above, would've used comboBox_SMRanks keys constant, but they get alphabetically sorted.
+		for(int i = 0; i < 13; i++){
+			ui->rankBox->addItem(Constants::smRankDisplayNames[i]);
+		}
     }
 }
 
