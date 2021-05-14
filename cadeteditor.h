@@ -9,7 +9,7 @@
 #ifndef CADETEDITOR_H
 #define CADETEDITOR_H
 
-#include <QMainWindow>
+#include <QDialog>
 
 class MainWindow;
 
@@ -20,7 +20,7 @@ class CadetEditor;
 /**
  * @brief Contains UI logic for creating and editing CAP Cadets or Senior Members
  */
-class CadetEditor : public QMainWindow
+class CadetEditor : public QDialog
 {
     Q_OBJECT
 
