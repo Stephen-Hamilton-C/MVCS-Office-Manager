@@ -42,6 +42,8 @@ public:
      */
     static QStringList itemCategories;
 
+	static QString filePath;
+
 	/**
 	 * @brief Reads all data from a QJsonObject and loads it into memory.
 	 * @param The JSON file, converted into a QJsonObject.

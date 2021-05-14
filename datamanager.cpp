@@ -21,6 +21,7 @@ QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
 QMap<QString, SupplyItem> DataManager::items = QMap<QString, SupplyItem>();
 QMap<QString, InspectionCard> DataManager::insCards = QMap<QString, InspectionCard>();
 QStringList DataManager::itemCategories = QStringList();
+QString DataManager::filePath = Constants::defaultSaveFileName;
 
 DataManager::DataManager() {
 
@@ -117,7 +118,7 @@ void DataManager::write(QJsonObject &json) {
 void DataManager::readFromFile() {
 
 	//Prepare to write to file
-	QFile loadFile(Constants::defaultSaveFileName);
+	QFile loadFile(filePath);
 
     if(loadFile.open(QIODevice::ReadOnly)){
 		//Load it into a QJsonDocemunt and read
@@ -132,7 +133,7 @@ void DataManager::readFromFile() {
 void DataManager::writeToFile() {
 
 	//Prepare to save to file
-	QFile saveFile(Constants::defaultSaveFileName);
+	QFile saveFile(filePath);
 
     if(saveFile.open(QIODevice::WriteOnly)){
 		//Load data into a QJsonDocument and write the raw JSON to file
