@@ -11,7 +11,8 @@ Needed and planned features will be placed into this file.
 - [x] Dropdowns for new inspection are tiny compared to new cadet dropdowns
 - [x] Need tabbing for new inspection window
 - [x] Try to put ranks in order in combo boxes
-- [] Alphabetize the names for cadet selection in inspections
-- [] Add PT score entering
-- [] Add "save before quitting" 
-- [] Save as and load functionality
+- [ ] Alphabetize the names for cadet selection in inspections
+- [ ] Add PT score entering
+- [ ] Add "save before quitting" 
+- [ ] Save as and load functionality
+- [ ] Add prefixes to UUIDs for different datatypes
