@@ -16,3 +16,4 @@ Needed and planned features will be placed into this file.
 - [ ] Add "save before quitting" 
 - [ ] Save as and load functionality
 - [ ] Add prefixes to UUIDs for different datatypes
+- [ ] Add a changes.json and a manager for that file to show a history of inventory and cadet promotion
