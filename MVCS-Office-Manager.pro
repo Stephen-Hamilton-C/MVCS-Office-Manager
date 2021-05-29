@@ -54,6 +54,7 @@ RESOURCES += \
 	Resources.qrc
 
 DISTFILES += \
+	CHANGELOG.md
 	TODO.md
 
 RC_ICONS = imgs/MVCS-Office-Manager.ico
