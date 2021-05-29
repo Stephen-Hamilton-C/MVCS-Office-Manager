@@ -8,6 +8,7 @@
 ### Added
 - Categories to supply items
 - Tabbing for new inspection window
+- Timestamp to status messages
 
 ### Changed
 - Inspection entry date picker defaults to last Thursday
