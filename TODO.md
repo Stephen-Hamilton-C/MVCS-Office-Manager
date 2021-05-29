@@ -14,7 +14,7 @@ Needed and planned features will be placed into this file.
 - [x] Alphabetize the names for cadet selection in inspections
 - [ ] Add PT score entering
 - [x] Add "save before quitting"
-- [ ] Save as and load functionality
+- [x] Save as and load functionality
 - [ ] Add prefixes to UUIDs for different datatypes
 - [ ] Add a changes.json and a manager for that file to show a history of inventory and cadet promotion
 - [ ] Fix sorting category being reset on item edit, creation, or deletion
@@ -22,3 +22,5 @@ Needed and planned features will be placed into this file.
 - [ ] Fix count being organized by string and not by number (23 is smaller than 3)
 - [ ] Make a version string in each JSON file and make a converter class that converts the old version to the new version
 - [ ] Changes made indicator, then make the confirm dialog not appear if no changes were made
+- [ ] Pass MainWindow to children rather than make it singleton
+- [ ] Make DataManager automatically open last file if possible
