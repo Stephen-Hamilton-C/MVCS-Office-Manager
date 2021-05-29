@@ -7,11 +7,15 @@
  * C/2Lt Stephen Hamilton, Civil Air Patrol
 */
 #include "mainwindow.h"
+#include "constants.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
+	QCoreApplication::setApplicationName(Constants::name);
+	QCoreApplication::setApplicationVersion(Constants::version);
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
