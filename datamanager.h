@@ -10,6 +10,7 @@
 #define DATAMANAGER_H
 
 #include <QString>
+#include <QSettings>
 
 class Cadet;
 class InspectionCard;
@@ -58,11 +59,15 @@ public:
 	/**
 	 * @brief Converts a JSON file to a QJsonObject and then stores it.
 	 */
-    static void readFromFile();
+	static void readFromFile(const bool createIfNull = false);
 	/**
 	 * @brief Writes stored data out to a JSON file.
 	 */
     static void writeToFile();
+
+private:
+
+	QSettings settings;
 
 };
 

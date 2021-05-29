@@ -10,21 +10,28 @@
 #include "constants.h"
 #include "supplyitem.h"
 #include "inspectioncard.h"
+#include "mainwindow.h"
 
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QFile>
+#include <QMessageBox>
+#include <QDir>
+#include <QStandardPaths>
 
 //Initialize static vars
 QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
 QMap<QString, SupplyItem> DataManager::items = QMap<QString, SupplyItem>();
 QMap<QString, InspectionCard> DataManager::insCards = QMap<QString, InspectionCard>();
 QStringList DataManager::itemCategories = QStringList();
-QString DataManager::filePath = Constants::defaultSaveFileName;
+QString DataManager::filePath = QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + Constants::defaultSaveFileName);
 
 DataManager::DataManager() {
-
+	QString lastPath = settings.value("last-file").toString();
+	if(QFile::exists(lastPath)){
+		filePath = lastPath;
+	}
 }
 
 void DataManager::read(const QJsonObject &json){
@@ -115,7 +122,9 @@ void DataManager::write(QJsonObject &json) {
 
 }
 
-void DataManager::readFromFile() {
+void DataManager::readFromFile(const bool createIfNull) {
+
+	MainWindow::getInstance()->showStatusMessage("Loading...");
 
 	//Prepare to write to file
 	QFile loadFile(filePath);
@@ -126,11 +135,27 @@ void DataManager::readFromFile() {
         QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
 
         read(loadDoc.object());
-    }
+
+		MainWindow::getInstance()->showStatusMessage("Loaded from "+filePath);
+	} else if(createIfNull){
+		cadets.clear();
+		items.clear();
+		insCards.clear();
+		itemCategories.clear();
+
+		writeToFile();
+
+		MainWindow::getInstance()->showStatusMessage("Loaded from "+filePath);
+	} else {
+		QMessageBox::critical(MainWindow::getInstance(), "Unable to open", "An error occurred while trying to open file "+filePath);
+		MainWindow::getInstance()->showStatusMessage("Error occurred while opening file "+filePath);
+	}
 
 }
 
 void DataManager::writeToFile() {
+
+	MainWindow::getInstance()->showStatusMessage("Saving...");
 
 	//Prepare to save to file
 	QFile saveFile(filePath);
@@ -140,8 +165,11 @@ void DataManager::writeToFile() {
         QJsonObject saveObject;
         write(saveObject);
         saveFile.write(QJsonDocument(saveObject).toJson());
+
+		MainWindow::getInstance()->showStatusMessage("Saved to "+filePath);
     } else {
-		//TODO: Make an error dialog
+		QMessageBox::critical(MainWindow::getInstance(), "Unable to save", "An error occurred while trying to save to "+filePath);
+		MainWindow::getInstance()->showStatusMessage("Error occurred while saving to "+filePath);
     }
 
 }
