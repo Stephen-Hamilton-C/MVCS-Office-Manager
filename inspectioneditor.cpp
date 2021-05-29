@@ -29,7 +29,7 @@ InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
 	QMapIterator<QString, Cadet> i(DataManager::cadets);
 	while(i.hasNext()){
 		i.next();
-		cadetMap.insert(i.value().getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST), i.key());
+		cadetMap.insert(i.value().getFormattedName(Cadet::NAMEFORMAT::LASTFIRST), i.key());
 	}
 
     //Update combobox with the map
