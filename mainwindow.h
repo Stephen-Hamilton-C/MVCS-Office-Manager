@@ -32,6 +32,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+	void closeEvent(QCloseEvent *event);
+
 	enum EDITORTYPE {
 		CADET,
 		SUPPLY,

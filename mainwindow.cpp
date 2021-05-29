@@ -18,6 +18,7 @@
 
 #include <QMessageBox>
 #include <QStandardItemModel>
+#include <QCloseEvent>
 
 MainWindow* MainWindow::ptrInstance = nullptr;
 
@@ -39,6 +40,20 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event){
+	event->ignore();
+	QMessageBox::StandardButton response = QMessageBox::question(this, "Exit "+Constants::name, "Save before exiting?",
+																 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+
+	if(response == QMessageBox::Yes){
+		this->on_action_Save_triggered();
+	}
+
+	if(response != QMessageBox::Cancel){
+		event->accept();
+	}
 }
 
 void MainWindow::changeView(int stackIndex, QString subTitle){
@@ -326,6 +341,7 @@ void MainWindow::on_editorNew_clicked() {
 }
 
 void MainWindow::showStatusMessage(QString message, int timeout){
+	message = QTime::currentTime().toString("HH:mm") + " - " + message;
 	ui->statusBar->showMessage(message, timeout);
 }
 
