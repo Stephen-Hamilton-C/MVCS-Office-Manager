@@ -19,3 +19,4 @@ Needed and planned features will be placed into this file.
 - [ ] Add a changes.json and a manager for that file to show a history of inventory and cadet promotion
 - [ ] Fix sorting category being reset on item edit, creation, or deletion
 - [ ] Fix rows having whitespace on top and bottom unless it is reloaded twice
+- [ ] Fix count being organized by string and not by number (23 is smaller than 3)
