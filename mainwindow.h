@@ -97,6 +97,10 @@ private slots:
 
 	void on_editorView_doubleClicked(const QModelIndex &index);
 
+	void on_action_Load_triggered();
+
+	void on_actionSave_as_triggered();
+
 private:
 
 	Ui::MainWindow *ui;

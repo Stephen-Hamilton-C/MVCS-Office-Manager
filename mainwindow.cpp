@@ -16,6 +16,7 @@
 #include "itemeditor.h"
 #include "inspectioneditor.h"
 
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QStandardItemModel>
 #include <QCloseEvent>
@@ -34,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle(Constants::name);
     this->showMaximized();
 
-	DataManager::readFromFile();
+	DataManager::readFromFile(true);
 }
 
 MainWindow::~MainWindow()
@@ -309,9 +310,7 @@ void MainWindow::on_actionAbout_Qt_triggered() {
 }
 
 void MainWindow::on_action_Save_triggered() {
-	showStatusMessage("Saving...");
     DataManager::writeToFile();
-	showStatusMessage("Saved.");
 }
 
 void MainWindow::on_editorNew_clicked() {
@@ -347,4 +346,24 @@ void MainWindow::showStatusMessage(QString message, int timeout){
 
 void MainWindow::on_editorView_doubleClicked(const QModelIndex &index) {
 	on_editorEdit_clicked();
+}
+
+void MainWindow::on_action_Load_triggered()
+{
+	QString filePath = QFileDialog::getOpenFileName(this, "Open Data File", QString(), "JSON Files (*.json)");
+	if(!filePath.isEmpty()){
+		DataManager::filePath = filePath;
+		DataManager::readFromFile();
+
+		updateEditorView();
+	}
+}
+
+void MainWindow::on_actionSave_as_triggered()
+{
+	QString filePath = QFileDialog::getSaveFileName(this, "Save Data File", DataManager::filePath, "JSON Files (*.json)");
+	if(!filePath.isEmpty()){
+		DataManager::filePath = filePath;
+		DataManager::writeToFile();
+	}
 }
