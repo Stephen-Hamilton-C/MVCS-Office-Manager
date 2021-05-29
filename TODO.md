@@ -20,3 +20,4 @@ Needed and planned features will be placed into this file.
 - [ ] Fix sorting category being reset on item edit, creation, or deletion
 - [ ] Fix rows having whitespace on top and bottom unless it is reloaded twice
 - [ ] Fix count being organized by string and not by number (23 is smaller than 3)
+- [ ] Make a version string in each JSON file and make a converter class that converts the old version to the new version
