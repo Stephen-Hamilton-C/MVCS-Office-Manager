@@ -22,5 +22,5 @@ Needed and planned features will be placed into this file.
 - [ ] Fix count being organized by string and not by number (23 is smaller than 3)
 - [ ] Make a version string in each JSON file and make a converter class that converts the old version to the new version
 - [ ] Changes made indicator, then make the confirm dialog not appear if no changes were made
-- [ ] Pass MainWindow to children rather than make it singleton
+- [x] Pass MainWindow to children rather than make it singleton
 - [ ] Make DataManager automatically open last file if possible
