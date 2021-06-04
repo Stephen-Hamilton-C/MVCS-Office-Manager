@@ -12,11 +12,12 @@
 #include "datamanager.h"
 #include "constants.h"
 
-InspectionEditor::InspectionEditor(QString id, QWidget *parent) :
+InspectionEditor::InspectionEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	QDialog(parent),
 	ui(new Ui::InspectionEditor)
 {
 	ui->setupUi(this);
+	this->mainWindow = mainWindow;
 
 	//Setup flightBox selections
 	ui->flightBox->addItems(Constants::comboBox_Flight.keys());
@@ -119,7 +120,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 	//Is the date before today?
 	if(ui->dateEdit->date().toJulianDay() > QDate::currentDate().toJulianDay()){
 		ui->dateEdit->setStyleSheet("color: rgb(200, 0, 0);");
-		MainWindow::getInstance()->showStatusMessage("Date invalid: must be before today's date.");
+		mainWindow->showStatusMessage("Date invalid: must be before today's date.");
 		valid = false;
 	} else {
 		ui->dateEdit->setStyleSheet("");
@@ -183,7 +184,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 							);
 
 		DataManager::insCards.insert(card.uuid, card);
-		MainWindow::getInstance()->showStatusMessage("Created inspection log for "+card.getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
+		mainWindow->showStatusMessage("Created inspection log for "+card.getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
 	} else {
 		//Edit the existing inspection log and update it with current values from the editor
 		InspectionCard* card = &DataManager::insCards[id];
@@ -203,12 +204,12 @@ void InspectionEditor::on_buttonBox_accepted() {
 		card->footwearScore = getScoreFromRadio("footwear");
 		card->bearingScore = getScoreFromRadio("bearing");
 
-		MainWindow::getInstance()->showStatusMessage("Edited inspection log for "+card->getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
+		mainWindow->showStatusMessage("Edited inspection log for "+card->getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
 	}
 
 	//Refresh inspection log display and close editor window
-	MainWindow::getInstance()->updateEditorView(MainWindow::EDITORTYPE::INSPECTIONLOGS);
-	MainWindow::getInstance()->deleteCardEditor();
+	mainWindow->updateEditorView(MainWindow::EDITORTYPE::INSPECTIONLOGS);
+	mainWindow->deleteCardEditor();
 }
 
 void InspectionEditor::on_cadetBox_currentTextChanged(const QString &arg1) {

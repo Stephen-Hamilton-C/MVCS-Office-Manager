@@ -29,13 +29,13 @@ public:
 	 * @brief Creates a new CadetEditor window
 	 * @param The UUID of a Cadet to edit. Leave blank if creating a new Cadet.
 	 */
-	explicit CadetEditor(QString id = "", QWidget *parent = nullptr);
+	explicit CadetEditor(MainWindow *mainWindow, QWidget *parent = nullptr, QString id = "");
     ~CadetEditor();
 
 private slots:
 
 	/**
-	 * @brief Triggered when the member grade is changed
+	 * @brief Triggered when the member grade is ch anged
 	 * @param The new index of the gradeBox
 	 */
     void on_gradeBox_currentIndexChanged(int index);

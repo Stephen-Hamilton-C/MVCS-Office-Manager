@@ -69,10 +69,6 @@ public:
      */
 	void deleteCardEditor();
 
-	static MainWindow* getInstance(){
-		return ptrInstance;
-	}
-
 private slots:
 
     void on_actionCadets_triggered();
@@ -104,8 +100,6 @@ private slots:
 private:
 
 	Ui::MainWindow *ui;
-
-	static MainWindow *ptrInstance;
 
     /**
      * @brief Changes the index of the stacked widget

@@ -15,11 +15,12 @@
 
 #include <QStandardItemModel>
 
-ItemEditor::ItemEditor(QString id, QWidget *parent) :
+ItemEditor::ItemEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	QDialog(parent),
 	ui(new Ui::ItemEditor)
 {
 	ui->setupUi(this);
+	this->mainWindow = mainWindow;
 
 	qDebug() << "ID received:" << id;
 
@@ -92,7 +93,7 @@ void ItemEditor::constructPropertiesMap(QVariantMap &properties) const {
 
 void ItemEditor::on_buttonBox_accepted() {
 	if(ui->nameEdit->text().length() <= 0){
-		MainWindow::getInstance()->showStatusMessage("Please fill required fields");
+		mainWindow->showStatusMessage("Please fill required fields");
 		ui->nameEdit->setStyleSheet("color: rgb(200, 0, 0);");
 		return;
 	}
@@ -109,7 +110,7 @@ void ItemEditor::on_buttonBox_accepted() {
 						properties);
 		DataManager::items.insert(item.uuid, item);
 
-		MainWindow::getInstance()->showStatusMessage("Created "+item.name+".");
+		mainWindow->showStatusMessage("Created "+item.name+".");
 	} else {
 		SupplyItem* item = &DataManager::items[ui->nameEdit->property("item_uuid").toString()];
 		item->name = ui->nameEdit->text();
@@ -118,15 +119,15 @@ void ItemEditor::on_buttonBox_accepted() {
 		item->lowCountThreshold = ui->lowCountBox->value();
 		item->properties = properties;
 
-		MainWindow::getInstance()->showStatusMessage("Edited "+item->name+".");
+		mainWindow->showStatusMessage("Edited "+item->name+".");
 	}
 
     if(!DataManager::itemCategories.contains(ui->categoryBox->currentText())){
         DataManager::itemCategories.append(ui->categoryBox->currentText());
     }
 
-	MainWindow::getInstance()->updateEditorView(MainWindow::EDITORTYPE::SUPPLY);
-	MainWindow::getInstance()->deleteItemEditor();
+	mainWindow->updateEditorView(MainWindow::EDITORTYPE::SUPPLY);
+	mainWindow->deleteItemEditor();
 }
 
 void ItemEditor::on_createProperty_clicked() {
