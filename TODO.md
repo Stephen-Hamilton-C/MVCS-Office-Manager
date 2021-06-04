@@ -24,3 +24,4 @@ Needed and planned features will be placed into this file.
 - [ ] Changes made indicator, then make the confirm dialog not appear if no changes were made
 - [x] Pass MainWindow to children rather than make it singleton
 - [ ] Make DataManager automatically open last file if possible
+- [ ] Make an editor class and have the editors extend off it
