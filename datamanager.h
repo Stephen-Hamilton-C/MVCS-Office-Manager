@@ -15,6 +15,7 @@
 class Cadet;
 class InspectionCard;
 class SupplyItem;
+class MainWindow;
 
 class QJsonObject;
 
@@ -65,9 +66,13 @@ public:
 	 */
     static void writeToFile();
 
+	static void setMainWindow(MainWindow *value);
+
 private:
 
 	QSettings settings;
+
+	static MainWindow *mainWindow;
 
 };
 

@@ -13,12 +13,12 @@
 #include "mainwindow.h"
 #include "constants.h"
 
-CadetEditor::CadetEditor(QString id, QWidget *parent) :
+CadetEditor::CadetEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	QDialog(parent),
-    ui(new Ui::CadetEditor)
+	ui(new Ui::CadetEditor)
 {
     ui->setupUi(this);
-    mainWindow = MainWindow::getInstance();
+	this->mainWindow = mainWindow;
 
 	//Setup gradeBox selections
 	ui->gradeBox->clear();

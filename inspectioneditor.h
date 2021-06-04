@@ -13,6 +13,8 @@
 
 #include <QDialog>
 
+class MainWindow;
+
 namespace Ui {
 	class InspectionEditor;
 }
@@ -29,7 +31,7 @@ public:
 	 * @brief Creates a new InspectionEditor window
 	 * @param The UUID of an inspection log entry to edit. Leave blank if creating a new log entry.
 	 */
-	explicit InspectionEditor(QString id = "", QWidget *parent = nullptr);
+	explicit InspectionEditor(MainWindow *mainWindow, QWidget *parent = nullptr, QString id = "");
 	~InspectionEditor();
 
 private slots:
@@ -72,6 +74,8 @@ private:
 	 * @param radioName The name of the button set to confirm if one has been checked.
 	 */
 	bool radioHasScore(QString radioName);
+
+	MainWindow *mainWindow;
 };
 
 #endif // INSPECTIONEDITOR_H

@@ -21,17 +21,13 @@
 #include <QStandardItemModel>
 #include <QCloseEvent>
 
-MainWindow* MainWindow::ptrInstance = nullptr;
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-	if(ptrInstance != nullptr){
-		delete this;
-	}
-	ptrInstance = this;
     ui->setupUi(this);
+	DataManager::setMainWindow(this);
+
     this->setWindowTitle(Constants::name);
     this->showMaximized();
 
@@ -180,19 +176,19 @@ void MainWindow::on_editorEdit_clicked() {
 		switch(currentEditorType){
 			case MainWindow::EDITORTYPE::CADET: {
 				Cadet* cadet = &DataManager::cadets[id];
-				cadetEditorWindow = new CadetEditor(id);
+				cadetEditorWindow = new CadetEditor(this, this, id);
 				cadetEditorWindow->show();
 				cadetEditorWindow->setWindowTitle("Edit "+cadet->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
 				break;
 			}
 			case MainWindow::EDITORTYPE::SUPPLY: {
-				itemEditorWindow = new ItemEditor(id);
+				itemEditorWindow = new ItemEditor(this, this, id);
 				itemEditorWindow->show();
 				itemEditorWindow->setWindowTitle("Edit "+DataManager::items[id].name);
 				break;
 			}
 			case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
-				cardEditorWindow = new InspectionEditor(id);
+				cardEditorWindow = new InspectionEditor(this, this, id);
 				cardEditorWindow->show();
 				cardEditorWindow->setWindowTitle("Edit inspection log for "+DataManager::insCards[id].getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
 				break;
@@ -317,21 +313,21 @@ void MainWindow::on_editorNew_clicked() {
 	switch(currentEditorType){
 		case MainWindow::EDITORTYPE::CADET: {
 			//Make new cadet dialog appear
-			cadetEditorWindow = new CadetEditor();
+			cadetEditorWindow = new CadetEditor(this, this);
 			cadetEditorWindow->show();
 			cadetEditorWindow->setWindowTitle("New Cadet");
 			break;
 		}
 		case MainWindow::EDITORTYPE::SUPPLY: {
 			//Make new item dialog appear
-			itemEditorWindow = new ItemEditor();
+			itemEditorWindow = new ItemEditor(this, this);
 			itemEditorWindow->show();
 			itemEditorWindow->setWindowTitle("New Item");
             break;
 		}
 		case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
 			//Make new inspection log appear
-			cardEditorWindow = new InspectionEditor();
+			cardEditorWindow = new InspectionEditor(this, this);
 			cardEditorWindow->show();
 			cardEditorWindow->setWindowTitle("New Inspection Log");
             break;

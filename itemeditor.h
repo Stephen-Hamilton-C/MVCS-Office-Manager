@@ -11,6 +11,8 @@
 
 #include <QDialog>
 
+class MainWindow;
+
 namespace Ui {
 	class ItemEditor;
 }
@@ -23,7 +25,7 @@ class ItemEditor : public QDialog
 	Q_OBJECT
 
 public:
-	explicit ItemEditor(QString id = "", QWidget *parent = nullptr);
+	explicit ItemEditor(MainWindow *mainWindow, QWidget *parent = nullptr, QString id = "");
 	~ItemEditor();
 
 private slots:
@@ -46,6 +48,8 @@ private:
      * @brief The UUID of the ItemEditor
      */
 	QString id;
+
+	MainWindow *mainWindow;
 };
 
 #endif // ITEMEDITOR_H
