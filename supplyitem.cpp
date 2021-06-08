@@ -7,6 +7,7 @@
  * C/2Lt Stephen Hamilton, Civil Air Patrol
 */
 #include "supplyitem.h"
+#include "uuidgenerator.h"
 
 SupplyItem::SupplyItem(QString uuid, QString name, QString category, int count, int lowCountThreshold, QVariantMap properties){
 	this->uuid = uuid;
@@ -25,7 +26,7 @@ void SupplyItem::read(const QJsonObject& json) {
 	if(json.contains("item_uuid") && json["item_uuid"].isString()){
 		uuid = json["item_uuid"].toString();
 	} else {
-		uuid = QUuid::createUuid().toString();
+        uuid = UUIDGenerator::generateUUID(UUIDGenerator::ITEM);
 		json["item_uuid"] = uuid;
 	}
 

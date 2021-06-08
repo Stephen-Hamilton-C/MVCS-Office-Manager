@@ -12,6 +12,7 @@
 #include "datamanager.h"
 #include "mainwindow.h"
 #include "constants.h"
+#include "uuidgenerator.h"
 
 CadetEditor::CadetEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	QDialog(parent),
@@ -102,7 +103,7 @@ void CadetEditor::on_buttonBox_accepted() {
 	//If creating a new cadet
 	if(id.isEmpty()){
 		//Create a cadet object using a complete constructor and insert into the DataManager
-		Cadet newCadet(QUuid::createUuid().toString(),
+        Cadet newCadet(UUIDGenerator::generateUUID(UUIDGenerator::CADET),
 					   ui->idBox->text().toInt(),
 					   Cadet::GRADE(ui->gradeBox->currentIndex()),
 					   ui->gradeBox->currentIndex() == 0 ? Constants::comboBox_CadetRanks[ui->rankBox->currentText()] : Constants::comboBox_SMRanks[ui->rankBox->currentText()],

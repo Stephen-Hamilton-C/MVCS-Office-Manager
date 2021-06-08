@@ -8,6 +8,7 @@
 */
 #include "cadet.h"
 #include "datamanager.h"
+#include "uuidgenerator.h"
 
 Cadet::Cadet(QString uuid, int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes) {
 	this->uuid = uuid;
@@ -249,7 +250,7 @@ void Cadet::read(const QJsonObject& json) {
 	if(json.contains("cadet_uuid") && json["cadet_uuid"].isString()){
 		uuid = json["cadet_uuid"].toString();
 	} else {
-		uuid = QUuid::createUuid().toString();
+        uuid = UUIDGenerator::generateUUID(UUIDGenerator::CADET);
 	}
 
     //CAP ID
