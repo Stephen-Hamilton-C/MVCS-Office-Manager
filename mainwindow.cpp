@@ -30,8 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setWindowTitle(Constants::name);
     this->showMaximized();
-
-	DataManager::readFromFile(true);
 }
 
 MainWindow::~MainWindow()
@@ -40,6 +38,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::closeEvent(QCloseEvent *event){
+
 	event->ignore();
 	QMessageBox::StandardButton response = QMessageBox::question(this, "Exit "+Constants::name, "Save before exiting?",
 																 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
@@ -362,4 +361,10 @@ void MainWindow::on_actionSave_as_triggered()
 		DataManager::filePath = filePath;
 		DataManager::writeToFile();
 	}
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+    //TODO: Check if need to save and prompt before making new file
+    DataManager::newFile();
 }
