@@ -76,7 +76,7 @@ QString InspectionCard::getRatingString(RATING rating) const {
 }
 
 Cadet* InspectionCard::getCadet() const {
-	return &DataManager::cadets[cadetUUID];
+    return &DataManager::cadets[cadetUUID];
 }
 
 void InspectionCard::read(const QJsonObject& json){

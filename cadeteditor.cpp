@@ -34,10 +34,10 @@ CadetEditor::CadetEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	ui->idBox->setValidator(new QIntValidator(0, 999999, this));
 
 	//If editing an existing cadet
-	if(!id.isEmpty() && DataManager::cadets.contains(id)){
+    if(!id.isEmpty() && DataManager::cadets.contains(id)){
 		//Setup UI so it matches the current data for the cadet
 		this->id = id;
-		Cadet *cadet = &DataManager::cadets[id];
+        Cadet *cadet = &DataManager::cadets[id];
 		ui->idBox->setText(QString::number(cadet->capid));
 
 		ui->gradeBox->setCurrentIndex(cadet->grade);
@@ -111,13 +111,13 @@ void CadetEditor::on_buttonBox_accepted() {
 					   ui->lastNameEdit->text(),
 					   Constants::comboBox_Flight[ui->flightBox->currentText()],
 					   ui->notesEdit->toPlainText());
-		DataManager::cadets.insert(newCadet.uuid, newCadet);
+        DataManager::cadets.insert(newCadet.uuid, newCadet);
 
         //Show status message that the cadet was just created
         mainWindow->showStatusMessage("Created "+Cadet::getGradeStr(Cadet::GRADE(ui->gradeBox->currentIndex()))+" "+ui->lastNameEdit->text()+".");
 	} else {
 		//Edit the existing cadet and update it with current values from the editor
-		Cadet* cadet = &DataManager::cadets[id];
+        Cadet* cadet = &DataManager::cadets[id];
 		cadet->capid = ui->idBox->text().toInt();
 		cadet->grade = Cadet::GRADE(ui->gradeBox->currentIndex());
 		cadet->rank = cadet->grade == Cadet::GRADE::CADET ? Constants::comboBox_CadetRanks[ui->rankBox->currentText()] :
@@ -130,6 +130,8 @@ void CadetEditor::on_buttonBox_accepted() {
         //Show status message that the cadet was just edited
         mainWindow->showStatusMessage("Edited "+cadet->getGradeStr()+" "+cadet->lastName+".");
 	}
+
+    DataManager::setDirty();
 
 	//Refresh Cadets display and close editor window
     mainWindow->updateEditorView(MainWindow::EDITORTYPE::CADET);

@@ -208,6 +208,8 @@ void InspectionEditor::on_buttonBox_accepted() {
 		mainWindow->showStatusMessage("Edited inspection log for "+card->getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
 	}
 
+    DataManager::setDirty();
+
 	//Refresh inspection log display and close editor window
 	mainWindow->updateEditorView(MainWindow::EDITORTYPE::INSPECTIONLOGS);
 	mainWindow->deleteCardEditor();

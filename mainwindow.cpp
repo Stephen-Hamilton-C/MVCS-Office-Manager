@@ -55,7 +55,6 @@ void MainWindow::closeEvent(QCloseEvent *event){
 void MainWindow::changeView(int stackIndex, QString subTitle){
 	bool goHome = ui->stackedWidget->currentIndex() == stackIndex && this->windowTitle() == Constants::name+" - "+subTitle;
     ui->stackedWidget->setCurrentIndex(goHome ? 0 : stackIndex);
-    this->setWindowTitle(Constants::name+(goHome ? "" : " - "+subTitle));
 }
 
 void MainWindow::updateEditorView(){
@@ -257,7 +256,15 @@ void MainWindow::deleteCardEditor(){
 	if(cardEditorWindow != nullptr){
 		delete cardEditorWindow;
 		cardEditorWindow = nullptr;
-	}
+    }
+}
+
+void MainWindow::setDirty(const bool dirty)
+{
+    dataDirty = dirty;
+
+    QString dirtyMarker = dirty ? "*" : "";
+    this->setWindowTitle(Constants::name + " - " + DataManager::filePath + dirtyMarker);
 }
 
 void MainWindow::on_actionCadets_triggered() {
@@ -357,6 +364,13 @@ void MainWindow::on_action_Load_triggered()
 void MainWindow::on_actionSave_as_triggered()
 {
 	QString filePath = QFileDialog::getSaveFileName(this, "Save Data File", DataManager::filePath, "JSON Files (*.json)");
+
+    //Automatically add .json extension
+    QString extension = filePath.right(5);
+    if(extension.toLower() != ".json"){
+        filePath += ".json";
+    }
+
 	if(!filePath.isEmpty()){
 		DataManager::filePath = filePath;
 		DataManager::writeToFile();
@@ -366,5 +380,11 @@ void MainWindow::on_actionSave_as_triggered()
 void MainWindow::on_actionNew_triggered()
 {
     //TODO: Check if need to save and prompt before making new file
+    if(dataDirty){
+        on_actionSave_as_triggered();
+    }
+
     DataManager::newFile();
+
+    updateEditorView();
 }
