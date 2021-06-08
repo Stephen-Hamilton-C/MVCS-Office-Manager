@@ -1,8 +1,11 @@
 #include "dataconverter.h"
 #include "datamanager.h"
 #include "constants.h"
+#include "uuidgenerator.h"
 
 #include <QJsonArray>
+
+//MAKE A UUID GENERATOR
 
 DataConverter::DataConverter()
 {
@@ -23,13 +26,15 @@ void DataConverter::convert(QJsonObject &json)
 
     switch(jsonVersion){
         case 0: {
+            //Update to new UUID pattern
+
             if(json.contains("cadets") && json["cadets"].isArray()){
                 QJsonArray cadets = json["cadets"].toArray();
                 for(int i = 0; i < cadets.count(); i++){
                     QJsonObject cadet = cadets[i].toObject();
                     if(cadet.contains("cadet_uuid") && cadet["cadet_uuid"].isString()){
                         QString uuid = cadet["cadet_uuid"].toString();
-                        uuid = "manager::cadet::"+uuid;
+                        uuid = UUIDGenerator::generateUUID(UUIDGenerator::CADET, uuid);
 
                         cadet["cadet_uuid"] = uuid;
                     }
@@ -46,7 +51,7 @@ void DataConverter::convert(QJsonObject &json)
                     QJsonObject item = items[i].toObject();
                     if(item.contains("item_uuid") && item["item_uuid"].isString()){
                         QString uuid = item["item_uuid"].toString();
-                        uuid = "manager::item::"+uuid;
+                        uuid = UUIDGenerator::generateUUID(UUIDGenerator::ITEM, uuid);
 
                         item["item_uuid"] = uuid;
                     }
@@ -63,14 +68,14 @@ void DataConverter::convert(QJsonObject &json)
                     QJsonObject card = cards[i].toObject();
                     if(card.contains("card_uuid") && card["card_uuid"].isString()){
                         QString uuid = card["card_uuid"].toString();
-                        uuid = "manager::card::"+uuid;
+                        uuid = UUIDGenerator::generateUUID(UUIDGenerator::CARD, uuid);
 
                         card["card_uuid"] = uuid;
                     }
 
                     if(card.contains("card_cadetUUID") && card["card_cadetUUID"].isString()){
                         QString uuid = card["card_cadetUUID"].toString();
-                        uuid = "manager::cadet::"+uuid;
+                        uuid = UUIDGenerator::generateUUID(UUIDGenerator::CADET, uuid);
 
                         card["card_cadetUUID"] = uuid;
                     }

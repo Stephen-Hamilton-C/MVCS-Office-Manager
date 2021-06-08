@@ -25,10 +25,10 @@ namespace Constants {
 	 * @brief The current version of the application
 	 */
 	const QString version = "Alpha-2105";
+    const int jsonVersion = 1;
 	/**
 	 * @brief The default name and extension that the data file is named
 	 */
-
 	const QString defaultSaveFileName = "MVCS-Manager-Data.json";
 
 	/**
