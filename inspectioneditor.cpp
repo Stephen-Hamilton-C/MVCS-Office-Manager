@@ -11,6 +11,7 @@
 #include "mainwindow.h"
 #include "datamanager.h"
 #include "constants.h"
+#include "uuidgenerator.h"
 
 InspectionEditor::InspectionEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	QDialog(parent),
@@ -173,7 +174,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 	//If creating a new inspection log entry
 	if(id.isEmpty()){
 		//Create an inspection log object using a complete constructor and insert into the DataManager
-		InspectionCard card(QUuid::createUuid().toString(),
+        InspectionCard card(UUIDGenerator::generateUUID(UUIDGenerator::CARD),
 							cadetMap[ui->cadetBox->currentText()],
 							ui->dateEdit->date(),
 							getScoreFromRadio("appearance"),

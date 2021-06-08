@@ -95,6 +95,10 @@ private slots:
 
 	void on_action_Load_triggered();
 
+    void on_actionNew_triggered();
+
+public slots:
+
 	void on_actionSave_as_triggered();
 
 private:

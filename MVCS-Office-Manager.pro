@@ -18,6 +18,7 @@ CONFIG += c++11
 SOURCES += \
     cadet.cpp \
     cadeteditor.cpp \
+    dataconverter.cpp \
     datamanager.cpp \
     inspectioncard.cpp \
     inspectioneditor.cpp \
@@ -25,18 +26,21 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     supplyitem.cpp \
+    uuidgenerator.cpp \
     verticallabel.cpp
 
 HEADERS += \
     cadet.h \
     cadeteditor.h \
     constants.h \
+    dataconverter.h \
     datamanager.h \
     inspectioncard.h \
     inspectioneditor.h \
     itemeditor.h \
     mainwindow.h \
     supplyitem.h \
+    uuidgenerator.h \
     verticallabel.h
 
 FORMS += \
@@ -54,7 +58,7 @@ RESOURCES += \
 	Resources.qrc
 
 DISTFILES += \
-	CHANGELOG.md
+	CHANGELOG.md \
 	TODO.md
 
 RC_ICONS = imgs/MVCS-Office-Manager.ico

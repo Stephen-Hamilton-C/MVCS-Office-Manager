@@ -8,6 +8,7 @@
 */
 #include "inspectioncard.h"
 #include "datamanager.h"
+#include "uuidgenerator.h"
 
 #include <QJsonArray>
 
@@ -86,7 +87,7 @@ void InspectionCard::read(const QJsonObject& json){
 	if(json.contains("card_uuid") && json["card_uuid"].isString()){
 		uuid = json["card_uuid"].toString();
 	} else {
-		uuid = QUuid::createUuid().toString();
+        uuid = UUIDGenerator::generateUUID(UUIDGenerator::CARD);
 	}
 
     //UUID

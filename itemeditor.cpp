@@ -12,6 +12,7 @@
 #include "mainwindow.h"
 #include "constants.h"
 #include "supplyitem.h"
+#include "uuidgenerator.h"
 
 #include <QStandardItemModel>
 
@@ -51,7 +52,7 @@ ItemEditor::ItemEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 							 new QStandardItem(i.value().toString()));
 		}
 	} else {
-		ui->nameEdit->setProperty("item_uuid", QUuid::createUuid().toString());
+        ui->nameEdit->setProperty("item_uuid", UUIDGenerator::generateUUID(UUIDGenerator::ITEM));
         ui->categoryBox->setCurrentText("Miscellaneous");
 	}
 
