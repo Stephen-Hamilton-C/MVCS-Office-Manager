@@ -11,6 +11,7 @@
 #include "supplyitem.h"
 #include "inspectioncard.h"
 #include "mainwindow.h"
+#include "dataconverter.h"
 
 #include <QJsonObject>
 #include <QJsonDocument>
@@ -25,17 +26,18 @@ QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
 QMap<QString, SupplyItem> DataManager::items = QMap<QString, SupplyItem>();
 QMap<QString, InspectionCard> DataManager::insCards = QMap<QString, InspectionCard>();
 QStringList DataManager::itemCategories = QStringList();
-QString DataManager::filePath = QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + Constants::defaultSaveFileName);
+QString DataManager::filePath = "";
 MainWindow *DataManager::mainWindow = nullptr;
 
-DataManager::DataManager() {
-	QString lastPath = settings.value("last-file").toString();
-	if(QFile::exists(lastPath)){
-		filePath = lastPath;
-	}
-}
+void DataManager::read(QJsonObject json){
 
-void DataManager::read(const QJsonObject &json){
+    if(!json.contains("version")){
+        json["version"] = 0;
+    }
+
+    while(json["version"].toInt() < Constants::jsonVersion){
+        DataConverter::convert(json);
+    }
 
     //Cadets
     if(json.contains("cadets") && json["cadets"].isArray()){
@@ -121,9 +123,10 @@ void DataManager::write(QJsonObject &json) {
 	//Set the QJsonObject to the main QJsonObject that will be written to file
     json["inspectioncards"] = jCards;
 
+    json["version"] = Constants::jsonVersion;
 }
 
-void DataManager::readFromFile(const bool createIfNull) {
+void DataManager::readFromFile() {
 
 	mainWindow->showStatusMessage("Loading...");
 
@@ -138,15 +141,6 @@ void DataManager::readFromFile(const bool createIfNull) {
         read(loadDoc.object());
 
 		mainWindow->showStatusMessage("Loaded from "+filePath);
-	} else if(createIfNull){
-		cadets.clear();
-		items.clear();
-		insCards.clear();
-		itemCategories.clear();
-
-		writeToFile();
-
-		mainWindow->showStatusMessage("Loaded from "+filePath);
 	} else {
 		QMessageBox::critical(mainWindow, "Unable to open", "An error occurred while trying to open file "+filePath);
 		mainWindow->showStatusMessage("Error occurred while opening file "+filePath);
@@ -157,6 +151,11 @@ void DataManager::readFromFile(const bool createIfNull) {
 void DataManager::writeToFile() {
 
 	mainWindow->showStatusMessage("Saving...");
+
+    if(filePath.length() == 0){
+        mainWindow->on_actionSave_as_triggered();
+        return;
+    }
 
 	//Prepare to save to file
 	QFile saveFile(filePath);
@@ -169,10 +168,18 @@ void DataManager::writeToFile() {
 
 		mainWindow->showStatusMessage("Saved to "+filePath);
     } else {
-		QMessageBox::critical(mainWindow, "Unable to save", "An error occurred while trying to save to "+filePath);
-		mainWindow->showStatusMessage("Error occurred while saving to "+filePath);
+        mainWindow->on_actionSave_as_triggered();
+        return;
     }
 
+}
+
+void DataManager::newFile(){
+    filePath = "";
+    cadets.clear();
+    items.clear();
+    insCards.clear();
+    itemCategories.clear();
 }
 
 void DataManager::setMainWindow(MainWindow *value)
