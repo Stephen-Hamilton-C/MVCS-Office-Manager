@@ -69,6 +69,8 @@ public:
      */
 	void deleteCardEditor();
 
+    void setDirty(const bool dirty);
+
 private slots:
 
     void on_actionCadets_triggered();
@@ -124,5 +126,7 @@ private:
 	InspectionEditor*  cardEditorWindow = nullptr;
 
 	EDITORTYPE currentEditorType;
+
+    bool dataDirty = false;
 };
 #endif // MAINWINDOW_H

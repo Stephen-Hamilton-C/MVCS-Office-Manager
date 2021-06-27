@@ -127,6 +127,8 @@ void ItemEditor::on_buttonBox_accepted() {
         DataManager::itemCategories.append(ui->categoryBox->currentText());
     }
 
+    DataManager::setDirty();
+
 	mainWindow->updateEditorView(MainWindow::EDITORTYPE::SUPPLY);
 	mainWindow->deleteItemEditor();
 }

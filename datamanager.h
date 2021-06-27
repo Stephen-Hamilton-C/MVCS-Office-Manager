@@ -26,54 +26,56 @@ class DataManager {
 
 public:
 
-	/**
-	 * @brief All the cadets that have been entered into the program, indexed by their UUID.
-	 */
-	static QMap<QString, Cadet> cadets;
-	/**
-	 * @brief All the supply items that have been entered into the program, indexed by their UUID.
-	 */
-	static QMap<QString, SupplyItem> items;
-	/**
-	 * @brief All the inspection logs that have been entered into the program, indexed by their UUID.
-	 */
-	static QMap<QString, InspectionCard> insCards;
+    /**
+     * @brief All the cadets that have been entered into the program, indexed by their UUID.
+     */
+    static QMap<QString, Cadet> cadets;
+    /**
+     * @brief All the supply items that have been entered into the program, indexed by their UUID.
+     */
+    static QMap<QString, SupplyItem> items;
+    /**
+     * @brief All the inspection logs that have been entered into the program, indexed by their UUID.
+     */
+    static QMap<QString, InspectionCard> insCards;
     /**
      * @brief Item categories that were found from loaded items.
      */
     static QStringList itemCategories;
 
-	static QString filePath;
+    static QString filePath;
 
-	/**
-	 * @brief Reads all data from a QJsonObject and loads it into memory.
-	 * @param The JSON file, converted into a QJsonObject.
-	 */
+    /**
+     * @brief Reads all data from a QJsonObject and loads it into memory.
+     * @param The JSON file, converted into a QJsonObject.
+     */
     static void read(QJsonObject json);
-	/**
-	 * @brief Converts data from memory to a QJsonObject to be written to a file.
-	 * @param The QJsonObject, to be converted into a file later.
-	 */
+    /**
+     * @brief Converts data from memory to a QJsonObject to be written to a file.
+     * @param The QJsonObject, to be converted into a file later.
+     */
     static void write(QJsonObject& json);
 
-	/**
-	 * @brief Converts a JSON file to a QJsonObject and then stores it.
-	 */
+    /**
+     * @brief Converts a JSON file to a QJsonObject and then stores it.
+     */
     static void readFromFile();
-	/**
-	 * @brief Writes stored data out to a JSON file.
-	 */
+    /**
+     * @brief Writes stored data out to a JSON file.
+     */
     static void writeToFile();
 
     static void newFile();
 
-	static void setMainWindow(MainWindow *value);
+    static void setMainWindow(MainWindow *value);
+
+    static void setDirty();
 
 private:
 
-	QSettings settings;
+    QSettings settings;
 
-	static MainWindow *mainWindow;
+    static MainWindow *mainWindow;
 
 };
 
