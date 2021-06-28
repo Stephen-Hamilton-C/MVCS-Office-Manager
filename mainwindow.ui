@@ -161,8 +161,16 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="supplyPage">
-       <layout class="QGridLayout" name="gridLayout_2"/>
+      <widget class="QWidget" name="scoresPage">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Scores</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="inspectionsPage">
        <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -215,7 +223,18 @@
     <addaction name="action_About"/>
     <addaction name="actionAbout_Qt"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="actionCadets"/>
+    <addaction name="actionSupply"/>
+    <addaction name="actionInspections"/>
+    <addaction name="actionFlights_Staff"/>
+    <addaction name="actionScores"/>
+   </widget>
    <addaction name="menu_Save"/>
+   <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
@@ -251,50 +270,6 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionCadets">
-   <property name="text">
-    <string>Cadets</string>
-   </property>
-   <property name="toolTip">
-    <string>(F1) View and manage Cadets and Senior Members</string>
-   </property>
-   <property name="shortcut">
-    <string>F1</string>
-   </property>
-  </action>
-  <action name="actionSupply">
-   <property name="text">
-    <string>Supply Items</string>
-   </property>
-   <property name="toolTip">
-    <string>(F2) View and manage squadron supply items</string>
-   </property>
-   <property name="shortcut">
-    <string>F2</string>
-   </property>
-  </action>
-  <action name="actionInspections">
-   <property name="text">
-    <string>Inspections</string>
-   </property>
-   <property name="toolTip">
-    <string>(F3) Look at inspection entries</string>
-   </property>
-   <property name="shortcut">
-    <string>F3</string>
-   </property>
-  </action>
-  <action name="actionFlights_Staff">
-   <property name="text">
-    <string>Flights &amp;&amp; Staff</string>
-   </property>
-   <property name="toolTip">
-    <string>(F4) Manage flights and their structure</string>
-   </property>
-   <property name="shortcut">
-    <string>F4</string>
-   </property>
-  </action>
   <action name="action_About">
    <property name="text">
     <string>&amp;About</string>
@@ -303,17 +278,6 @@
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About &amp;Qt</string>
-   </property>
-  </action>
-  <action name="actionScores">
-   <property name="text">
-    <string>Scores</string>
-   </property>
-   <property name="toolTip">
-    <string>(F5) Scores</string>
-   </property>
-   <property name="shortcut">
-    <string>F5</string>
    </property>
   </action>
   <action name="actionSave_as">
@@ -332,6 +296,78 @@
     <string>Ctrl+N</string>
    </property>
   </action>
+  <actiongroup name="Views">
+   <action name="actionCadets">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Cadets</string>
+    </property>
+    <property name="toolTip">
+     <string>(F1) View and manage Cadets and Senior Members</string>
+    </property>
+    <property name="shortcut">
+     <string>F1</string>
+    </property>
+   </action>
+   <action name="actionSupply">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Supply Items</string>
+    </property>
+    <property name="toolTip">
+     <string>(F2) View and manage squadron supply items</string>
+    </property>
+    <property name="shortcut">
+     <string>F2</string>
+    </property>
+   </action>
+   <action name="actionInspections">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Inspections</string>
+    </property>
+    <property name="toolTip">
+     <string>(F3) Look at inspection entries</string>
+    </property>
+    <property name="shortcut">
+     <string>F3</string>
+    </property>
+   </action>
+   <action name="actionFlights_Staff">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Flights &amp;&amp; Staff</string>
+    </property>
+    <property name="toolTip">
+     <string>(F4) Manage flights and their structure</string>
+    </property>
+    <property name="shortcut">
+     <string>F4</string>
+    </property>
+   </action>
+   <action name="actionScores">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Scores</string>
+    </property>
+    <property name="toolTip">
+     <string>(F5) Scores</string>
+    </property>
+    <property name="shortcut">
+     <string>F5</string>
+    </property>
+   </action>
+  </actiongroup>
  </widget>
  <resources>
   <include location="Resources.qrc"/>
