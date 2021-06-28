@@ -25,7 +25,7 @@
 QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
 QMap<QString, SupplyItem> DataManager::items = QMap<QString, SupplyItem>();
 QMap<QString, InspectionCard> DataManager::insCards = QMap<QString, InspectionCard>();
-QStringList DataManager::itemCategories = QStringList();
+QSet<QString> DataManager::itemCategories = QSet<QString>();
 QString DataManager::filePath = "";
 MainWindow *DataManager::mainWindow = nullptr;
 
@@ -65,7 +65,7 @@ void DataManager::read(QJsonObject json){
 
             //Populate item categories
             if(!newItem.category.isEmpty() && !itemCategories.contains(newItem.category)){
-                itemCategories.append(newItem.category);
+                itemCategories.insert(newItem.category);
             }
         }
     }
