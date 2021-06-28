@@ -21,7 +21,7 @@ Needed and planned features will be placed into this file.
 - [ ] Fix rows having whitespace on top and bottom unless it is reloaded twice
 - [ ] Fix count being organized by string and not by number (23 is smaller than 3)
 - [x] Make a version string in each JSON file and make a converter class that converts the old version to the new version
-- [ ] Changes made indicator, then make the confirm dialog not appear if no changes were made
+- [x] Changes made indicator, then make the confirm dialog not appear if no changes were made
 - [x] Pass MainWindow to children rather than make it singleton
 - [ ] Make DataManager automatically open last file if possible
 - [ ] Make an editor class and have the editors extend off it
