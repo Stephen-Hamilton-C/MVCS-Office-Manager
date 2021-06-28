@@ -99,6 +99,8 @@ private slots:
 
     void on_actionNew_triggered();
 
+    void on_actionScores_triggered();
+
 public slots:
 
 	void on_actionSave_as_triggered();
@@ -112,7 +114,7 @@ private:
      * @param stackIndex The index to switch to
      * @param subTitle What to put in the window title when this view is shown
      */
-	void changeView(int stackIndex, QString subTitle);
+    void changeView(int stackIndex);
 
     /**
      * @brief Gets the UUID of the currently selected row from the editor
