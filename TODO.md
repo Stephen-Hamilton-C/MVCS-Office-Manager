@@ -23,11 +23,11 @@ Needed and planned features will be placed into this file.
 - [x] Pass MainWindow to children rather than make it singleton
 - [ ] Make DataManager automatically open last file if possible
 - [ ] Make an editor class and have the editors extend off it
-- [ ] Make header indicating what category editor is open
+- [x] Make header indicating what category editor is open
 - [ ] User configuration, independant of the data JSON. Use this to make persistent columns
 - [ ] Remove trailing newline in supply item properties
 - [ ] When creating new item, suggest editing an existing item if name already exists
-- [ ] Remove "back to logo" when selecting the same screen
+- [x] Remove "back to logo" when selecting the same screen
 - [ ] Requisition entry, automatically removes one count from an item
 - [x] See if sets exist in C++ or Qt, and store categories in a set
 - [ ] Remove context help from windows
