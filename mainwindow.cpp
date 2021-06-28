@@ -38,18 +38,20 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::closeEvent(QCloseEvent *event){
+    if(dataDirty){
+        event->ignore();
 
-	event->ignore();
-	QMessageBox::StandardButton response = QMessageBox::question(this, "Exit "+Constants::name, "Save before exiting?",
-																 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        QMessageBox::StandardButton response = QMessageBox::question(this, "Exit "+Constants::name, "Save before exiting?",
+                                                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 
-	if(response == QMessageBox::Yes){
-		this->on_action_Save_triggered();
-	}
+        if(response == QMessageBox::Yes){
+            this->on_action_Save_triggered();
+        }
 
-	if(response != QMessageBox::Cancel){
-		event->accept();
-	}
+        if(response != QMessageBox::Cancel){
+            event->accept();
+        }
+    }
 }
 
 void MainWindow::changeView(int stackIndex, QString subTitle){
