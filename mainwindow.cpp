@@ -54,9 +54,8 @@ void MainWindow::closeEvent(QCloseEvent *event){
     }
 }
 
-void MainWindow::changeView(int stackIndex, QString subTitle){
-	bool goHome = ui->stackedWidget->currentIndex() == stackIndex && this->windowTitle() == Constants::name+" - "+subTitle;
-    ui->stackedWidget->setCurrentIndex(goHome ? 0 : stackIndex);
+void MainWindow::changeView(int stackIndex){
+    ui->stackedWidget->setCurrentIndex(stackIndex);
 }
 
 void MainWindow::updateEditorView(){
@@ -270,28 +269,33 @@ void MainWindow::setDirty(const bool dirty)
 }
 
 void MainWindow::on_actionCadets_triggered() {
-	changeView(1, "Cadets");
+    changeView(1);
 	updateEditorView(MainWindow::EDITORTYPE::CADET);
 	deleteItemEditor();
 	deleteCardEditor();
 }
 
 void MainWindow::on_actionSupply_triggered() {
-	changeView(1, "Supply");
+    changeView(1);
 	updateEditorView(MainWindow::EDITORTYPE::SUPPLY);
 	deleteCadetEditor();
 	deleteCardEditor();
 }
 
 void MainWindow::on_actionInspections_triggered() {
-	changeView(1, "Inspection Logs");
+    changeView(1);
 	updateEditorView(MainWindow::EDITORTYPE::INSPECTIONLOGS);
 	deleteCadetEditor();
 	deleteItemEditor();
 }
 
 void MainWindow::on_actionFlights_Staff_triggered() {
-    changeView(4, "Flights & Staff");
+    changeView(4);
+}
+
+void MainWindow::on_actionScores_triggered()
+{
+    changeView(2);
 }
 
 const QString aboutHTML =
