@@ -8,6 +8,15 @@ Change::Change()
 
 }
 
+Change::Change(QString objectUUID, QString uuid, QString property, QVariant value, QDate date)
+{
+    this->objectUUID = objectUUID;
+    this->uuid = uuid;
+    this->property = property;
+    this->value = value;
+    this->date = date;
+}
+
 void Change::read(const QJsonObject &json)
 {
     if(json.contains("change_objectUUID") && json["change_objectUUID"].isString()){

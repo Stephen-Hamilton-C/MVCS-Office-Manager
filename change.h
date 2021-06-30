@@ -9,6 +9,7 @@ class Change
 {
 public:
     Change();
+    Change(QString objectUUID, QString uuid, QString property, QVariant value, QDate date);
 
     /**
      * @brief The UUID of the object this goes to
