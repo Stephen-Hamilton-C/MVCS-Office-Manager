@@ -145,10 +145,7 @@ void InspectionCard::write(QJsonObject &json) const {
 	json["card_cadetFlight"] = cadetFlightAtInspect;
 
 	//Convert the QDate into a year, month, day array
-	QJsonArray dateArray;
-    dateArray.append(date.year());
-    dateArray.append(date.month());
-    dateArray.append(date.day());
+    QJsonArray dateArray { date.year(), date.month(), date.day() };
     json["card_date"] = dateArray;
 
     json["card_appearanceScore"] = appearanceScore;
