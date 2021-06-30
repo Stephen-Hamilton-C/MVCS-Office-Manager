@@ -18,6 +18,8 @@ CONFIG += c++11
 SOURCES += \
     cadet.cpp \
     cadeteditor.cpp \
+    change.cpp \
+    changesmanager.cpp \
     dataconverter.cpp \
     datamanager.cpp \
     inspectioncard.cpp \
@@ -32,6 +34,8 @@ SOURCES += \
 HEADERS += \
     cadet.h \
     cadeteditor.h \
+    change.h \
+    changesmanager.h \
     constants.h \
     dataconverter.h \
     datamanager.h \
