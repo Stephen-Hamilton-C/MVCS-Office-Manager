@@ -12,7 +12,8 @@ public:
         STANDARD,
         CADET,
         ITEM,
-        CARD
+        CARD,
+        CHANGE
     };
 
     static QString generateUUID(IDType idType = IDType::STANDARD, QString uuid = "");
