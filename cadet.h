@@ -9,14 +9,18 @@
 #ifndef CADET_H
 #define CADET_H
 
+#include <item.h>
+
 #include <QJsonObject>
 #include <QString>
 
 /**
  * @brief Holds all data related to a single CAP Cadet or Senior Member
  */
-class Cadet {
+class Cadet: public Item {
 public:
+
+    void changeMade() override;
 
     enum GRADE {
 		CADET = 0,
@@ -101,10 +105,7 @@ public:
 		GRADEFIRSTLAST
     };
 
-	/**
-	 * @brief The identifier used in the `DataManager` that indexes this member
-	 */
-	QString uuid;
+    //QString uuid;
     int capid;
 	/**
 	 * @brief Cadet or Senior Member

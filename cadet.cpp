@@ -9,6 +9,24 @@
 #include "cadet.h"
 #include "datamanager.h"
 #include "uuidgenerator.h"
+#include "changesmanager.h"
+
+void Cadet::changeMade()
+{
+    ChangesManager::createSnapshot(
+                this->uuid,
+                UUIDGenerator::generateUUID(UUIDGenerator::IDType::CHANGE),
+                QMap<QString, QVariant>{
+                    {"capid", this->capid},
+                    {"grade", this->grade},
+                    {"rank", this->rank},
+                    {"firstName", this->firstName},
+                    {"lastName", this->lastName},
+                    {"flight", this->flight}
+                },
+                QDate::currentDate()
+                );
+}
 
 Cadet::Cadet(QString uuid, int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes) {
 	this->uuid = uuid;
