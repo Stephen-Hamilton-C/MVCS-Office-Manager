@@ -16,6 +16,11 @@ InspectionCard::InspectionCard() {
     qDebug() << "Creating empty Inspection Card";
 }
 
+void InspectionCard::takeSnapshot()
+{
+    qDebug() << "Inspection logs should not change";
+}
+
 InspectionCard::InspectionCard(QString uuid, QString cadetUUID, QDate date,
 							   RATING appearanceScore, RATING garmentsScore, RATING accountrementsScore, RATING footwearScore, RATING bearingScore) {
 	this->uuid = uuid;

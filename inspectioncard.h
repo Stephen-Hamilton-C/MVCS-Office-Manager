@@ -20,6 +20,8 @@
 class InspectionCard: public Item {
 public:
 
+    void takeSnapshot() override;
+
 	/**
 	 * @brief The three possible ratings a section can have.
 	 * NEEDSIMPROVEMENT: A score of 0.
