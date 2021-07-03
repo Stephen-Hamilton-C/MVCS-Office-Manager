@@ -54,11 +54,11 @@ void DataManager::read(QJsonObject json){
     }
 
     //Supply items
-    if(json.contains("items") && json["items"].isArray()){
+    if(json.contains("supplyitems") && json["supplyitems"].isArray()){
         //Read supply items array and store each item
         supplyItems.clear();
-        for(int i = 0; i < json["items"].toArray().count(); i++){
-            QJsonValue supplyItem = json["items"].toArray()[i];
+        for(int i = 0; i < json["supplyitems"].toArray().count(); i++){
+            QJsonValue supplyItem = json["supplyitems"].toArray()[i];
             SupplyItem newItem;
             newItem.read(supplyItem.toObject());
             supplyItems.insert(newItem.uuid, newItem);
@@ -111,7 +111,7 @@ void DataManager::write(QJsonObject &json) {
         jItems.append(itemJson);
     }
     //Set the QJsonObject to the main QJsonObject that will be written to file
-    json["items"] = jItems;
+    json["supplyitems"] = jItems;
 
     //Convert inspection logs to a QJsonObject
     QJsonArray jCards;

@@ -52,8 +52,8 @@ void DataConverter::convert(QJsonObject &json)
                 json["cadets"] = cadets;
             }
 
-            if(json.contains("items") && json["items"].isArray()){
-                QJsonArray supplyItems = json["items"].toArray();
+            if(json.contains("supplyitems") && json["supplyitems"].isArray()){
+                QJsonArray supplyItems = json["supplyitems"].toArray();
                 for(int i = 0; i < supplyItems.count(); i++){
                     QJsonObject supplyItem = supplyItems[i].toObject();
                     if(supplyItem.contains("item_uuid") && supplyItem["item_uuid"].isString()){
@@ -66,7 +66,7 @@ void DataConverter::convert(QJsonObject &json)
                     supplyItems[i] = supplyItem;
                 }
 
-                json["items"] = supplyItems;
+                json["supplyitems"] = supplyItems;
             }
 
             if(json.contains("inspectioncards") && json["inspectioncards"].isArray()){
