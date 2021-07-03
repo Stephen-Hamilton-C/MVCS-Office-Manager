@@ -19,11 +19,8 @@ void Cadet::takeSnapshot()
                 this->uuid,
                 UUIDGenerator::generateUUID(UUIDGenerator::IDType::CHANGE),
                 QMap<QString, QVariant>{
-                    {"capid", this->capid},
                     {"grade", this->grade},
                     {"rank", this->rank},
-                    {"firstName", this->firstName},
-                    {"lastName", this->lastName},
                     {"flight", this->flight}
                 },
                 QDate::currentDate().addDays(_day)

@@ -27,8 +27,6 @@ void SupplyItem::takeSnapshot()
                 this->uuid,
                 UUIDGenerator::generateUUID(UUIDGenerator::IDType::CHANGE),
                 QMap<QString, QVariant>{
-                    {"name", this->name},
-                    {"category", this->category},
                     {"count", this->count},
                     {"lowCountThreshold", this->lowCountThreshold}
                 },
