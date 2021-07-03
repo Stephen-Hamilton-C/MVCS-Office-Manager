@@ -9,25 +9,32 @@
 #ifndef SUPPLYITEM_H
 #define SUPPLYITEM_H
 
+#include "item.h"
+
 #include <QJsonObject>
 
-class SupplyItem {
+class SupplyItem: public Item {
 public:
+
+    void takeSnapshot() override;
 
     SupplyItem();
     SupplyItem(QString uuid, QString name, QString category, int count, int lowCountThreshold = 0, QVariantMap properties = QVariantMap());
 
-	QString uuid;
     QString name;
     QString category = "Miscellaneous";
     int count;
     int lowCountThreshold;
     QVariantMap properties;
 
-    void read(const QJsonObject& json);
-    void write(QJsonObject& json) const;
+    void read(const QJsonObject& json) override;
+    void write(QJsonObject& json) const override;
 
 	QString toString() const;
+
+private:
+
+    static int _day;
 
 };
 

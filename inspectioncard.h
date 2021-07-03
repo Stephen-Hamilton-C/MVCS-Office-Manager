@@ -9,6 +9,7 @@
 #ifndef INSPECTIONCARD_H
 #define INSPECTIONCARD_H
 
+#include "item.h"
 #include "cadet.h"
 
 #include <QJsonObject>
@@ -16,7 +17,7 @@
 /**
  * @brief Holds all data related to a single Inspection Log Entry
  */
-class InspectionCard {
+class InspectionCard: public Item {
 public:
 
 	/**
@@ -41,10 +42,6 @@ public:
 				   RATING appearanceScore, RATING garmentsScore, RATING accountrementsScore, RATING footwearScore, RATING bearingScore);
     InspectionCard();
 
-	/**
-	 * @brief The identifier used in the `DataManager` that indexes this member.
-	 */
-	QString uuid;
 	/**
 	 * @brief The identifier of the cadet that received this inspection.
 	 */
@@ -102,17 +99,21 @@ public:
 	 * @brief Sets all variables to values read from the QJsonObject, if they exist, supplied by the `DataManager`.
 	 * @param A reference to a QJsonObject read from a file.
 	 */
-	void read(const QJsonObject& json);
+    void read(const QJsonObject& json) override;
 	/**
 	 * @brief Writes all variables to a QJsonObject to be written to a file later by the `DataManager`.
 	 * @param A reference to a QJsonObject that is to be written to a file.
 	 */
-	void write(QJsonObject& json) const;
+    void write(QJsonObject& json) const override;
 
 	/**
 	 * @brief Debug purposes.
 	 */
     QString toString();
+
+private:
+
+    static int _day;
 
 };
 
