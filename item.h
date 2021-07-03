@@ -3,9 +3,11 @@
 
 #endif // ITEM_H
 
+#include "serializable.h"
+
 #include <QString>
 
-class Item {
+class Item: public Serializable {
 public:
 
     virtual void changeMade() = 0;
