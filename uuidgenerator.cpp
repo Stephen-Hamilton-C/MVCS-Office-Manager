@@ -25,7 +25,7 @@ QString UUIDGenerator::generateUUID(IDType idType, QString uuid)
             return "manager::"+uuid;
         case IDType::CADET:
             return "manager::cadet::"+uuid;
-        case IDType::ITEM:
+        case IDType::SUPPLY:
             return "manager::item::"+uuid;
         case IDType::CARD:
             return "manager::card::"+uuid;

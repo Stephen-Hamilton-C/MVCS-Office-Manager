@@ -39,7 +39,7 @@ public:
      */
     static QMap<QString, InspectionCard> insCards;
     /**
-     * @brief Item categories that were found from loaded items.
+     * @brief Supply item categories that were found from loaded items.
      */
     static QSet<QString> supplyCategories;
 

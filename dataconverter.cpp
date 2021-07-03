@@ -12,7 +12,6 @@ DataConverter::DataConverter()
 
 }
 
-//TODO: Completely redesign this thing oml
 void DataConverter::convert(QJsonObject &json)
 {
     int jsonVersion = 0;
@@ -45,21 +44,21 @@ void DataConverter::convert(QJsonObject &json)
                 json["cadets"] = cadets;
             }
 
-            if(json.contains("supplyitems") && json["supplyitems"].isArray()){
-                QJsonArray items = json["supplyitems"].toArray();
-                for(int i = 0; i < items.count(); i++){
-                    QJsonObject item = items[i].toObject();
-                    if(item.contains("item_uuid") && item["item_uuid"].isString()){
-                        QString uuid = item["item_uuid"].toString();
-                        uuid = UUIDGenerator::generateUUID(UUIDGenerator::ITEM, uuid);
+            if(json.contains("items") && json["items"].isArray()){
+                QJsonArray supplyItems = json["items"].toArray();
+                for(int i = 0; i < supplyItems.count(); i++){
+                    QJsonObject supplyItem = supplyItems[i].toObject();
+                    if(supplyItem.contains("item_uuid") && supplyItem["item_uuid"].isString()){
+                        QString uuid = supplyItem["item_uuid"].toString();
+                        uuid = UUIDGenerator::generateUUID(UUIDGenerator::SUPPLY, uuid);
 
-                        item["item_uuid"] = uuid;
+                        supplyItem["item_uuid"] = uuid;
                     }
 
-                    items[i] = item;
+                    supplyItems[i] = supplyItem;
                 }
 
-                json["supplyitems"] = items;
+                json["items"] = supplyItems;
             }
 
             if(json.contains("inspectioncards") && json["inspectioncards"].isArray()){

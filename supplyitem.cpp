@@ -23,11 +23,11 @@ SupplyItem::SupplyItem(){
 }
 
 void SupplyItem::read(const QJsonObject& json) {
-	if(json.contains("item_uuid") && json["item_uuid"].isString()){
-		uuid = json["item_uuid"].toString();
+    if(json.contains("item_uuid") && json["item_uuid"].isString()){
+        uuid = json["item_uuid"].toString();
 	} else {
-        uuid = UUIDGenerator::generateUUID(UUIDGenerator::ITEM);
-		json["item_uuid"] = uuid;
+        uuid = UUIDGenerator::generateUUID(UUIDGenerator::SUPPLY);
+        json["item_uuid"] = uuid;
 	}
 
     if(json.contains("item_name") && json["item_name"].isString()){
@@ -53,7 +53,7 @@ void SupplyItem::read(const QJsonObject& json) {
 }
 
 void SupplyItem::write(QJsonObject& json) const {
-	json["item_uuid"] = uuid;
+    json["item_uuid"] = uuid;
     json["item_name"] = name;
     json["item_category"] = category;
     json["item_count"] = count;

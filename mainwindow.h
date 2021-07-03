@@ -14,7 +14,7 @@
 class QItemSelectionModel;
 
 class CadetEditor;
-class ItemEditor;
+class SupplyEditor;
 class InspectionEditor;
 
 QT_BEGIN_NAMESPACE
@@ -124,7 +124,7 @@ private:
 	void getSelectedID(QItemSelectionModel *selection, QString &id) const;
 
 	CadetEditor* cadetEditorWindow = nullptr;
-	ItemEditor* itemEditorWindow = nullptr;
+    SupplyEditor* supplyEditorWindow = nullptr;
 	InspectionEditor*  cardEditorWindow = nullptr;
 
 	EDITORTYPE currentEditorType;

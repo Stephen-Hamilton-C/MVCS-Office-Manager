@@ -11,7 +11,7 @@ public:
     enum IDType {
         STANDARD,
         CADET,
-        ITEM,
+        SUPPLY,
         CARD,
         CHANGE
     };

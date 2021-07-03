@@ -44,7 +44,7 @@ void DataManager::read(QJsonObject json){
         //Read cadets array and store each cadet
         cadets.clear();
         for(int i = 0; i < json["cadets"].toArray().count(); i++){
-            auto cadet = json["cadets"].toArray()[i];
+            QJsonValue cadet = json["cadets"].toArray()[i];
             Cadet newCadet;
             newCadet.read(cadet.toObject());
             cadets.insert(newCadet.uuid, newCadet);
@@ -53,17 +53,17 @@ void DataManager::read(QJsonObject json){
     }
 
     //Supply items
-    if(json.contains("supplyitems") && json["supplyitems"].isArray()){
+    if(json.contains("items") && json["items"].isArray()){
         //Read supply items array and store each item
         supplyItems.clear();
-        for(int i = 0; i < json["supplyitems"].toArray().count(); i++){
-            auto item = json["supplyitems"].toArray()[i];
+        for(int i = 0; i < json["items"].toArray().count(); i++){
+            QJsonValue supplyItem = json["items"].toArray()[i];
             SupplyItem newItem;
-            newItem.read(item.toObject());
+            newItem.read(supplyItem.toObject());
             supplyItems.insert(newItem.uuid, newItem);
             qDebug() << "Supply Item Read:" << newItem.toString();
 
-            //Populate item categories
+            //Populate supply item categories
             if(!newItem.category.isEmpty() && !supplyCategories.contains(newItem.category)){
                 supplyCategories.insert(newItem.category);
             }
@@ -75,7 +75,7 @@ void DataManager::read(QJsonObject json){
         //Read inspection logs array and store each log
         insCards.clear();
         for(int i = 0; i < json["inspectioncards"].toArray().count(); i++){
-            auto card = json["inspectioncards"].toArray()[i];
+            QJsonValue card = json["inspectioncards"].toArray()[i];
             InspectionCard newCard;
             newCard.read(card.toObject());
             insCards.insert(newCard.uuid, newCard);
@@ -109,7 +109,7 @@ void DataManager::write(QJsonObject &json) {
         jItems.append(itemJson);
     }
     //Set the QJsonObject to the main QJsonObject that will be written to file
-    json["supplyitems"] = jItems;
+    json["items"] = jItems;
 
     //Convert inspection logs to a QJsonObject
     QJsonArray jCards;

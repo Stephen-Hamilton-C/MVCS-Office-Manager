@@ -13,7 +13,7 @@
 #include "supplyitem.h"
 #include "inspectioncard.h"
 #include "cadeteditor.h"
-#include "itemeditor.h"
+#include "supplyeditor.h"
 #include "inspectioneditor.h"
 
 #include <QFileDialog>
@@ -90,7 +90,7 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 			break;
 		}
 		case MainWindow::EDITORTYPE::SUPPLY: {
-			model->setHorizontalHeaderLabels(Constants::itemTableHeader);
+            model->setHorizontalHeaderLabels(Constants::supplyTableHeader);
 
             QMapIterator<QString, SupplyItem> i(DataManager::supplyItems);
 			while(i.hasNext()){
@@ -181,9 +181,9 @@ void MainWindow::on_editorEdit_clicked() {
 				break;
 			}
 			case MainWindow::EDITORTYPE::SUPPLY: {
-				itemEditorWindow = new ItemEditor(this, this, id);
-				itemEditorWindow->show();
-                itemEditorWindow->setWindowTitle("Edit "+DataManager::supplyItems[id].name);
+                supplyEditorWindow = new SupplyEditor(this, this, id);
+                supplyEditorWindow->show();
+                supplyEditorWindow->setWindowTitle("Edit "+DataManager::supplyItems[id].name);
 				break;
 			}
 			case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
@@ -219,7 +219,7 @@ void MainWindow::on_editorDelete_clicked() {
 					showStatusMessage("Deleted "+name+".");
 					updateEditorView();
 				} else {
-					showStatusMessage("Failed to delete: No item found.");
+                    showStatusMessage("Failed to delete: No supply item found.");
 				}
 				break;
 			}
@@ -247,9 +247,9 @@ void MainWindow::deleteCadetEditor(){
 }
 
 void MainWindow::deleteItemEditor(){
-	if(itemEditorWindow != nullptr){
-		delete itemEditorWindow;
-		itemEditorWindow = nullptr;
+    if(supplyEditorWindow != nullptr){
+        delete supplyEditorWindow;
+        supplyEditorWindow = nullptr;
 	}
 }
 
@@ -331,10 +331,10 @@ void MainWindow::on_editorNew_clicked() {
 			break;
 		}
 		case MainWindow::EDITORTYPE::SUPPLY: {
-			//Make new item dialog appear
-			itemEditorWindow = new ItemEditor(this, this);
-			itemEditorWindow->show();
-			itemEditorWindow->setWindowTitle("New Item");
+            //Make new supply item dialog appear
+            supplyEditorWindow = new SupplyEditor(this, this);
+            supplyEditorWindow->show();
+            supplyEditorWindow->setWindowTitle("New Supply Item");
             break;
 		}
 		case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
