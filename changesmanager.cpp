@@ -6,13 +6,20 @@
 QList<ItemSnapshot> ChangesManager::_snapshots = QList<ItemSnapshot>();
 QMap<QString, QList<ItemSnapshot*>> ChangesManager::_itemUUIDMap = QMap<QString, QList<ItemSnapshot*>>();
 QMap<QDate, QList<ItemSnapshot*>> ChangesManager::_dateMap = QMap<QDate, QList<ItemSnapshot*>>();
+QMap<QString, QMap<QDate, ItemSnapshot*>> ChangesManager::_masterMap = QMap<QString, QMap<QDate, ItemSnapshot*>>();
 
 ItemSnapshot* ChangesManager::createSnapshot(QString itemUUID, QString uuid, QMap<QString, QVariant> properties, QDate date)
 {
-    _snapshots.append(ItemSnapshot(itemUUID, uuid, properties, date));
-    ItemSnapshot* snapshot = &_snapshots.last();
-    index(snapshot);
-    return snapshot;
+    if(_masterMap.contains(itemUUID) && _masterMap[itemUUID].contains(date)){
+        ItemSnapshot* snapshot = _masterMap[itemUUID][date];
+        snapshot->properties = properties;
+        return snapshot;
+    } else {
+        _snapshots.append(ItemSnapshot(itemUUID, uuid, properties, date));
+        ItemSnapshot* snapshot = &_snapshots.last();
+        index(snapshot);
+        return snapshot;
+    }
 }
 
 QList<ItemSnapshot *> ChangesManager::fromItemUUID(QString itemUUID)
@@ -23,6 +30,11 @@ QList<ItemSnapshot *> ChangesManager::fromItemUUID(QString itemUUID)
 QList<ItemSnapshot*> ChangesManager::fromDate(QDate date)
 {
     return _dateMap[date];
+}
+
+ItemSnapshot* ChangesManager::get(QString itemUUID, QDate date)
+{
+    return _masterMap[itemUUID][date];
 }
 
 void ChangesManager::read(const QJsonObject &json)
@@ -74,5 +86,11 @@ void ChangesManager::index(ItemSnapshot* snapshot)
         _itemUUIDMap[snapshot->itemUUID].append(snapshot);
     } else {
         _itemUUIDMap.insert(snapshot->itemUUID, QList<ItemSnapshot*>{snapshot});
+    }
+
+    if(_masterMap.contains(snapshot->itemUUID)){
+        _masterMap[snapshot->itemUUID].insert(snapshot->date, snapshot);
+    } else {
+        _masterMap.insert(snapshot->itemUUID, QMap<QDate, ItemSnapshot*>{{snapshot->date, snapshot}});
     }
 }
