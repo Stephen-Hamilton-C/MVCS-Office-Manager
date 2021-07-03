@@ -1,3 +1,11 @@
+/*
+ * This file is a part of {{ dc045.manager }}.
+ *
+ * Developed for MVCS Office Manager.
+ * See the LICENSE file at the top-level directory of this distribution for license details.
+ * Licensed under the GNU General Public License V3
+ * C/2Lt Stephen Hamilton, Civil Air Patrol
+*/
 #include "dataconverter.h"
 #include "datamanager.h"
 #include "constants.h"
@@ -12,7 +20,6 @@ DataConverter::DataConverter()
 
 }
 
-//TODO: Completely redesign this thing oml
 void DataConverter::convert(QJsonObject &json)
 {
     int jsonVersion = 0;
@@ -46,20 +53,20 @@ void DataConverter::convert(QJsonObject &json)
             }
 
             if(json.contains("supplyitems") && json["supplyitems"].isArray()){
-                QJsonArray items = json["supplyitems"].toArray();
-                for(int i = 0; i < items.count(); i++){
-                    QJsonObject item = items[i].toObject();
-                    if(item.contains("item_uuid") && item["item_uuid"].isString()){
-                        QString uuid = item["item_uuid"].toString();
-                        uuid = UUIDGenerator::generateUUID(UUIDGenerator::ITEM, uuid);
+                QJsonArray supplyItems = json["supplyitems"].toArray();
+                for(int i = 0; i < supplyItems.count(); i++){
+                    QJsonObject supplyItem = supplyItems[i].toObject();
+                    if(supplyItem.contains("item_uuid") && supplyItem["item_uuid"].isString()){
+                        QString uuid = supplyItem["item_uuid"].toString();
+                        uuid = UUIDGenerator::generateUUID(UUIDGenerator::SUPPLY, uuid);
 
-                        item["item_uuid"] = uuid;
+                        supplyItem["item_uuid"] = uuid;
                     }
 
-                    items[i] = item;
+                    supplyItems[i] = supplyItem;
                 }
 
-                json["supplyitems"] = items;
+                json["supplyitems"] = supplyItems;
             }
 
             if(json.contains("inspectioncards") && json["inspectioncards"].isArray()){

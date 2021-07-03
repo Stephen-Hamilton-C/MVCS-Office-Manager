@@ -18,13 +18,15 @@ CONFIG += c++11
 SOURCES += \
     cadet.cpp \
     cadeteditor.cpp \
+    changesmanager.cpp \
     dataconverter.cpp \
     datamanager.cpp \
     inspectioncard.cpp \
     inspectioneditor.cpp \
-    itemeditor.cpp \
+    itemsnapshot.cpp \
     main.cpp \
     mainwindow.cpp \
+    supplyeditor.cpp \
     supplyitem.cpp \
     uuidgenerator.cpp \
     verticallabel.cpp
@@ -32,13 +34,17 @@ SOURCES += \
 HEADERS += \
     cadet.h \
     cadeteditor.h \
+    changesmanager.h \
     constants.h \
     dataconverter.h \
     datamanager.h \
     inspectioncard.h \
     inspectioneditor.h \
-    itemeditor.h \
+    item.h \
+    itemsnapshot.h \
     mainwindow.h \
+    serializable.h \
+    supplyeditor.h \
     supplyitem.h \
     uuidgenerator.h \
     verticallabel.h
@@ -46,8 +52,8 @@ HEADERS += \
 FORMS += \
     cadeteditor.ui \
     inspectioneditor.ui \
-    itemeditor.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    supplyeditor.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -6,17 +6,22 @@
  * Licensed under the GNU General Public License V3
  * C/2Lt Stephen Hamilton, Civil Air Patrol
 */
-#ifndef DATACONVERTER_H
-#define DATACONVERTER_H
+#ifndef ITEM_H
+#define ITEM_H
 
-#include <QJsonObject>
+#include "serializable.h"
 
-class DataConverter
-{
+#include <QString>
+
+class Item: public Serializable {
 public:
-    DataConverter();
 
-    static void convert(QJsonObject &json);
+    virtual void takeSnapshot() = 0;
+
+    /**
+     * @brief The identifier used in the `DataManager` that indexes this member
+     */
+    QString uuid;
 };
 
-#endif // DATACONVERTER_H
+#endif // ITEM_H

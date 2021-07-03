@@ -8,6 +8,9 @@
 */
 #include "supplyitem.h"
 #include "uuidgenerator.h"
+#include "changesmanager.h"
+
+int SupplyItem::_day = 0;
 
 SupplyItem::SupplyItem(QString uuid, QString name, QString category, int count, int lowCountThreshold, QVariantMap properties){
 	this->uuid = uuid;
@@ -18,16 +21,31 @@ SupplyItem::SupplyItem(QString uuid, QString name, QString category, int count, 
     this->properties = properties;
 }
 
+void SupplyItem::takeSnapshot()
+{
+    ChangesManager::createSnapshot(
+                this->uuid,
+                UUIDGenerator::generateUUID(UUIDGenerator::IDType::CHANGE),
+                QMap<QString, QVariant>{
+                    {"count", this->count},
+                    {"lowCountThreshold", this->lowCountThreshold}
+                },
+                QDate::currentDate().addDays(_day)
+                );
+
+    _day++;
+}
+
 SupplyItem::SupplyItem(){
     qDebug() << "Created empty SupplyItem";
 }
 
 void SupplyItem::read(const QJsonObject& json) {
-	if(json.contains("item_uuid") && json["item_uuid"].isString()){
-		uuid = json["item_uuid"].toString();
+    if(json.contains("item_uuid") && json["item_uuid"].isString()){
+        uuid = json["item_uuid"].toString();
 	} else {
-        uuid = UUIDGenerator::generateUUID(UUIDGenerator::ITEM);
-		json["item_uuid"] = uuid;
+        uuid = UUIDGenerator::generateUUID(UUIDGenerator::SUPPLY);
+        json["item_uuid"] = uuid;
 	}
 
     if(json.contains("item_name") && json["item_name"].isString()){
@@ -53,7 +71,7 @@ void SupplyItem::read(const QJsonObject& json) {
 }
 
 void SupplyItem::write(QJsonObject& json) const {
-	json["item_uuid"] = uuid;
+    json["item_uuid"] = uuid;
     json["item_name"] = name;
     json["item_category"] = category;
     json["item_count"] = count;

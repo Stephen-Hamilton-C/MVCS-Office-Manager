@@ -6,7 +6,7 @@
  * Licensed under the GNU General Public License V3
  * C/2Lt Stephen Hamilton, Civil Air Patrol
 */
-#include "itemeditor.h"
+#include "supplyeditor.h"
 #include "ui_itemeditor.h"
 #include "datamanager.h"
 #include "mainwindow.h"
@@ -16,7 +16,7 @@
 
 #include <QStandardItemModel>
 
-ItemEditor::ItemEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
+SupplyEditor::SupplyEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	QDialog(parent),
 	ui(new Ui::ItemEditor)
 {
@@ -26,10 +26,10 @@ ItemEditor::ItemEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	qDebug() << "ID received:" << id;
 
     QStandardItemModel* model = new QStandardItemModel();
-    model->setHorizontalHeaderLabels(Constants::itemPropertyTableHeaders);
+    model->setHorizontalHeaderLabels(Constants::supplyPropertyTableHeaders);
 
     QStandardItemModel* catModel = new QStandardItemModel();
-    QSetIterator<QString> i(DataManager::itemCategories);
+    QSetIterator<QString> i(DataManager::supplyCategories);
     while(i.hasNext()){
         catModel->appendRow(new QStandardItem(i.next()));
     }
@@ -37,15 +37,15 @@ ItemEditor::ItemEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 
 	if(!id.isEmpty()){
 		this->id = id;
-		SupplyItem *item = &DataManager::items[id];
+        SupplyItem *supplyItem = &DataManager::supplyItems[id];
 
 		ui->nameEdit->setProperty("item_uuid", id);
-		ui->nameEdit->setText(item->name);
-        ui->categoryBox->setCurrentText(item->category);
-		ui->countBox->setValue(item->count);
-		ui->lowCountBox->setValue(item->lowCountThreshold);
+        ui->nameEdit->setText(supplyItem->name);
+        ui->categoryBox->setCurrentText(supplyItem->category);
+        ui->countBox->setValue(supplyItem->count);
+        ui->lowCountBox->setValue(supplyItem->lowCountThreshold);
 
-		QMapIterator<QString, QVariant> i(item->properties);
+        QMapIterator<QString, QVariant> i(supplyItem->properties);
 		while(i.hasNext()){
 			i.next();
 			model->appendRow(QList<QStandardItem*>() <<
@@ -53,7 +53,7 @@ ItemEditor::ItemEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 							 new QStandardItem(i.value().toString()));
 		}
 	} else {
-        ui->nameEdit->setProperty("item_uuid", UUIDGenerator::generateUUID(UUIDGenerator::ITEM));
+        ui->nameEdit->setProperty("item_uuid", UUIDGenerator::generateUUID(UUIDGenerator::SUPPLY));
         ui->categoryBox->setCurrentText("Miscellaneous");
 	}
 
@@ -71,12 +71,12 @@ ItemEditor::ItemEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 
 
 
-ItemEditor::~ItemEditor()
+SupplyEditor::~SupplyEditor()
 {
 	delete ui;
 }
 
-void ItemEditor::constructPropertiesMap(QVariantMap &properties) const {
+void SupplyEditor::constructPropertiesMap(QVariantMap &properties) const {
 	QAbstractItemModel* model = ui->propertiesView->model();
 	if(model == nullptr){
 		return;
@@ -93,7 +93,7 @@ void ItemEditor::constructPropertiesMap(QVariantMap &properties) const {
 	}
 }
 
-void ItemEditor::on_buttonBox_accepted() {
+void SupplyEditor::on_buttonBox_accepted() {
 	if(ui->nameEdit->text().length() <= 0){
 		mainWindow->showStatusMessage("Please fill required fields");
 		ui->nameEdit->setStyleSheet("color: rgb(200, 0, 0);");
@@ -104,28 +104,32 @@ void ItemEditor::on_buttonBox_accepted() {
 	constructPropertiesMap(properties);
 
 	if(id.isEmpty()){
-		SupplyItem item(ui->nameEdit->property("item_uuid").toString(),
+        SupplyItem supplyItem(ui->nameEdit->property("item_uuid").toString(),
 						ui->nameEdit->text(),
                         ui->categoryBox->currentText(),
 						ui->countBox->value(),
 						ui->lowCountBox->value(),
 						properties);
-		DataManager::items.insert(item.uuid, item);
+        DataManager::supplyItems.insert(supplyItem.uuid, supplyItem);
 
-		mainWindow->showStatusMessage("Created "+item.name+".");
+        supplyItem.takeSnapshot();
+
+        mainWindow->showStatusMessage("Created "+supplyItem.name+".");
 	} else {
-		SupplyItem* item = &DataManager::items[ui->nameEdit->property("item_uuid").toString()];
-		item->name = ui->nameEdit->text();
-        item->category = ui->categoryBox->currentText();
-		item->count = ui->countBox->value();
-		item->lowCountThreshold = ui->lowCountBox->value();
-		item->properties = properties;
+        SupplyItem* supplyItem = &DataManager::supplyItems[ui->nameEdit->property("item_uuid").toString()];
+        supplyItem->name = ui->nameEdit->text();
+        supplyItem->category = ui->categoryBox->currentText();
+        supplyItem->count = ui->countBox->value();
+        supplyItem->lowCountThreshold = ui->lowCountBox->value();
+        supplyItem->properties = properties;
 
-		mainWindow->showStatusMessage("Edited "+item->name+".");
+        supplyItem->takeSnapshot();
+
+        mainWindow->showStatusMessage("Edited "+supplyItem->name+".");
 	}
 
-    if(!DataManager::itemCategories.contains(ui->categoryBox->currentText())){
-        DataManager::itemCategories.insert(ui->categoryBox->currentText());
+    if(!DataManager::supplyCategories.contains(ui->categoryBox->currentText())){
+        DataManager::supplyCategories.insert(ui->categoryBox->currentText());
     }
 
     DataManager::setDirty();
@@ -134,11 +138,11 @@ void ItemEditor::on_buttonBox_accepted() {
 	mainWindow->deleteItemEditor();
 }
 
-void ItemEditor::on_createProperty_clicked() {
+void SupplyEditor::on_createProperty_clicked() {
 	QAbstractItemModel* model = ui->propertiesView->model();
 	QStandardItemModel* smodel = new QStandardItemModel();
 
-    smodel->setHorizontalHeaderLabels(Constants::itemPropertyTableHeaders);
+    smodel->setHorizontalHeaderLabels(Constants::supplyPropertyTableHeaders);
 
 	//model->rowCount is freaking gay
 	int rows;
@@ -167,7 +171,7 @@ void ItemEditor::on_createProperty_clicked() {
 	ui->propertiesView->resizeRowsToContents();
 }
 
-void ItemEditor::on_deleteProperty_clicked() {
+void SupplyEditor::on_deleteProperty_clicked() {
 	QItemSelectionModel* selection = ui->propertiesView->selectionModel();
 	if(selection->hasSelection()){
 		QAbstractItemModel* model = ui->propertiesView->model();

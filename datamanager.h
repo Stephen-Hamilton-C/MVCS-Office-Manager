@@ -16,6 +16,7 @@ class Cadet;
 class InspectionCard;
 class SupplyItem;
 class MainWindow;
+class Item;
 
 class QJsonObject;
 
@@ -33,17 +34,19 @@ public:
     /**
      * @brief All the supply items that have been entered into the program, indexed by their UUID.
      */
-    static QMap<QString, SupplyItem> items;
+    static QMap<QString, SupplyItem> supplyItems;
     /**
      * @brief All the inspection logs that have been entered into the program, indexed by their UUID.
      */
     static QMap<QString, InspectionCard> insCards;
     /**
-     * @brief Item categories that were found from loaded items.
+     * @brief Supply item categories that were found from loaded items.
      */
-    static QSet<QString> itemCategories;
-
-    static QString filePath;
+    static QSet<QString> supplyCategories;
+    /**
+     * @brief Any type of tracked item indexed by their UUID.
+     */
+    static QMap<QString, Item> items;
 
     /**
      * @brief Reads all data from a QJsonObject and loads it into memory.
@@ -61,9 +64,17 @@ public:
      */
     static void readFromFile();
     /**
+     * @brief Converts a JSON file at the given path to a QJsonObject and then stores it.
+     */
+    static void readFromFile(const QString filePath);
+    /**
      * @brief Writes stored data out to a JSON file.
      */
     static void writeToFile();
+    /**
+     * @brief Writes stored data to given path.
+     */
+    static void writeToFile(const QString filePath);
 
     static void newFile();
 
@@ -71,11 +82,15 @@ public:
 
     static void setDirty();
 
+    static QString getFilePath();
+
 private:
 
     QSettings settings;
 
     static MainWindow *mainWindow;
+
+    static QString filePath;
 
 };
 

@@ -1,3 +1,11 @@
+/*
+ * This file is a part of {{ dc045.manager }}.
+ *
+ * Developed for MVCS Office Manager.
+ * See the LICENSE file at the top-level directory of this distribution for license details.
+ * Licensed under the GNU General Public License V3
+ * C/2Lt Stephen Hamilton, Civil Air Patrol
+*/
 #include "uuidgenerator.h"
 
 #include "cadet.h"
@@ -25,11 +33,15 @@ QString UUIDGenerator::generateUUID(IDType idType, QString uuid)
             return "manager::"+uuid;
         case IDType::CADET:
             return "manager::cadet::"+uuid;
-        case IDType::ITEM:
+        case IDType::SUPPLY:
             return "manager::item::"+uuid;
         case IDType::CARD:
             return "manager::card::"+uuid;
+        case IDType::CHANGE:
+            return "manager::change::"+uuid;
     }
+
+    return uuid;
 }
 
 void UUIDGenerator::removeBraces(QString &uuid)

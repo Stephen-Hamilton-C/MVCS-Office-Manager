@@ -16,6 +16,11 @@ InspectionCard::InspectionCard() {
     qDebug() << "Creating empty Inspection Card";
 }
 
+void InspectionCard::takeSnapshot()
+{
+    qDebug() << "Inspection logs should not change";
+}
+
 InspectionCard::InspectionCard(QString uuid, QString cadetUUID, QDate date,
 							   RATING appearanceScore, RATING garmentsScore, RATING accountrementsScore, RATING footwearScore, RATING bearingScore) {
 	this->uuid = uuid;
@@ -145,10 +150,7 @@ void InspectionCard::write(QJsonObject &json) const {
 	json["card_cadetFlight"] = cadetFlightAtInspect;
 
 	//Convert the QDate into a year, month, day array
-	QJsonArray dateArray;
-    dateArray.append(date.year());
-    dateArray.append(date.month());
-    dateArray.append(date.day());
+    QJsonArray dateArray { date.year(), date.month(), date.day() };
     json["card_date"] = dateArray;
 
     json["card_appearanceScore"] = appearanceScore;

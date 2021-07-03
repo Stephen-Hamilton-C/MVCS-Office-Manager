@@ -13,7 +13,7 @@
 #include "supplyitem.h"
 #include "inspectioncard.h"
 #include "cadeteditor.h"
-#include "itemeditor.h"
+#include "supplyeditor.h"
 #include "inspectioneditor.h"
 
 #include <QFileDialog>
@@ -90,9 +90,9 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 			break;
 		}
 		case MainWindow::EDITORTYPE::SUPPLY: {
-			model->setHorizontalHeaderLabels(Constants::itemTableHeader);
+            model->setHorizontalHeaderLabels(Constants::supplyTableHeader);
 
-			QMapIterator<QString, SupplyItem> i(DataManager::items);
+            QMapIterator<QString, SupplyItem> i(DataManager::supplyItems);
 			while(i.hasNext()){
 				i.next();
 
@@ -181,9 +181,9 @@ void MainWindow::on_editorEdit_clicked() {
 				break;
 			}
 			case MainWindow::EDITORTYPE::SUPPLY: {
-				itemEditorWindow = new ItemEditor(this, this, id);
-				itemEditorWindow->show();
-				itemEditorWindow->setWindowTitle("Edit "+DataManager::items[id].name);
+                supplyEditorWindow = new SupplyEditor(this, this, id);
+                supplyEditorWindow->show();
+                supplyEditorWindow->setWindowTitle("Edit "+DataManager::supplyItems[id].name);
 				break;
 			}
 			case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
@@ -213,13 +213,13 @@ void MainWindow::on_editorDelete_clicked() {
 				break;
 			}
 			case MainWindow::EDITORTYPE::SUPPLY: {
-				if(DataManager::items.contains(id)){
-					QString name = DataManager::items[id].name;
-					DataManager::items.remove(id);
+                if(DataManager::supplyItems.contains(id)){
+                    QString name = DataManager::supplyItems[id].name;
+                    DataManager::supplyItems.remove(id);
 					showStatusMessage("Deleted "+name+".");
 					updateEditorView();
 				} else {
-					showStatusMessage("Failed to delete: No item found.");
+                    showStatusMessage("Failed to delete: No supply item found.");
 				}
 				break;
 			}
@@ -247,9 +247,9 @@ void MainWindow::deleteCadetEditor(){
 }
 
 void MainWindow::deleteItemEditor(){
-	if(itemEditorWindow != nullptr){
-		delete itemEditorWindow;
-		itemEditorWindow = nullptr;
+    if(supplyEditorWindow != nullptr){
+        delete supplyEditorWindow;
+        supplyEditorWindow = nullptr;
 	}
 }
 
@@ -265,7 +265,7 @@ void MainWindow::setDirty(const bool dirty)
     dataDirty = dirty;
 
     QString dirtyMarker = dirty ? "*" : "";
-    this->setWindowTitle(Constants::name + " - " + DataManager::filePath + dirtyMarker);
+    this->setWindowTitle(Constants::name + " - " + DataManager::getFilePath() + dirtyMarker);
 }
 
 void MainWindow::on_actionCadets_triggered() {
@@ -331,10 +331,10 @@ void MainWindow::on_editorNew_clicked() {
 			break;
 		}
 		case MainWindow::EDITORTYPE::SUPPLY: {
-			//Make new item dialog appear
-			itemEditorWindow = new ItemEditor(this, this);
-			itemEditorWindow->show();
-			itemEditorWindow->setWindowTitle("New Item");
+            //Make new supply item dialog appear
+            supplyEditorWindow = new SupplyEditor(this, this);
+            supplyEditorWindow->show();
+            supplyEditorWindow->setWindowTitle("New Supply Item");
             break;
 		}
 		case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
@@ -360,8 +360,7 @@ void MainWindow::on_action_Load_triggered()
 {
 	QString filePath = QFileDialog::getOpenFileName(this, "Open Data File", QString(), "JSON Files (*.json)");
 	if(!filePath.isEmpty()){
-		DataManager::filePath = filePath;
-		DataManager::readFromFile();
+        DataManager::readFromFile(filePath);
 
 		updateEditorView();
 	}
@@ -369,7 +368,7 @@ void MainWindow::on_action_Load_triggered()
 
 void MainWindow::on_actionSave_as_triggered()
 {
-	QString filePath = QFileDialog::getSaveFileName(this, "Save Data File", DataManager::filePath, "JSON Files (*.json)");
+    QString filePath = QFileDialog::getSaveFileName(this, "Save Data File", DataManager::getFilePath(), "JSON Files (*.json)");
 
     //Automatically add .json extension
     QString extension = filePath.right(5);
@@ -378,8 +377,7 @@ void MainWindow::on_actionSave_as_triggered()
     }
 
 	if(!filePath.isEmpty()){
-		DataManager::filePath = filePath;
-		DataManager::writeToFile();
+        DataManager::writeToFile(filePath);
 	}
 }
 

@@ -12,6 +12,7 @@
 #include "inspectioncard.h"
 #include "mainwindow.h"
 #include "dataconverter.h"
+#include "changesmanager.h"
 
 #include <QJsonObject>
 #include <QJsonDocument>
@@ -23,9 +24,9 @@
 
 //Initialize static vars
 QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
-QMap<QString, SupplyItem> DataManager::items = QMap<QString, SupplyItem>();
+QMap<QString, SupplyItem> DataManager::supplyItems = QMap<QString, SupplyItem>();
 QMap<QString, InspectionCard> DataManager::insCards = QMap<QString, InspectionCard>();
-QSet<QString> DataManager::itemCategories = QSet<QString>();
+QSet<QString> DataManager::supplyCategories = QSet<QString>();
 QString DataManager::filePath = "";
 MainWindow *DataManager::mainWindow = nullptr;
 
@@ -44,7 +45,7 @@ void DataManager::read(QJsonObject json){
         //Read cadets array and store each cadet
         cadets.clear();
         for(int i = 0; i < json["cadets"].toArray().count(); i++){
-            auto cadet = json["cadets"].toArray()[i];
+            QJsonValue cadet = json["cadets"].toArray()[i];
             Cadet newCadet;
             newCadet.read(cadet.toObject());
             cadets.insert(newCadet.uuid, newCadet);
@@ -55,17 +56,17 @@ void DataManager::read(QJsonObject json){
     //Supply items
     if(json.contains("supplyitems") && json["supplyitems"].isArray()){
         //Read supply items array and store each item
-        items.clear();
+        supplyItems.clear();
         for(int i = 0; i < json["supplyitems"].toArray().count(); i++){
-            auto item = json["supplyitems"].toArray()[i];
+            QJsonValue supplyItem = json["supplyitems"].toArray()[i];
             SupplyItem newItem;
-            newItem.read(item.toObject());
-            items.insert(newItem.uuid, newItem);
+            newItem.read(supplyItem.toObject());
+            supplyItems.insert(newItem.uuid, newItem);
             qDebug() << "Supply Item Read:" << newItem.toString();
 
-            //Populate item categories
-            if(!newItem.category.isEmpty() && !itemCategories.contains(newItem.category)){
-                itemCategories.insert(newItem.category);
+            //Populate supply item categories
+            if(!newItem.category.isEmpty() && !supplyCategories.contains(newItem.category)){
+                supplyCategories.insert(newItem.category);
             }
         }
     }
@@ -75,7 +76,7 @@ void DataManager::read(QJsonObject json){
         //Read inspection logs array and store each log
         insCards.clear();
         for(int i = 0; i < json["inspectioncards"].toArray().count(); i++){
-            auto card = json["inspectioncards"].toArray()[i];
+            QJsonValue card = json["inspectioncards"].toArray()[i];
             InspectionCard newCard;
             newCard.read(card.toObject());
             insCards.insert(newCard.uuid, newCard);
@@ -83,6 +84,7 @@ void DataManager::read(QJsonObject json){
         }
     }
 
+    ChangesManager::read(json);
 }
 
 void DataManager::write(QJsonObject &json) {
@@ -101,7 +103,7 @@ void DataManager::write(QJsonObject &json) {
 
     //Convert items to a QJsonObject
     QJsonArray jItems;
-    auto iItems = QMapIterator<QString, SupplyItem>(items);
+    auto iItems = QMapIterator<QString, SupplyItem>(supplyItems);
     while(iItems.hasNext()){
         iItems.next();
         QJsonObject itemJson;
@@ -122,6 +124,8 @@ void DataManager::write(QJsonObject &json) {
     }
     //Set the QJsonObject to the main QJsonObject that will be written to file
     json["inspectioncards"] = jCards;
+
+    ChangesManager::write(json);
 
     json["version"] = Constants::jsonVersion;
 }
@@ -146,6 +150,12 @@ void DataManager::readFromFile() {
         mainWindow->showStatusMessage("Error occurred while opening file "+filePath);
     }
 
+}
+
+void DataManager::readFromFile(const QString filePath)
+{
+    DataManager::filePath = filePath;
+    readFromFile();
 }
 
 void DataManager::writeToFile() {
@@ -175,12 +185,18 @@ void DataManager::writeToFile() {
 
 }
 
+void DataManager::writeToFile(const QString filePath)
+{
+    DataManager::filePath = filePath;
+    writeToFile();
+}
+
 void DataManager::newFile(){
     filePath = "";
     cadets.clear();
-    items.clear();
+    supplyItems.clear();
     insCards.clear();
-    itemCategories.clear();
+    supplyCategories.clear();
 }
 
 void DataManager::setMainWindow(MainWindow *value)
@@ -191,4 +207,9 @@ void DataManager::setMainWindow(MainWindow *value)
 void DataManager::setDirty()
 {
     mainWindow->setDirty(true);
+}
+
+QString DataManager::getFilePath()
+{
+    return filePath;
 }

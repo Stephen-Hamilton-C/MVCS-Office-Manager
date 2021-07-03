@@ -9,14 +9,18 @@
 #ifndef CADET_H
 #define CADET_H
 
+#include <item.h>
+
 #include <QJsonObject>
 #include <QString>
 
 /**
  * @brief Holds all data related to a single CAP Cadet or Senior Member
  */
-class Cadet {
+class Cadet: public Item {
 public:
+
+    void takeSnapshot() override;
 
     enum GRADE {
 		CADET = 0,
@@ -101,10 +105,6 @@ public:
 		GRADEFIRSTLAST
     };
 
-	/**
-	 * @brief The identifier used in the `DataManager` that indexes this member
-	 */
-	QString uuid;
     int capid;
 	/**
 	 * @brief Cadet or Senior Member
@@ -198,21 +198,21 @@ public:
 	 */
 	int getPhase() const;
 
-	/**
-	 * @brief Sets all variables to values read from the QJsonObject, if they exist, supplied by the `DataManager`.
-	 * @param A reference to a QJsonObject read from a file.
-	 */
-    void read(const QJsonObject& json);
-	/**
-	 * @brief Writes all variables to a QJsonObject to be written to a file later by the `DataManager`.
-	 * @param A reference to a QJsonObject that is to be written to a file.
-	 */
-    void write(QJsonObject& json) const;
+    /**
+     * @brief see Serializable::read
+     */
+    void read(const QJsonObject& json) override;
+    /**
+     * @brief see Serializable::write
+     */
+    void write(QJsonObject& json) const override;
 
 	/**
 	 * @brief Debug purposes.
 	 */
     QString toString();
+
+    static int _day;
 
 };
 
