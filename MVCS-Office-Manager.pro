@@ -44,6 +44,7 @@ HEADERS += \
     itemeditor.h \
     itemsnapshot.h \
     mainwindow.h \
+    serializable.h \
     supplyitem.h \
     uuidgenerator.h \
     verticallabel.h
