@@ -12,6 +12,7 @@
 #include "inspectioncard.h"
 #include "mainwindow.h"
 #include "dataconverter.h"
+#include "changesmanager.h"
 
 #include <QJsonObject>
 #include <QJsonDocument>
@@ -83,6 +84,7 @@ void DataManager::read(QJsonObject json){
         }
     }
 
+    ChangesManager::read(json);
 }
 
 void DataManager::write(QJsonObject &json) {
@@ -122,6 +124,8 @@ void DataManager::write(QJsonObject &json) {
     }
     //Set the QJsonObject to the main QJsonObject that will be written to file
     json["inspectioncards"] = jCards;
+
+    ChangesManager::write(json);
 
     json["version"] = Constants::jsonVersion;
 }
