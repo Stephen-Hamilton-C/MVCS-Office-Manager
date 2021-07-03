@@ -1,27 +1,26 @@
 #include "changesmanager.h"
-#include "change.h"
+#include "itemsnapshot.h"
 
 #include <QJsonArray>
 
-ChangesManager::ChangesManager()
-{
+QList<ItemSnapshot> ChangesManager::_snapshots = QList<ItemSnapshot>();
+QMap<QString, QList<ItemSnapshot*>> ChangesManager::_itemUUIDMap = QMap<QString, QList<ItemSnapshot*>>();
+QMap<QDate, QList<ItemSnapshot*>> ChangesManager::_dateMap = QMap<QDate, QList<ItemSnapshot*>>();
 
+ItemSnapshot* ChangesManager::createSnapshot(QString itemUUID, QString uuid, QMap<QString, QVariant> properties, QDate date)
+{
+    _snapshots.append(ItemSnapshot(itemUUID, uuid, properties, date));
+    ItemSnapshot* snapshot = &_snapshots.last();
+    index(snapshot);
+    return snapshot;
 }
 
-Change* ChangesManager::createChange(QString objectUUID, QString uuid, QString property, QVariant value, QDate date)
+QList<ItemSnapshot *> ChangesManager::fromItemUUID(QString itemUUID)
 {
-    _changes.append(Change(objectUUID, uuid, property, value, date));
-    Change* change = &_changes.last();
-    index(change);
-    return change;
+    return _itemUUIDMap[itemUUID];
 }
 
-Change* ChangesManager::fromObjectUUID(QString objectUUID, QString property)
-{
-    return _objectUUIDMap[objectUUID][property];
-}
-
-QList<Change*> ChangesManager::fromDate(QDate date)
+QList<ItemSnapshot*> ChangesManager::fromDate(QDate date)
 {
     return _dateMap[date];
 }
@@ -31,9 +30,9 @@ void ChangesManager::read(const QJsonObject &json)
     if(json.contains("changes") && json["changes"].isArray()){
         const QJsonArray jChanges = json["changes"].toArray();
         for(int i = 0; i < jChanges.count(); i++){
-            Change change;
-            change.read(json["changes"][i].toObject());
-            _changes.append(change);
+            ItemSnapshot snapshot;
+            snapshot.read(json["changes"][i].toObject());
+            _snapshots.append(snapshot);
         }
     }
 
@@ -43,9 +42,9 @@ void ChangesManager::read(const QJsonObject &json)
 void ChangesManager::write(QJsonObject &json)
 {
     QJsonArray jChanges;
-    for(int i = 0; i < _changes.count(); i++){
+    for(int i = 0; i < _snapshots.count(); i++){
         QJsonObject changeJObj;
-        _changes[i].write(changeJObj);
+        _snapshots[i].write(changeJObj);
         jChanges.append(changeJObj);
     }
 
@@ -55,25 +54,25 @@ void ChangesManager::write(QJsonObject &json)
 void ChangesManager::reindex()
 {
     _dateMap.clear();
-    _objectUUIDMap.clear();
+    _itemUUIDMap.clear();
 
-    for(int i = 0; i < _changes.count(); i++){
-        Change* change = &_changes[i];
-        index(change);
+    for(int i = 0; i < _snapshots.count(); i++){
+        ItemSnapshot* snapshot = &_snapshots[i];
+        index(snapshot);
     }
 }
 
-void ChangesManager::index(Change *change)
+void ChangesManager::index(ItemSnapshot* snapshot)
 {
-    if(_dateMap.contains(change->date)){
-        _dateMap[change->date].append(change);
+    if(_dateMap.contains(snapshot->date)){
+        _dateMap[snapshot->date].append(snapshot);
     } else {
-        _dateMap.insert(change->date, QList<Change*>() << change);
+        _dateMap.insert(snapshot->date, QList<ItemSnapshot*>{snapshot});
     }
 
-    if(_objectUUIDMap.contains(change->objectUUID)){
-        _objectUUIDMap[change->objectUUID].insert(change->property, change);
+    if(_itemUUIDMap.contains(snapshot->itemUUID)){
+        _itemUUIDMap[snapshot->itemUUID].append(snapshot);
     } else {
-        _objectUUIDMap.insert(change->objectUUID, QMap<QString, Change*>{{change->property, change}});
+        _itemUUIDMap.insert(snapshot->itemUUID, QList<ItemSnapshot*>{snapshot});
     }
 }

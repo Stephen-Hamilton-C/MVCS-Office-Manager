@@ -1,23 +1,22 @@
-#ifndef CHANGE_H
-#define CHANGE_H
+#ifndef ITEMSNAPSHOT_H
+#define ITEMSNAPSHOT_H
 
 #include <QString>
 #include <QDateTime>
 #include <QJsonObject>
 
-class Change
+class ItemSnapshot
 {
 public:
-    Change();
-    Change(QString objectUUID, QString uuid, QString property, QVariant value, QDate date);
+    ItemSnapshot();
+    ItemSnapshot(QString objectUUID, QString uuid, QMap<QString, QVariant> properties, QDate date);
 
     /**
-     * @brief The UUID of the object this goes to
+     * @brief The UUID of the Item this goes to
      */
-    QString objectUUID;
+    QString itemUUID;
     QString uuid;
-    QString property;
-    QVariant value;
+    QMap<QString, QVariant> properties;
     QDate date;
 
     /**
@@ -32,4 +31,4 @@ public:
     void write(QJsonObject &json);
 };
 
-#endif // CHANGE_H
+#endif // ITEMSNAPSHOT_H
