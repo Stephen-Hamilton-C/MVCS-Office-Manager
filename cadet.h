@@ -213,6 +213,8 @@ public:
 	 */
     QString toString();
 
+    static int _day;
+
 };
 
 #endif // CADET_H
