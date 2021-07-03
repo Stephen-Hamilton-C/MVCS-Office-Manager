@@ -18,13 +18,13 @@ CONFIG += c++11
 SOURCES += \
     cadet.cpp \
     cadeteditor.cpp \
-    change.cpp \
     changesmanager.cpp \
     dataconverter.cpp \
     datamanager.cpp \
     inspectioncard.cpp \
     inspectioneditor.cpp \
     itemeditor.cpp \
+    itemsnapshot.cpp \
     main.cpp \
     mainwindow.cpp \
     supplyitem.cpp \
@@ -34,14 +34,15 @@ SOURCES += \
 HEADERS += \
     cadet.h \
     cadeteditor.h \
-    change.h \
     changesmanager.h \
     constants.h \
     dataconverter.h \
     datamanager.h \
     inspectioncard.h \
     inspectioneditor.h \
+    item.h \
     itemeditor.h \
+    itemsnapshot.h \
     mainwindow.h \
     supplyitem.h \
     uuidgenerator.h \
