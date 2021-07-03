@@ -105,7 +105,6 @@ public:
 		GRADEFIRSTLAST
     };
 
-    //QString uuid;
     int capid;
 	/**
 	 * @brief Cadet or Senior Member
