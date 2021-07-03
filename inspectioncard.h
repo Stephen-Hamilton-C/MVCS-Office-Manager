@@ -20,7 +20,7 @@
 class InspectionCard: public Item {
 public:
 
-    void takeSnapshot() override;
+	void takeSnapshot() override;
 
 	/**
 	 * @brief The three possible ratings a section can have.
@@ -42,7 +42,7 @@ public:
 	 */
 	InspectionCard(QString uuid, QString cadetUUID, QDate date,
 				   RATING appearanceScore, RATING garmentsScore, RATING accountrementsScore, RATING footwearScore, RATING bearingScore);
-    InspectionCard();
+	InspectionCard();
 
 	/**
 	 * @brief The identifier of the cadet that received this inspection.
@@ -59,14 +59,14 @@ public:
 	/**
 	 * @brief The date when this inspection was issued.
 	 */
-    QDate date;
+	QDate date;
 
 	//These are self-explanatory, no documentation needed.
-    RATING appearanceScore;
-    RATING garmentsScore;
-    RATING accountrementsScore;
-    RATING footwearScore;
-    RATING bearingScore;
+	RATING appearanceScore;
+	RATING garmentsScore;
+	RATING accountrementsScore;
+	RATING footwearScore;
+	RATING bearingScore;
 
 	/**
 	 * @brief Returns the numerical total points the cadet got on this inspection. Leadership phase does not affect the result.
@@ -97,23 +97,23 @@ public:
 	Cadet* getCadet() const;
 
 
-    /**
-     * @brief see Serializable::read
-     */
-    void read(const QJsonObject& json) override;
-    /**
-     * @brief see Serializable::write
-     */
-    void write(QJsonObject& json) const override;
+	/**
+	 * @brief see Serializable::read
+	 */
+	void read(const QJsonObject& json) override;
+	/**
+	 * @brief see Serializable::write
+	 */
+	void write(QJsonObject& json) const override;
 
 	/**
 	 * @brief Debug purposes.
 	 */
-    QString toString();
+	QString toString();
 
 private:
 
-    static int _day;
+	static int _day;
 
 };
 

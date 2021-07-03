@@ -22,40 +22,40 @@
 #include <QCloseEvent>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+	: QMainWindow(parent)
+	, ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 	DataManager::setMainWindow(this);
 
-    this->setWindowTitle(Constants::name);
-    this->showMaximized();
+	this->setWindowTitle(Constants::name);
+	this->showMaximized();
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+	delete ui;
 }
 
 void MainWindow::closeEvent(QCloseEvent *event){
-    if(dataDirty){
-        event->ignore();
+	if(dataDirty){
+		event->ignore();
 
-        QMessageBox::StandardButton response = QMessageBox::question(this, "Exit "+Constants::name, "Save before exiting?",
-                                                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+		QMessageBox::StandardButton response = QMessageBox::question(this, "Exit "+Constants::name, "Save before exiting?",
+																	 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 
-        if(response == QMessageBox::Yes){
-            this->on_action_Save_triggered();
-        }
+		if(response == QMessageBox::Yes){
+			this->on_action_Save_triggered();
+		}
 
-        if(response != QMessageBox::Cancel){
-            event->accept();
-        }
-    }
+		if(response != QMessageBox::Cancel){
+			event->accept();
+		}
+	}
 }
 
 void MainWindow::changeView(int stackIndex){
-    ui->stackedWidget->setCurrentIndex(stackIndex);
+	ui->stackedWidget->setCurrentIndex(stackIndex);
 }
 
 void MainWindow::updateEditorView(){
@@ -90,9 +90,9 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 			break;
 		}
 		case MainWindow::EDITORTYPE::SUPPLY: {
-            model->setHorizontalHeaderLabels(Constants::supplyTableHeader);
+			model->setHorizontalHeaderLabels(Constants::supplyTableHeader);
 
-            QMapIterator<QString, SupplyItem> i(DataManager::supplyItems);
+			QMapIterator<QString, SupplyItem> i(DataManager::supplyItems);
 			while(i.hasNext()){
 				i.next();
 
@@ -107,7 +107,7 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 				model->appendRow(QList<QStandardItem*>() <<
 								 new QStandardItem(i.value().uuid) <<
 								 new QStandardItem(i.value().name) <<
-                                 new QStandardItem(i.value().category) << //This caused infinite recursion??
+								 new QStandardItem(i.value().category) << //This caused infinite recursion??
 								 new QStandardItem(QString::number(i.value().count)) <<
 								 new QStandardItem(propertiesStr));
 			}
@@ -181,9 +181,9 @@ void MainWindow::on_editorEdit_clicked() {
 				break;
 			}
 			case MainWindow::EDITORTYPE::SUPPLY: {
-                supplyEditorWindow = new SupplyEditor(this, this, id);
-                supplyEditorWindow->show();
-                supplyEditorWindow->setWindowTitle("Edit "+DataManager::supplyItems[id].name);
+				supplyEditorWindow = new SupplyEditor(this, this, id);
+				supplyEditorWindow->show();
+				supplyEditorWindow->setWindowTitle("Edit "+DataManager::supplyItems[id].name);
 				break;
 			}
 			case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
@@ -213,13 +213,13 @@ void MainWindow::on_editorDelete_clicked() {
 				break;
 			}
 			case MainWindow::EDITORTYPE::SUPPLY: {
-                if(DataManager::supplyItems.contains(id)){
-                    QString name = DataManager::supplyItems[id].name;
-                    DataManager::supplyItems.remove(id);
+				if(DataManager::supplyItems.contains(id)){
+					QString name = DataManager::supplyItems[id].name;
+					DataManager::supplyItems.remove(id);
 					showStatusMessage("Deleted "+name+".");
 					updateEditorView();
 				} else {
-                    showStatusMessage("Failed to delete: No supply item found.");
+					showStatusMessage("Failed to delete: No supply item found.");
 				}
 				break;
 			}
@@ -247,9 +247,9 @@ void MainWindow::deleteCadetEditor(){
 }
 
 void MainWindow::deleteItemEditor(){
-    if(supplyEditorWindow != nullptr){
-        delete supplyEditorWindow;
-        supplyEditorWindow = nullptr;
+	if(supplyEditorWindow != nullptr){
+		delete supplyEditorWindow;
+		supplyEditorWindow = nullptr;
 	}
 }
 
@@ -257,68 +257,68 @@ void MainWindow::deleteCardEditor(){
 	if(cardEditorWindow != nullptr){
 		delete cardEditorWindow;
 		cardEditorWindow = nullptr;
-    }
+	}
 }
 
 void MainWindow::setDirty(const bool dirty)
 {
-    dataDirty = dirty;
+	dataDirty = dirty;
 
-    QString dirtyMarker = dirty ? "*" : "";
-    this->setWindowTitle(Constants::name + " - " + DataManager::getFilePath() + dirtyMarker);
+	QString dirtyMarker = dirty ? "*" : "";
+	this->setWindowTitle(Constants::name + " - " + DataManager::getFilePath() + dirtyMarker);
 }
 
 void MainWindow::on_actionCadets_triggered() {
-    changeView(1);
+	changeView(1);
 	updateEditorView(MainWindow::EDITORTYPE::CADET);
 	deleteItemEditor();
 	deleteCardEditor();
 }
 
 void MainWindow::on_actionSupply_triggered() {
-    changeView(1);
+	changeView(1);
 	updateEditorView(MainWindow::EDITORTYPE::SUPPLY);
 	deleteCadetEditor();
 	deleteCardEditor();
 }
 
 void MainWindow::on_actionInspections_triggered() {
-    changeView(1);
+	changeView(1);
 	updateEditorView(MainWindow::EDITORTYPE::INSPECTIONLOGS);
 	deleteCadetEditor();
 	deleteItemEditor();
 }
 
 void MainWindow::on_actionFlights_Staff_triggered() {
-    changeView(4);
+	changeView(4);
 }
 
 void MainWindow::on_actionScores_triggered()
 {
-    changeView(2);
+	changeView(2);
 }
 
 const QString aboutHTML =
-        "<HTML>"
-        "<p><b>"+Constants::name+" "+Constants::version+"</b></p>\n"
-        "<p>"+Constants::name+" was designed for Civil Air Patrol's Mount Vernon Composite Squadron in the National Capital Wing, but may be used for other squadrons if desired.<p>\n"
-        "<p>"+Constants::name+" helps office staff keep track of supply and which cadets or senior members have taken certain items. "
-        "It also can show which cadets and flights are doing well with inspections.</p>"
-        "<p>"+Constants::name+" was developed as an open source project under the <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GPL-3.0 License</a>.</p>"
-        "<p>You can access the source code here:<br>"
-        "<a href=\"https://github.com/Stephen-Hamilton-C/MVCS-Office-Manager\">https://github.com/Stephen-Hamilton-C/MVCS-Office-Manager</a></p>"
-        "</HTML>";
+		"<HTML>"
+		"<p><b>"+Constants::name+" "+Constants::version+"</b></p>\n"
+		"<p>"+Constants::name+" was designed for Civil Air Patrol's Mount Vernon Composite Squadron in the National Capital Wing, but may be used for other squadrons if desired.<p>\n"
+		"<p>"+Constants::name+" helps office staff keep track of supply and which cadets or senior members have taken certain items. "
+		"It also can show which cadets and flights are doing well with inspections.</p>"
+		"<p>"+Constants::name+" was developed as an open source project under the <a href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GPL-3.0 License</a>.</p>"
+		"<p>You can access the source code here:<br>"
+		"<a href=\"https://github.com/Stephen-Hamilton-C/MVCS-Office-Manager\">https://github.com/Stephen-Hamilton-C/MVCS-Office-Manager</a></p>"
+		"</HTML>";
 
 void MainWindow::on_action_About_triggered() {
-    QMessageBox::about(this, "About "+Constants::name, aboutHTML);
+	QMessageBox::about(this, "About "+Constants::name, aboutHTML);
 }
 
 void MainWindow::on_actionAbout_Qt_triggered() {
-    QApplication::aboutQt();
+	QApplication::aboutQt();
 }
 
 void MainWindow::on_action_Save_triggered() {
-    DataManager::writeToFile();
+	DataManager::writeToFile();
 }
 
 void MainWindow::on_editorNew_clicked() {
@@ -331,18 +331,18 @@ void MainWindow::on_editorNew_clicked() {
 			break;
 		}
 		case MainWindow::EDITORTYPE::SUPPLY: {
-            //Make new supply item dialog appear
-            supplyEditorWindow = new SupplyEditor(this, this);
-            supplyEditorWindow->show();
-            supplyEditorWindow->setWindowTitle("New Supply Item");
-            break;
+			//Make new supply item dialog appear
+			supplyEditorWindow = new SupplyEditor(this, this);
+			supplyEditorWindow->show();
+			supplyEditorWindow->setWindowTitle("New Supply Item");
+			break;
 		}
 		case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
 			//Make new inspection log appear
 			cardEditorWindow = new InspectionEditor(this, this);
 			cardEditorWindow->show();
 			cardEditorWindow->setWindowTitle("New Inspection Log");
-            break;
+			break;
 		}
 	}
 }
@@ -360,7 +360,7 @@ void MainWindow::on_action_Load_triggered()
 {
 	QString filePath = QFileDialog::getOpenFileName(this, "Open Data File", QString(), "JSON Files (*.json)");
 	if(!filePath.isEmpty()){
-        DataManager::readFromFile(filePath);
+		DataManager::readFromFile(filePath);
 
 		updateEditorView();
 	}
@@ -368,27 +368,27 @@ void MainWindow::on_action_Load_triggered()
 
 void MainWindow::on_actionSave_as_triggered()
 {
-    QString filePath = QFileDialog::getSaveFileName(this, "Save Data File", DataManager::getFilePath(), "JSON Files (*.json)");
+	QString filePath = QFileDialog::getSaveFileName(this, "Save Data File", DataManager::getFilePath(), "JSON Files (*.json)");
 
-    //Automatically add .json extension
-    QString extension = filePath.right(5);
-    if(extension.toLower() != ".json"){
-        filePath += ".json";
-    }
+	//Automatically add .json extension
+	QString extension = filePath.right(5);
+	if(extension.toLower() != ".json"){
+		filePath += ".json";
+	}
 
 	if(!filePath.isEmpty()){
-        DataManager::writeToFile(filePath);
+		DataManager::writeToFile(filePath);
 	}
 }
 
 void MainWindow::on_actionNew_triggered()
 {
-    //TODO: Check if need to save and prompt before making new file
-    if(dataDirty){
-        on_actionSave_as_triggered();
-    }
+	//TODO: Check if need to save and prompt before making new file
+	if(dataDirty){
+		on_actionSave_as_triggered();
+	}
 
-    DataManager::newFile();
+	DataManager::newFile();
 
-    updateEditorView();
+	updateEditorView();
 }

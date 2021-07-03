@@ -16,31 +16,31 @@
 class SupplyItem: public Item {
 public:
 
-    void takeSnapshot() override;
+	void takeSnapshot() override;
 
-    SupplyItem();
-    SupplyItem(QString uuid, QString name, QString category, int count, int lowCountThreshold = 0, QVariantMap properties = QVariantMap());
+	SupplyItem();
+	SupplyItem(QString uuid, QString name, QString category, int count, int lowCountThreshold = 0, QVariantMap properties = QVariantMap());
 
-    QString name;
-    QString category = "Miscellaneous";
-    int count;
-    int lowCountThreshold;
-    QVariantMap properties;
+	QString name;
+	QString category = "Miscellaneous";
+	int count;
+	int lowCountThreshold;
+	QVariantMap properties;
 
-    /**
-     * @brief see Serializable::read
-     */
-    void read(const QJsonObject& json) override;
-    /**
-     * @brief see Serializable::write
-     */
-    void write(QJsonObject& json) const override;
+	/**
+	 * @brief see Serializable::read
+	 */
+	void read(const QJsonObject& json) override;
+	/**
+	 * @brief see Serializable::write
+	 */
+	void write(QJsonObject& json) const override;
 
 	QString toString() const;
 
 private:
 
-    static int _day;
+	static int _day;
 
 };
 

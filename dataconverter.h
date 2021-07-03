@@ -14,9 +14,9 @@
 class DataConverter
 {
 public:
-    DataConverter();
+	DataConverter();
 
-    static void convert(QJsonObject &json);
+	static void convert(QJsonObject &json);
 };
 
 #endif // DATACONVERTER_H

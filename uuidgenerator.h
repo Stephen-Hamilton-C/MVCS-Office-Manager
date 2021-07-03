@@ -14,21 +14,21 @@
 class UUIDGenerator
 {
 public:
-    UUIDGenerator();
+	UUIDGenerator();
 
-    enum IDType {
-        STANDARD,
-        CADET,
-        SUPPLY,
-        CARD,
-        CHANGE
-    };
+	enum IDType {
+		STANDARD,
+		CADET,
+		SUPPLY,
+		CARD,
+		CHANGE
+	};
 
-    static QString generateUUID(IDType idType = IDType::STANDARD, QString uuid = "");
+	static QString generateUUID(IDType idType = IDType::STANDARD, QString uuid = "");
 
 private:
 
-    static void removeBraces(QString &uuid);
+	static void removeBraces(QString &uuid);
 
 };
 

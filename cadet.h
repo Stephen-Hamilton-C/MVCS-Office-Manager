@@ -20,28 +20,28 @@
 class Cadet: public Item {
 public:
 
-    void takeSnapshot() override;
+	void takeSnapshot() override;
 
-    enum GRADE {
+	enum GRADE {
 		CADET = 0,
 		SENIORMEMBER = 1
-    };
+	};
 
-    enum RANK {
-        VISITOR,
+	enum RANK {
+		VISITOR,
 
-        //Cadet ranks
-        BASIC,   //Airman Basic
-        AMN,     //Airman
-        A1C,     //Airman 1st Class
-        SRA,     //Senior Airman
-        SSGT,    //Staff Sergeant
-        TSGT,    //Technical Sergeant
-        MSGT,    //Master Sergeant
-        SMSGT,   //Senior Master Sergeant
-        CMSGT,   //Chief Master Sergeant
+		//Cadet ranks
+		BASIC,   //Airman Basic
+		AMN,     //Airman
+		A1C,     //Airman 1st Class
+		SRA,     //Senior Airman
+		SSGT,    //Staff Sergeant
+		TSGT,    //Technical Sergeant
+		MSGT,    //Master Sergeant
+		SMSGT,   //Senior Master Sergeant
+		CMSGT,   //Chief Master Sergeant
 
-        //Shared with SMs and Cadets
+		//Shared with SMs and Cadets
 		LT2ND,   //2nd Lieutenant
 		LT1ST,   //1st Liutenant
 		CAPT,    //Captain
@@ -49,48 +49,48 @@ public:
 		LTCOL,   //Lieutenant Colonel
 		COL,     //Colonel
 
-        //SM ranks
+		//SM ranks
 		SM,      //Senior Member
 		FO,      //Flight Officer
 		TFO,     //Technical Flight Officer
 		SFO,     //Senior Flight Officer
 		BRIGGEN, //Brigadier General
 		MAJGEN   //Major General
-    };
+	};
 
-    enum FLIGHT {
-        ALPHA,
-        BRAVO,
-        CHARLIE,
-        DELTA,
-        ECHO,
-        FOXTROT,
-        GOLF,
-        HOTEL,
-        INDIA,
-        JULIET,
-        KILO,
-        LIMA,
-        MIKE,
-        NOVEMBER,
-        OSCAR,
-        PAPA,
-        QUEBEC,
-        ROMEO,
-        SIERRA,
-        TANGO,
-        UNIFORM,
-        VICTOR,
-        WHISKEY,
-        XRAY,
-        YANKEE,
-        ZULU,
+	enum FLIGHT {
+		ALPHA,
+		BRAVO,
+		CHARLIE,
+		DELTA,
+		ECHO,
+		FOXTROT,
+		GOLF,
+		HOTEL,
+		INDIA,
+		JULIET,
+		KILO,
+		LIMA,
+		MIKE,
+		NOVEMBER,
+		OSCAR,
+		PAPA,
+		QUEBEC,
+		ROMEO,
+		SIERRA,
+		TANGO,
+		UNIFORM,
+		VICTOR,
+		WHISKEY,
+		XRAY,
+		YANKEE,
+		ZULU,
 
-        TRAINING,
-        STAFF,
-        UNASSIGNED
-    };
-    
+		TRAINING,
+		STAFF,
+		UNASSIGNED
+	};
+
 	/**
 	 * @brief How a name should be formatted.
 	 * LASTFIRST: Last name, First name (Hamilton, Stephen)
@@ -98,23 +98,23 @@ public:
 	 * GRADELASTFIRST: Grade/Rank Last name, First name (C/2Lt Hamilton, Stephen)
 	 * GRADEFIRSTLAST: Grade/Rank First name Last name (C/2Lt Stephen Hamilton)
 	 */
-    enum NAMEFORMAT {
-        LASTFIRST,
-        FIRSTLAST,
+	enum NAMEFORMAT {
+		LASTFIRST,
+		FIRSTLAST,
 		GRADELASTFIRST,
 		GRADEFIRSTLAST
-    };
+	};
 
-    int capid;
+	int capid;
 	/**
 	 * @brief Cadet or Senior Member
 	 */
-    GRADE grade;
-    RANK rank;
+	GRADE grade;
+	RANK rank;
 	QString firstName;
 	QString lastName;
-    FLIGHT flight;
-    QString notes;
+	FLIGHT flight;
+	QString notes;
 
 	/**
 	 * @brief The Complete Setup constructor.
@@ -127,7 +127,7 @@ public:
 	 * @param flight The flight this member is currently in.
 	 */
 	Cadet(QString uuid, int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes);
-    Cadet();
+	Cadet();
 
 	/**
 	 * @brief Converts a RANK enum into a human readable QString. See `Cadet::getShortRankStr(RANK rank)` for a shorter QString.
@@ -198,21 +198,21 @@ public:
 	 */
 	int getPhase() const;
 
-    /**
-     * @brief see Serializable::read
-     */
-    void read(const QJsonObject& json) override;
-    /**
-     * @brief see Serializable::write
-     */
-    void write(QJsonObject& json) const override;
+	/**
+	 * @brief see Serializable::read
+	 */
+	void read(const QJsonObject& json) override;
+	/**
+	 * @brief see Serializable::write
+	 */
+	void write(QJsonObject& json) const override;
 
 	/**
 	 * @brief Debug purposes.
 	 */
-    QString toString();
+	QString toString();
 
-    static int _day;
+	static int _day;
 
 };
 
