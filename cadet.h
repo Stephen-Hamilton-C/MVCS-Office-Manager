@@ -20,7 +20,7 @@
 class Cadet: public Item {
 public:
 
-    void changeMade() override;
+    void takeSnapshot() override;
 
     enum GRADE {
 		CADET = 0,

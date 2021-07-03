@@ -10,7 +10,7 @@
 class Item: public Serializable {
 public:
 
-    virtual void changeMade() = 0;
+    virtual void takeSnapshot() = 0;
 
     /**
      * @brief The identifier used in the `DataManager` that indexes this member

@@ -13,7 +13,7 @@
 
 int Cadet::_day = 0;
 
-void Cadet::changeMade()
+void Cadet::takeSnapshot()
 {
     ChangesManager::createSnapshot(
                 this->uuid,

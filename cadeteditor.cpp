@@ -113,7 +113,7 @@ void CadetEditor::on_buttonBox_accepted() {
 					   ui->notesEdit->toPlainText());
         DataManager::cadets.insert(newCadet.uuid, newCadet);
 
-        newCadet.changeMade();
+        newCadet.takeSnapshot();
 
         //Show status message that the cadet was just created
         mainWindow->showStatusMessage("Created "+Cadet::getGradeStr(Cadet::GRADE(ui->gradeBox->currentIndex()))+" "+ui->lastNameEdit->text()+".");
@@ -129,7 +129,7 @@ void CadetEditor::on_buttonBox_accepted() {
 		cadet->flight = Constants::comboBox_Flight[ui->flightBox->currentText()];
 		cadet->notes = ui->notesEdit->toPlainText();
 
-        cadet->changeMade();
+        cadet->takeSnapshot();
 
         //Show status message that the cadet was just edited
         mainWindow->showStatusMessage("Edited "+cadet->getGradeStr()+" "+cadet->lastName+".");
