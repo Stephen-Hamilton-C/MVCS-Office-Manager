@@ -32,3 +32,5 @@ Needed and planned features will be placed into this file.
 - [x] See if sets exist in C++ or Qt, and store categories in a set
 - [ ] Remove context help from windows, or add helps to elements
 - [ ] Make DataConverter convert properties so that items don't have the "item_" in the key for each property of an item. It seems redundant to have an array of cadets and for each property of each cadet to start with "cadet_"
+- [ ] Turn all the methods with the huge switch statements into constant maps
+- [ ] Make maps private in DataManager so the items map can be utilized
