@@ -41,7 +41,7 @@ public:
     /**
      * @brief Item categories that were found from loaded items.
      */
-    static QSet<QString> itemCategories;
+    static QSet<QString> supplyCategories;
 
     static QString filePath;
 

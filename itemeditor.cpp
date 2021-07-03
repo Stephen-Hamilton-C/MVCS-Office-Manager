@@ -29,7 +29,7 @@ ItemEditor::ItemEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
     model->setHorizontalHeaderLabels(Constants::itemPropertyTableHeaders);
 
     QStandardItemModel* catModel = new QStandardItemModel();
-    QSetIterator<QString> i(DataManager::itemCategories);
+    QSetIterator<QString> i(DataManager::supplyCategories);
     while(i.hasNext()){
         catModel->appendRow(new QStandardItem(i.next()));
     }
@@ -124,8 +124,8 @@ void ItemEditor::on_buttonBox_accepted() {
 		mainWindow->showStatusMessage("Edited "+item->name+".");
 	}
 
-    if(!DataManager::itemCategories.contains(ui->categoryBox->currentText())){
-        DataManager::itemCategories.insert(ui->categoryBox->currentText());
+    if(!DataManager::supplyCategories.contains(ui->categoryBox->currentText())){
+        DataManager::supplyCategories.insert(ui->categoryBox->currentText());
     }
 
     DataManager::setDirty();
