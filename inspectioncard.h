@@ -97,15 +97,13 @@ public:
 	Cadet* getCadet() const;
 
 
-	/**
-	 * @brief Sets all variables to values read from the QJsonObject, if they exist, supplied by the `DataManager`.
-	 * @param A reference to a QJsonObject read from a file.
-	 */
+    /**
+     * @brief see Serializable::read
+     */
     void read(const QJsonObject& json) override;
-	/**
-	 * @brief Writes all variables to a QJsonObject to be written to a file later by the `DataManager`.
-	 * @param A reference to a QJsonObject that is to be written to a file.
-	 */
+    /**
+     * @brief see Serializable::write
+     */
     void write(QJsonObject& json) const override;
 
 	/**

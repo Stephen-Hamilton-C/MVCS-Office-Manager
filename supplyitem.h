@@ -27,7 +27,13 @@ public:
     int lowCountThreshold;
     QVariantMap properties;
 
+    /**
+     * @brief see Serializable::read
+     */
     void read(const QJsonObject& json) override;
+    /**
+     * @brief see Serializable::write
+     */
     void write(QJsonObject& json) const override;
 
 	QString toString() const;
