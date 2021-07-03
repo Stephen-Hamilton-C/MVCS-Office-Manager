@@ -33,7 +33,7 @@ public:
     /**
      * @brief All the supply items that have been entered into the program, indexed by their UUID.
      */
-    static QMap<QString, SupplyItem> items;
+    static QMap<QString, SupplyItem> supplyItems;
     /**
      * @brief All the inspection logs that have been entered into the program, indexed by their UUID.
      */

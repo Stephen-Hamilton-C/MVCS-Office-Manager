@@ -37,7 +37,7 @@ ItemEditor::ItemEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 
 	if(!id.isEmpty()){
 		this->id = id;
-		SupplyItem *item = &DataManager::items[id];
+		SupplyItem *item = &DataManager::supplyItems[id];
 
 		ui->nameEdit->setProperty("item_uuid", id);
 		ui->nameEdit->setText(item->name);
@@ -110,11 +110,11 @@ void ItemEditor::on_buttonBox_accepted() {
 						ui->countBox->value(),
 						ui->lowCountBox->value(),
 						properties);
-		DataManager::items.insert(item.uuid, item);
+		DataManager::supplyItems.insert(item.uuid, item);
 
 		mainWindow->showStatusMessage("Created "+item.name+".");
 	} else {
-		SupplyItem* item = &DataManager::items[ui->nameEdit->property("item_uuid").toString()];
+		SupplyItem* item = &DataManager::supplyItems[ui->nameEdit->property("item_uuid").toString()];
 		item->name = ui->nameEdit->text();
         item->category = ui->categoryBox->currentText();
 		item->count = ui->countBox->value();

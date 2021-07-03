@@ -23,7 +23,7 @@
 
 //Initialize static vars
 QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();
-QMap<QString, SupplyItem> DataManager::items = QMap<QString, SupplyItem>();
+QMap<QString, SupplyItem> DataManager::supplyItems = QMap<QString, SupplyItem>();
 QMap<QString, InspectionCard> DataManager::insCards = QMap<QString, InspectionCard>();
 QSet<QString> DataManager::itemCategories = QSet<QString>();
 QString DataManager::filePath = "";
@@ -55,12 +55,12 @@ void DataManager::read(QJsonObject json){
     //Supply items
     if(json.contains("supplyitems") && json["supplyitems"].isArray()){
         //Read supply items array and store each item
-        items.clear();
+        supplyItems.clear();
         for(int i = 0; i < json["supplyitems"].toArray().count(); i++){
             auto item = json["supplyitems"].toArray()[i];
             SupplyItem newItem;
             newItem.read(item.toObject());
-            items.insert(newItem.uuid, newItem);
+            supplyItems.insert(newItem.uuid, newItem);
             qDebug() << "Supply Item Read:" << newItem.toString();
 
             //Populate item categories
@@ -101,7 +101,7 @@ void DataManager::write(QJsonObject &json) {
 
     //Convert items to a QJsonObject
     QJsonArray jItems;
-    auto iItems = QMapIterator<QString, SupplyItem>(items);
+    auto iItems = QMapIterator<QString, SupplyItem>(supplyItems);
     while(iItems.hasNext()){
         iItems.next();
         QJsonObject itemJson;
@@ -178,7 +178,7 @@ void DataManager::writeToFile() {
 void DataManager::newFile(){
     filePath = "";
     cadets.clear();
-    items.clear();
+    supplyItems.clear();
     insCards.clear();
     itemCategories.clear();
 }

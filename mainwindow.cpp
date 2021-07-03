@@ -92,7 +92,7 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 		case MainWindow::EDITORTYPE::SUPPLY: {
 			model->setHorizontalHeaderLabels(Constants::itemTableHeader);
 
-			QMapIterator<QString, SupplyItem> i(DataManager::items);
+            QMapIterator<QString, SupplyItem> i(DataManager::supplyItems);
 			while(i.hasNext()){
 				i.next();
 
@@ -183,7 +183,7 @@ void MainWindow::on_editorEdit_clicked() {
 			case MainWindow::EDITORTYPE::SUPPLY: {
 				itemEditorWindow = new ItemEditor(this, this, id);
 				itemEditorWindow->show();
-				itemEditorWindow->setWindowTitle("Edit "+DataManager::items[id].name);
+                itemEditorWindow->setWindowTitle("Edit "+DataManager::supplyItems[id].name);
 				break;
 			}
 			case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
@@ -213,9 +213,9 @@ void MainWindow::on_editorDelete_clicked() {
 				break;
 			}
 			case MainWindow::EDITORTYPE::SUPPLY: {
-				if(DataManager::items.contains(id)){
-					QString name = DataManager::items[id].name;
-					DataManager::items.remove(id);
+                if(DataManager::supplyItems.contains(id)){
+                    QString name = DataManager::supplyItems[id].name;
+                    DataManager::supplyItems.remove(id);
 					showStatusMessage("Deleted "+name+".");
 					updateEditorView();
 				} else {
