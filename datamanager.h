@@ -43,8 +43,6 @@ public:
      */
     static QSet<QString> supplyCategories;
 
-    static QString filePath;
-
     /**
      * @brief Reads all data from a QJsonObject and loads it into memory.
      * @param The JSON file, converted into a QJsonObject.
@@ -61,9 +59,17 @@ public:
      */
     static void readFromFile();
     /**
+     * @brief Converts a JSON file at the given path to a QJsonObject and then stores it.
+     */
+    static void readFromFile(const QString filePath);
+    /**
      * @brief Writes stored data out to a JSON file.
      */
     static void writeToFile();
+    /**
+     * @brief Writes stored data to given path.
+     */
+    static void writeToFile(const QString filePath);
 
     static void newFile();
 
@@ -71,11 +77,15 @@ public:
 
     static void setDirty();
 
+    static QString getFilePath();
+
 private:
 
     QSettings settings;
 
     static MainWindow *mainWindow;
+
+    static QString filePath;
 
 };
 

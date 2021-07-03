@@ -265,7 +265,7 @@ void MainWindow::setDirty(const bool dirty)
     dataDirty = dirty;
 
     QString dirtyMarker = dirty ? "*" : "";
-    this->setWindowTitle(Constants::name + " - " + DataManager::filePath + dirtyMarker);
+    this->setWindowTitle(Constants::name + " - " + DataManager::getFilePath() + dirtyMarker);
 }
 
 void MainWindow::on_actionCadets_triggered() {
@@ -360,8 +360,7 @@ void MainWindow::on_action_Load_triggered()
 {
 	QString filePath = QFileDialog::getOpenFileName(this, "Open Data File", QString(), "JSON Files (*.json)");
 	if(!filePath.isEmpty()){
-		DataManager::filePath = filePath;
-		DataManager::readFromFile();
+        DataManager::readFromFile(filePath);
 
 		updateEditorView();
 	}
@@ -369,7 +368,7 @@ void MainWindow::on_action_Load_triggered()
 
 void MainWindow::on_actionSave_as_triggered()
 {
-	QString filePath = QFileDialog::getSaveFileName(this, "Save Data File", DataManager::filePath, "JSON Files (*.json)");
+    QString filePath = QFileDialog::getSaveFileName(this, "Save Data File", DataManager::getFilePath(), "JSON Files (*.json)");
 
     //Automatically add .json extension
     QString extension = filePath.right(5);
@@ -378,8 +377,7 @@ void MainWindow::on_actionSave_as_triggered()
     }
 
 	if(!filePath.isEmpty()){
-		DataManager::filePath = filePath;
-		DataManager::writeToFile();
+        DataManager::writeToFile(filePath);
 	}
 }
 

@@ -148,6 +148,12 @@ void DataManager::readFromFile() {
 
 }
 
+void DataManager::readFromFile(const QString filePath)
+{
+    DataManager::filePath = filePath;
+    readFromFile();
+}
+
 void DataManager::writeToFile() {
 
     mainWindow->showStatusMessage("Saving...");
@@ -175,6 +181,12 @@ void DataManager::writeToFile() {
 
 }
 
+void DataManager::writeToFile(const QString filePath)
+{
+    DataManager::filePath = filePath;
+    writeToFile();
+}
+
 void DataManager::newFile(){
     filePath = "";
     cadets.clear();
@@ -191,4 +203,9 @@ void DataManager::setMainWindow(MainWindow *value)
 void DataManager::setDirty()
 {
     mainWindow->setDirty(true);
+}
+
+QString DataManager::getFilePath()
+{
+    return filePath;
 }
