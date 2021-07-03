@@ -112,6 +112,8 @@ void SupplyEditor::on_buttonBox_accepted() {
 						properties);
         DataManager::supplyItems.insert(supplyItem.uuid, supplyItem);
 
+        supplyItem.takeSnapshot();
+
         mainWindow->showStatusMessage("Created "+supplyItem.name+".");
 	} else {
         SupplyItem* supplyItem = &DataManager::supplyItems[ui->nameEdit->property("item_uuid").toString()];
@@ -120,6 +122,8 @@ void SupplyEditor::on_buttonBox_accepted() {
         supplyItem->count = ui->countBox->value();
         supplyItem->lowCountThreshold = ui->lowCountBox->value();
         supplyItem->properties = properties;
+
+        supplyItem->takeSnapshot();
 
         mainWindow->showStatusMessage("Edited "+supplyItem->name+".");
 	}
