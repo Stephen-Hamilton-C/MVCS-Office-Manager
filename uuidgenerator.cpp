@@ -32,6 +32,8 @@ QString UUIDGenerator::generateUUID(IDType idType, QString uuid)
         case IDType::CHANGE:
             return "manager::change::"+uuid;
     }
+
+    return uuid;
 }
 
 void UUIDGenerator::removeBraces(QString &uuid)
