@@ -199,16 +199,14 @@ public:
 	 */
 	int getPhase() const;
 
-	/**
-	 * @brief Sets all variables to values read from the QJsonObject, if they exist, supplied by the `DataManager`.
-	 * @param A reference to a QJsonObject read from a file.
-	 */
-    void read(const QJsonObject& json);
-	/**
-	 * @brief Writes all variables to a QJsonObject to be written to a file later by the `DataManager`.
-	 * @param A reference to a QJsonObject that is to be written to a file.
-	 */
-    void write(QJsonObject& json) const;
+    /**
+     * @brief see Serializable::read
+     */
+    void read(const QJsonObject& json) override;
+    /**
+     * @brief see Serializable::write
+     */
+    void write(QJsonObject& json) const override;
 
 	/**
 	 * @brief Debug purposes.
