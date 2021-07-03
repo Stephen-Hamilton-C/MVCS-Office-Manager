@@ -16,6 +16,7 @@ class Cadet;
 class InspectionCard;
 class SupplyItem;
 class MainWindow;
+class Item;
 
 class QJsonObject;
 
@@ -42,6 +43,10 @@ public:
      * @brief Supply item categories that were found from loaded items.
      */
     static QSet<QString> supplyCategories;
+    /**
+     * @brief Any type of tracked item indexed by their UUID.
+     */
+    static QMap<QString, Item> items;
 
     /**
      * @brief Reads all data from a QJsonObject and loads it into memory.
