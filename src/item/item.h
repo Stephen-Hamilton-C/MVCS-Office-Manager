@@ -16,12 +16,12 @@
 class Item: public Serializable {
 public:
 
-    virtual void takeSnapshot() = 0;
+	virtual void takeSnapshot() = 0;
 
-    /**
-     * @brief The identifier used in the `DataManager` that indexes this member
-     */
-    QString uuid;
+	/**
+	 * @brief The identifier used in the `DataManager` that indexes this member
+	 */
+	QString uuid;
 };
 
 #endif // ITEM_H

@@ -25,27 +25,27 @@ SupplyEditor::SupplyEditor(MainWindow *mainWindow, QWidget *parent, QString id) 
 
 	qDebug() << "ID received:" << id;
 
-    QStandardItemModel* model = new QStandardItemModel();
-    model->setHorizontalHeaderLabels(Constants::supplyPropertyTableHeaders);
+	QStandardItemModel* model = new QStandardItemModel();
+	model->setHorizontalHeaderLabels(Constants::supplyPropertyTableHeaders);
 
-    QStandardItemModel* catModel = new QStandardItemModel();
-    QSetIterator<QString> i(DataManager::supplyCategories);
-    while(i.hasNext()){
-        catModel->appendRow(new QStandardItem(i.next()));
-    }
-    ui->categoryBox->setModel(catModel);
+	QStandardItemModel* catModel = new QStandardItemModel();
+	QSetIterator<QString> i(DataManager::supplyCategories);
+	while(i.hasNext()){
+		catModel->appendRow(new QStandardItem(i.next()));
+	}
+	ui->categoryBox->setModel(catModel);
 
 	if(!id.isEmpty()){
 		this->id = id;
-        SupplyItem *supplyItem = &DataManager::supplyItems[id];
+		SupplyItem *supplyItem = &DataManager::supplyItems[id];
 
 		ui->nameEdit->setProperty("item_uuid", id);
-        ui->nameEdit->setText(supplyItem->name);
-        ui->categoryBox->setCurrentText(supplyItem->category);
-        ui->countBox->setValue(supplyItem->count);
-        ui->lowCountBox->setValue(supplyItem->lowCountThreshold);
+		ui->nameEdit->setText(supplyItem->name);
+		ui->categoryBox->setCurrentText(supplyItem->category);
+		ui->countBox->setValue(supplyItem->count);
+		ui->lowCountBox->setValue(supplyItem->lowCountThreshold);
 
-        QMapIterator<QString, QVariant> i(supplyItem->properties);
+		QMapIterator<QString, QVariant> i(supplyItem->properties);
 		while(i.hasNext()){
 			i.next();
 			model->appendRow(QList<QStandardItem*>() <<
@@ -53,11 +53,11 @@ SupplyEditor::SupplyEditor(MainWindow *mainWindow, QWidget *parent, QString id) 
 							 new QStandardItem(i.value().toString()));
 		}
 	} else {
-        ui->nameEdit->setProperty("item_uuid", UUIDGenerator::generateUUID(UUIDGenerator::SUPPLY));
-        ui->categoryBox->setCurrentText("Miscellaneous");
+		ui->nameEdit->setProperty("item_uuid", UUIDGenerator::generateUUID(UUIDGenerator::SUPPLY));
+		ui->categoryBox->setCurrentText("Miscellaneous");
 	}
 
-    ui->propertiesView->setModel(model);
+	ui->propertiesView->setModel(model);
 	ui->propertiesView->verticalHeader()->setVisible(false);
 	ui->propertiesView->setWordWrap(true);
 	ui->propertiesView->setTextElideMode(Qt::ElideMiddle);
@@ -66,7 +66,7 @@ SupplyEditor::SupplyEditor(MainWindow *mainWindow, QWidget *parent, QString id) 
 	ui->propertiesView->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 	ui->propertiesView->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);
 
-    ui->nameEdit->setFocus(Qt::FocusReason::TabFocusReason);
+	ui->nameEdit->setFocus(Qt::FocusReason::TabFocusReason);
 }
 
 
@@ -104,35 +104,35 @@ void SupplyEditor::on_buttonBox_accepted() {
 	constructPropertiesMap(properties);
 
 	if(id.isEmpty()){
-        SupplyItem supplyItem(ui->nameEdit->property("item_uuid").toString(),
+		SupplyItem supplyItem(ui->nameEdit->property("item_uuid").toString(),
 						ui->nameEdit->text(),
-                        ui->categoryBox->currentText(),
+						ui->categoryBox->currentText(),
 						ui->countBox->value(),
 						ui->lowCountBox->value(),
 						properties);
-        DataManager::supplyItems.insert(supplyItem.uuid, supplyItem);
+		DataManager::supplyItems.insert(supplyItem.uuid, supplyItem);
 
-        supplyItem.takeSnapshot();
+		supplyItem.takeSnapshot();
 
-        mainWindow->showStatusMessage("Created "+supplyItem.name+".");
+		mainWindow->showStatusMessage("Created "+supplyItem.name+".");
 	} else {
-        SupplyItem* supplyItem = &DataManager::supplyItems[ui->nameEdit->property("item_uuid").toString()];
-        supplyItem->name = ui->nameEdit->text();
-        supplyItem->category = ui->categoryBox->currentText();
-        supplyItem->count = ui->countBox->value();
-        supplyItem->lowCountThreshold = ui->lowCountBox->value();
-        supplyItem->properties = properties;
+		SupplyItem* supplyItem = &DataManager::supplyItems[ui->nameEdit->property("item_uuid").toString()];
+		supplyItem->name = ui->nameEdit->text();
+		supplyItem->category = ui->categoryBox->currentText();
+		supplyItem->count = ui->countBox->value();
+		supplyItem->lowCountThreshold = ui->lowCountBox->value();
+		supplyItem->properties = properties;
 
-        supplyItem->takeSnapshot();
+		supplyItem->takeSnapshot();
 
-        mainWindow->showStatusMessage("Edited "+supplyItem->name+".");
+		mainWindow->showStatusMessage("Edited "+supplyItem->name+".");
 	}
 
-    if(!DataManager::supplyCategories.contains(ui->categoryBox->currentText())){
-        DataManager::supplyCategories.insert(ui->categoryBox->currentText());
-    }
+	if(!DataManager::supplyCategories.contains(ui->categoryBox->currentText())){
+		DataManager::supplyCategories.insert(ui->categoryBox->currentText());
+	}
 
-    DataManager::setDirty();
+	DataManager::setDirty();
 
 	mainWindow->updateEditorView(MainWindow::EDITORTYPE::SUPPLY);
 	mainWindow->deleteItemEditor();
@@ -142,7 +142,7 @@ void SupplyEditor::on_createProperty_clicked() {
 	QAbstractItemModel* model = ui->propertiesView->model();
 	QStandardItemModel* smodel = new QStandardItemModel();
 
-    smodel->setHorizontalHeaderLabels(Constants::supplyPropertyTableHeaders);
+	smodel->setHorizontalHeaderLabels(Constants::supplyPropertyTableHeaders);
 
 	//model->rowCount is freaking gay
 	int rows;

@@ -25,8 +25,8 @@ class SupplyEditor : public QDialog
 	Q_OBJECT
 
 public:
-    explicit SupplyEditor(MainWindow *mainWindow, QWidget *parent = nullptr, QString id = "");
-    ~SupplyEditor();
+	explicit SupplyEditor(MainWindow *mainWindow, QWidget *parent = nullptr, QString id = "");
+	~SupplyEditor();
 
 private slots:
 	void on_buttonBox_accepted();
@@ -38,15 +38,15 @@ private slots:
 private:
 	Ui::ItemEditor *ui;
 
-    /**
-     * @brief Creates a QVariantMap from the properties UI
-     * @param properties The variable to store the map into
-     */
+	/**
+	 * @brief Creates a QVariantMap from the properties UI
+	 * @param properties The variable to store the map into
+	 */
 	void constructPropertiesMap(QVariantMap &properties) const;
 
-    /**
-     * @brief The UUID of the ItemEditor
-     */
+	/**
+	 * @brief The UUID of the ItemEditor
+	 */
 	QString id;
 
 	MainWindow *mainWindow;

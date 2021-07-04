@@ -22,7 +22,7 @@ class CadetEditor;
  */
 class CadetEditor : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
 	/**
@@ -30,7 +30,7 @@ public:
 	 * @param The UUID of a Cadet to edit. Leave blank if creating a new Cadet.
 	 */
 	explicit CadetEditor(MainWindow *mainWindow, QWidget *parent = nullptr, QString id = "");
-    ~CadetEditor();
+	~CadetEditor();
 
 private slots:
 
@@ -38,7 +38,7 @@ private slots:
 	 * @brief Triggered when the member grade is ch anged
 	 * @param The new index of the gradeBox
 	 */
-    void on_gradeBox_currentIndexChanged(int index);
+	void on_gradeBox_currentIndexChanged(int index);
 
 	/**
 	 * @brief Triggered when Return or OK is pressed
@@ -51,17 +51,18 @@ private slots:
 	void on_buttonBox_rejected();
 
 private:
-    Ui::CadetEditor *ui;
+
+	Ui::CadetEditor *ui;
 
 	/**
 	 * @brief The UUID of a Cadet stored in `DataManager` to edit, or blank if creating a new Cadet.
 	 */
 	QString id = "";
 
-    /**
-     * @brief The MainWindow instance
-     */
-    MainWindow* mainWindow;
+	/**
+	 * @brief The MainWindow instance
+	 */
+	MainWindow* mainWindow;
 };
 
 #endif // CADETEDITOR_H
