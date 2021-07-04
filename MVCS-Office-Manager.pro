@@ -5,11 +5,16 @@
 # Licensed under the GNU General Public License V3
 # C/2Lt Stephen Hamilton, Civil Air Patrol
 
-QT       += core gui
+QT       += core gui charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
+INCLUDEPATH += \
+    src/ \
+    src/widgets/ \
+    src/widgets/editor/ \
+    src/item/ \
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -17,12 +22,13 @@ CONFIG += c++11
 
 SOURCES += \
     src/item/cadet.cpp \
+    src/widgets/changeschart.cpp \
     src/widgets/editor/cadeteditor.cpp \
     src/changesmanager.cpp \
     src/dataconverter.cpp \
     src/datamanager.cpp \
     src/item/inspectioncard.cpp \
-    src/widgets/editorinspectioneditor.cpp \
+    src/widgets/editor/inspectioneditor.cpp \
     src/itemsnapshot.cpp \
     src/main.cpp \
     src/widgets/mainwindow.cpp \
@@ -33,6 +39,7 @@ SOURCES += \
 
 HEADERS += \
     src/item/cadet.h \
+    src/widgets/changeschart.h \
     src/widgets/editor/cadeteditor.h \
     src/changesmanager.h \
     src/constants.h \
@@ -50,6 +57,7 @@ HEADERS += \
     src/widgets/verticallabel.h
 
 FORMS += \
+    src/widgets/changeschart.ui \
     src/widgets/editor/cadeteditor.ui \
     src/widgets/editor/inspectioneditor.ui \
     src/widgets/mainwindow.ui \
