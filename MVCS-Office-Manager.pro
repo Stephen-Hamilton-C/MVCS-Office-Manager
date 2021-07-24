@@ -11,10 +11,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 INCLUDEPATH += \
-    src/ \
+    src \
     src/widgets/ \
     src/widgets/editor/ \
-    src/item/ \
+    src/item/
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.

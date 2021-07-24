@@ -45,6 +45,16 @@ ItemSnapshot* ChangesManager::get(QString itemUUID, QDate date)
 	return _masterMap[itemUUID][date];
 }
 
+QList<ItemSnapshot*> ChangesManager::getAll()
+{
+	QList<ItemSnapshot*> pointerList;
+	for(int i = 0; i < _snapshots.length(); i++){
+		pointerList.append(&_snapshots[i]);
+	}
+
+	return pointerList;
+}
+
 void ChangesManager::read(const QJsonObject &json)
 {
 	if(json.contains("changes") && json["changes"].isArray()){

@@ -24,6 +24,7 @@ public:
 	static QList<ItemSnapshot*> fromItemUUID(QString itemUUID);
 	static QList<ItemSnapshot*> fromDate(QDate date);
 	static ItemSnapshot* get(QString itemUUID, QDate date);
+	static QList<ItemSnapshot*> getAll();
 
 	/**
 	 * @brief Sets all variables to values read from the QJsonObject, if they exist, supplied by the `DataManager`.

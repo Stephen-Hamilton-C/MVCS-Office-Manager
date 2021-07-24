@@ -15,6 +15,8 @@
 #include "cadeteditor.h"
 #include "supplyeditor.h"
 #include "inspectioneditor.h"
+#include "changeschart.h"
+#include "changesmanager.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -27,6 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 	DataManager::setMainWindow(this);
+
+	changesChart = new ChangesChart();
+	ui->chartsPage->layout()->addWidget(changesChart);
+	changesChart->show();
 
 	this->setWindowTitle(Constants::name);
 	this->showMaximized();
@@ -363,6 +369,7 @@ void MainWindow::on_action_Load_triggered()
 		DataManager::readFromFile(filePath);
 
 		updateEditorView();
+		//changesChart->refreshChart(ChangesManager::getAll());
 	}
 }
 
@@ -391,4 +398,10 @@ void MainWindow::on_actionNew_triggered()
 	DataManager::newFile();
 
 	updateEditorView();
+}
+
+void MainWindow::on_actionCharts_triggered()
+{
+	changeView(5);
+	changesChart->refreshChart(ChangesManager::getAll());
 }

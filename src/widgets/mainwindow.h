@@ -16,6 +16,7 @@ class QItemSelectionModel;
 class CadetEditor;
 class SupplyEditor;
 class InspectionEditor;
+class ChangesChart;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -101,7 +102,9 @@ private slots:
 
 	void on_actionScores_triggered();
 
-public slots:
+	void on_actionCharts_triggered();
+
+	public slots:
 
 	void on_actionSave_as_triggered();
 
@@ -126,6 +129,7 @@ private:
 	CadetEditor* cadetEditorWindow = nullptr;
 	SupplyEditor* supplyEditorWindow = nullptr;
 	InspectionEditor*  cardEditorWindow = nullptr;
+	ChangesChart* changesChart = nullptr;
 
 	EDITORTYPE currentEditorType;
 

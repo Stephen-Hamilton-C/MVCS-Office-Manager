@@ -20,7 +20,7 @@
    <string>Manager</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="Resources.qrc">
+   <iconset resource="../../Resources.qrc">
     <normaloff>:/imgs/squadron-logo</normaloff>:/imgs/squadron-logo</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -31,7 +31,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="logoPage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -41,7 +41,7 @@
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap resource="Resources.qrc">:/imgs/squadron-logo</pixmap>
+           <pixmap resource="../../Resources.qrc">:/imgs/squadron-logo</pixmap>
           </property>
           <property name="scaledContents">
            <bool>false</bool>
@@ -194,6 +194,9 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="chartsPage">
+       <layout class="QVBoxLayout" name="verticalLayout_3"/>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -232,6 +235,7 @@
     <addaction name="actionInspections"/>
     <addaction name="actionFlights_Staff"/>
     <addaction name="actionScores"/>
+    <addaction name="actionCharts"/>
    </widget>
    <addaction name="menu_Save"/>
    <addaction name="menuView"/>
@@ -252,6 +256,7 @@
    <addaction name="actionInspections"/>
    <addaction name="actionFlights_Staff"/>
    <addaction name="actionScores"/>
+   <addaction name="actionCharts"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Save">
@@ -367,10 +372,21 @@
      <string>F5</string>
     </property>
    </action>
+   <action name="actionCharts">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Charts</string>
+    </property>
+    <property name="shortcut">
+     <string>F6</string>
+    </property>
+   </action>
   </actiongroup>
  </widget>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../../Resources.qrc"/>
  </resources>
  <connections/>
 </ui>
