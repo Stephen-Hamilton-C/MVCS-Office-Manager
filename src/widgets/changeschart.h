@@ -30,8 +30,6 @@ class ChangesChart : public QWidget
 
 	private:
 		Ui::ChangesChart *ui;
-
-		QChart* _chart;
 };
 
 #endif // CHANGESCHART_H
