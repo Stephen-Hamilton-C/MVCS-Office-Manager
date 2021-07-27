@@ -18,16 +18,6 @@ ChangesChart::ChangesChart(QWidget *parent) :
 	ui(new Ui::ChangesChart)
 {
 	ui->setupUi(this);
-
-	_chart = new QChart();
-	_chart->createDefaultAxes();
-	_chart->
-	_chart->setTitle("Simple line chart example");
-
-	QChartView *chartView = new QChartView(_chart);
-	chartView->setRenderHint(QPainter::Antialiasing);
-	ui->verticalLayout->addWidget(chartView);
-	chartView->show();
 }
 
 ChangesChart::~ChangesChart()
@@ -37,26 +27,55 @@ ChangesChart::~ChangesChart()
 
 void ChangesChart::refreshChart(QList<ItemSnapshot*> snapshots)
 {
-	_chart->removeAllSeries();
-
 	QMap<QString, QLineSeries*> seriesMap;
 	for(int i = 0; i < snapshots.length(); i++){
 		QMapIterator<QString, QVariant> j(snapshots[i]->properties);
 		while(j.hasNext()){
 			j.next();
-			if(!seriesMap.contains(j.key())){
-				seriesMap.insert(j.key(), new QLineSeries());
-				seriesMap[j.key()]->setName(j.key());
+			QLineSeries* series = seriesMap[j.key()];
+			if(series == nullptr){
+				series = new QLineSeries();
+				seriesMap.insert(j.key(), series);
+				series->setName(j.key());
 			}
 
-			QLineSeries* series = seriesMap[j.key()];
-			series->append(QDateTime(snapshots[i]->date).toTime_t(), j.value().toInt());
+			QDateTime moment;
+			moment.setDate(snapshots[i]->date);
+
+			series->append(moment.toMSecsSinceEpoch(), j.value().toInt());
 		}
 	}
+
+	QChart* chart = new QChart();
+	chart->setTitle("Changes");
 
 	QMapIterator<QString, QLineSeries*> i(seriesMap);
 	while(i.hasNext()){
 		i.next();
-		_chart->addSeries(i.value());
+		chart->addSeries(i.value());
 	}
+
+	QDateTimeAxis *axisX = new QDateTimeAxis;
+	axisX->setTickCount(10);
+	axisX->setFormat("MM/dd/yy");
+	axisX->setTitleText("Date");
+	chart->addAxis(axisX, Qt::AlignBottom);
+	QMapIterator<QString, QLineSeries*> x(seriesMap);
+
+	QValueAxis *axisY = new QValueAxis;
+	axisY->setLabelFormat("%i");
+	axisY->setTitleText("Value");
+	chart->addAxis(axisY, Qt::AlignLeft);
+	QMapIterator<QString, QLineSeries*> y(seriesMap);
+	while(y.hasNext()){
+		y.next();
+		y.value()->attachAxis(axisX);
+		y.value()->attachAxis(axisY);
+	}
+
+	QChartView* chartView = new QChartView(chart);
+	chartView->setRenderHint(QPainter::Antialiasing);
+	ui->verticalLayout->addWidget(chartView);
+	chartView->show();
+
 }
