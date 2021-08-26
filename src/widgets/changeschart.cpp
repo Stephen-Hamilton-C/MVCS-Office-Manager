@@ -75,7 +75,7 @@ void ChangesChart::refreshChart(QList<ItemSnapshot*> snapshots)
 
 	QChartView* chartView = new QChartView(chart);
 	chartView->setRenderHint(QPainter::Antialiasing);
-	ui->verticalLayout->addWidget(chartView);
+	ui->chartFrame->layout()->addWidget(chartView);
 	chartView->show();
 
 }
