@@ -212,6 +212,12 @@ public:
 	 */
 	QString toString();
 
+private:
+
+	static QMap<FLIGHT, QString> _flightToStr;
+	static QMap<RANK, QString> _rankToStr;
+	static QMap<RANK, QString> _rankToShortStr;
+
 };
 
 #endif // CADET_H
