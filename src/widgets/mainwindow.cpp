@@ -376,7 +376,7 @@ void MainWindow::on_actionSave_as_triggered()
 		filePath += ".json";
 	}
 
-	if(!filePath.isEmpty()){
+	if(!filePath.isEmpty() && filePath.toLower() != ".json"){
 		DataManager::writeToFile(filePath);
 	}
 }
