@@ -34,3 +34,9 @@ Needed and planned features will be placed into this file.
 - [ ] Make DataConverter convert properties so that items don't have the "item_" in the key for each property of an item. It seems redundant to have an array of cadets and for each property of each cadet to start with "cadet_"
 - [ ] Turn all the methods with the huge switch statements into constant maps
 - [ ] Make maps private in DataManager so the items map can be utilized
+- [ ] Press enter to edit from table
+- [ ] Export as CSV
+- [ ] Add full stock count for supply items
+	- [ ] maybe replace low count with full count and alert when at 30% stock?
+- [ ] Export list of needed supply items
+- [ ] Don't show a comma if there's no first name in cadet display
