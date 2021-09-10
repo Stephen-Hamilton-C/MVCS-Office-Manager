@@ -13,8 +13,6 @@
 
 #include <QJsonArray>
 
-//MAKE A UUID GENERATOR
-
 DataConverter::DataConverter()
 {
 
