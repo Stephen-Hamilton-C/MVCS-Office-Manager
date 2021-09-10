@@ -71,6 +71,10 @@ public:
 
 	void setDirty(const bool dirty);
 
+	void editCadet(QString id);
+
+	void editSupplyItem(QString id);
+
 private slots:
 
 	void on_actionCadets_triggered();

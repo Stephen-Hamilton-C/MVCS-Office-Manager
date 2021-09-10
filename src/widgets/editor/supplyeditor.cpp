@@ -15,6 +15,7 @@
 #include "uuidgenerator.h"
 
 #include <QStandardItemModel>
+#include <QMessageBox>
 
 SupplyEditor::SupplyEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	QDialog(parent),
@@ -104,8 +105,35 @@ void SupplyEditor::on_buttonBox_accepted() {
 	constructPropertiesMap(properties);
 
 	if(id.isEmpty()){
+		QString itemName = ui->nameEdit->text();
+
+		QString possibleMatchID;
+		QMapIterator<QString, SupplyItem> i(DataManager::supplyItems);
+		while(i.hasNext()){
+			i.next();
+			if(i.value().name.toLower() == itemName.toLower()){
+				possibleMatchID = i.value().uuid;
+				break;
+			}
+		}
+
+		if(possibleMatchID.length() > 0){
+			SupplyItem* supplyItem = &DataManager::supplyItems[possibleMatchID];
+			//Ask if user wants to edit existing similar cadet instead
+			QMessageBox::StandardButton response = QMessageBox::question(this,
+																		 "Possible duplicate entry",
+																		 "Another item with a similar name already exists ("+supplyItem->name+"). Do you want to edit this item instead?",
+																		 QMessageBox::Yes | QMessageBox::No);
+
+			if(response == QMessageBox::Yes){
+				mainWindow->editSupplyItem(possibleMatchID);
+				delete this;
+				return;
+			}
+		}
+
 		SupplyItem supplyItem(ui->nameEdit->property("item_uuid").toString(),
-						ui->nameEdit->text(),
+						itemName,
 						ui->categoryBox->currentText(),
 						ui->countBox->value(),
 						ui->lowCountBox->value(),

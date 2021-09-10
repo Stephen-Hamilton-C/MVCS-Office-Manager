@@ -101,7 +101,7 @@ void MainWindow::updateEditorView(MainWindow::EDITORTYPE editorType){
 				QMapIterator<QString, QVariant> j(i.value().properties);
 				while (j.hasNext()) {
 					j.next();
-					propertiesStr += j.key() + ": "+j.value().toString() + "\n";
+					propertiesStr += j.key() + ": "+j.value().toString() + (j.hasNext() ? "\n" : "");
 				}
 
 				model->appendRow(QList<QStandardItem*>() <<
@@ -174,16 +174,11 @@ void MainWindow::on_editorEdit_clicked() {
 	if(!id.isEmpty()){
 		switch(currentEditorType){
 			case MainWindow::EDITORTYPE::CADET: {
-				Cadet* cadet = &DataManager::cadets[id];
-				cadetEditorWindow = new CadetEditor(this, this, id);
-				cadetEditorWindow->show();
-				cadetEditorWindow->setWindowTitle("Edit "+cadet->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
+				editCadet(id);
 				break;
 			}
 			case MainWindow::EDITORTYPE::SUPPLY: {
-				supplyEditorWindow = new SupplyEditor(this, this, id);
-				supplyEditorWindow->show();
-				supplyEditorWindow->setWindowTitle("Edit "+DataManager::supplyItems[id].name);
+				editSupplyItem(id);
 				break;
 			}
 			case MainWindow::EDITORTYPE::INSPECTIONLOGS: {
@@ -194,6 +189,19 @@ void MainWindow::on_editorEdit_clicked() {
 			}
 		}
 	}
+}
+
+void MainWindow::editCadet(QString id) {
+	Cadet* cadet = &DataManager::cadets[id];
+	cadetEditorWindow = new CadetEditor(this, this, id);
+	cadetEditorWindow->show();
+	cadetEditorWindow->setWindowTitle("Edit "+cadet->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
+}
+
+void MainWindow::editSupplyItem(QString id){
+	supplyEditorWindow = new SupplyEditor(this, this, id);
+	supplyEditorWindow->show();
+	supplyEditorWindow->setWindowTitle("Edit "+DataManager::supplyItems[id].name);
 }
 
 void MainWindow::on_editorDelete_clicked() {

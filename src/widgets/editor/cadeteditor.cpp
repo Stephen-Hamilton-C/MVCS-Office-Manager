@@ -14,6 +14,8 @@
 #include "constants.h"
 #include "uuidgenerator.h"
 
+#include <QMessageBox>
+
 CadetEditor::CadetEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	QDialog(parent),
 	ui(new Ui::CadetEditor)
@@ -102,13 +104,53 @@ void CadetEditor::on_buttonBox_accepted() {
 
 	//If creating a new cadet
 	if(id.isEmpty()){
+		QString lastName = ui->lastNameEdit->text();
+		QString firstName = ui->firstNameEdit->text();
+
+		QString possibleMatchID;
+		int matchWeight = 0;
+		QMapIterator<QString, Cadet> i(DataManager::cadets);
+		while(i.hasNext()){
+			i.next();
+			const Cadet cadet = i.value();
+			if(cadet.lastName.toLower() == lastName.toLower() &&
+					cadet.firstName.toLower() == firstName.toLower()){
+				//No better match than exact first and last names
+				possibleMatchID = cadet.uuid;
+				break;
+			} else if(cadet.lastName.toLower() == lastName.toLower() && matchWeight < 2){
+				possibleMatchID = cadet.uuid;
+				matchWeight = 2;
+			} else if(cadet.lastName.toLower() == firstName.toLower() && matchWeight < 1){
+				possibleMatchID = cadet.uuid;
+				matchWeight = 1;
+			} else if(cadet.firstName.toLower() == lastName.toLower() && matchWeight < 1){
+				possibleMatchID = cadet.uuid;
+				matchWeight = 1;
+			}
+		}
+
+		if(possibleMatchID.length() > 0){
+			Cadet* cadet = &DataManager::cadets[possibleMatchID];
+			//Ask if user wants to edit existing similar cadet instead
+			QMessageBox::StandardButton response = QMessageBox::question(this,
+																		 "Possible duplicate entry",
+																		 "Another cadet with a similar name already exists ("+cadet->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+"). Do you want to edit this cadet instead?",
+																		 QMessageBox::Yes | QMessageBox::No);
+
+			if(response == QMessageBox::Yes){
+				mainWindow->editCadet(possibleMatchID);
+				delete this;
+				return;
+			}
+		}
 		//Create a cadet object using a complete constructor and insert into the DataManager
 		Cadet newCadet(UUIDGenerator::generateUUID(UUIDGenerator::CADET),
 					   ui->idBox->text().toInt(),
 					   Cadet::GRADE(ui->gradeBox->currentIndex()),
 					   ui->gradeBox->currentIndex() == 0 ? Constants::comboBox_CadetRanks[ui->rankBox->currentText()] : Constants::comboBox_SMRanks[ui->rankBox->currentText()],
-					   ui->firstNameEdit->text(),
-					   ui->lastNameEdit->text(),
+					   firstName,
+					   lastName,
 					   Constants::comboBox_Flight[ui->flightBox->currentText()],
 					   ui->notesEdit->toPlainText());
 		DataManager::cadets.insert(newCadet.uuid, newCadet);
