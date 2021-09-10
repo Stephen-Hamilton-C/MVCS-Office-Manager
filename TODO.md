@@ -17,6 +17,8 @@ Needed and planned features will be placed into this file.
 - [x] Make a version string in each JSON file and make a converter class that converts the old version to the new version
 - [x] Changes made indicator, then make the confirm dialog not appear if no changes were made
 - [x] Pass MainWindow to children rather than make it singleton
+
+### QOL
 - [ ] Make DataManager automatically open last file if possible
 - [x] Make header indicating what category editor is open
 - [ ] Remove trailing newline in supply item properties
