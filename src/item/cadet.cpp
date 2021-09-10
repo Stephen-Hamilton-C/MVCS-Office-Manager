@@ -11,8 +11,6 @@
 #include "uuidgenerator.h"
 #include "changesmanager.h"
 
-int Cadet::_day = 0;
-
 void Cadet::takeSnapshot()
 {
 	ChangesManager::createSnapshot(
@@ -23,10 +21,8 @@ void Cadet::takeSnapshot()
 					{"rank", this->rank},
 					{"flight", this->flight}
 				},
-				QDate::currentDate().addDays(_day)
+				QDate::currentDate()
 				);
-
-	_day++;
 }
 
 Cadet::Cadet(QString uuid, int capid, GRADE grade, RANK rank, QString firstName, QString lastName, FLIGHT flight, QString notes) {

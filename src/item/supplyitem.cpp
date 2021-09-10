@@ -10,8 +10,6 @@
 #include "uuidgenerator.h"
 #include "changesmanager.h"
 
-int SupplyItem::_day = 0;
-
 SupplyItem::SupplyItem(QString uuid, QString name, QString category, int count, int lowCountThreshold, QVariantMap properties){
 	this->uuid = uuid;
 	this->name = name;
@@ -30,10 +28,8 @@ void SupplyItem::takeSnapshot()
 					{"count", this->count},
 					{"lowCountThreshold", this->lowCountThreshold}
 				},
-				QDate::currentDate().addDays(_day)
+				QDate::currentDate()
 				);
-
-	_day++;
 }
 
 SupplyItem::SupplyItem(){

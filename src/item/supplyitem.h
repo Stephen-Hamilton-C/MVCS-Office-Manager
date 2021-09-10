@@ -38,10 +38,6 @@ public:
 
 	QString toString() const;
 
-private:
-
-	static int _day;
-
 };
 
 #endif // SUPPLYITEM_H
