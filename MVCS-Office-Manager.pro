@@ -22,7 +22,6 @@ INCLUDEPATH += \
 
 SOURCES += \
     src/item/cadet.cpp \
-    src/widgets/changeschart.cpp \
     src/widgets/editor/cadeteditor.cpp \
     src/changesmanager.cpp \
     src/dataconverter.cpp \
@@ -39,7 +38,6 @@ SOURCES += \
 
 HEADERS += \
     src/item/cadet.h \
-    src/widgets/changeschart.h \
     src/widgets/editor/cadeteditor.h \
     src/changesmanager.h \
     src/constants.h \
@@ -57,7 +55,6 @@ HEADERS += \
     src/widgets/verticallabel.h
 
 FORMS += \
-    src/widgets/changeschart.ui \
     src/widgets/editor/cadeteditor.ui \
     src/widgets/editor/inspectioneditor.ui \
     src/widgets/mainwindow.ui \
