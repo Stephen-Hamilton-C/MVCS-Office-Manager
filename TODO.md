@@ -21,15 +21,15 @@ Needed and planned features will be placed into this file.
 ### QOL
 - [ ] Make DataManager automatically open last file if possible
 - [x] Make header indicating what category editor is open
-- [ ] Remove trailing newline in supply item properties
-- [ ] When creating new item, suggest editing an existing item if name already exists
+- [x] Remove trailing newline in supply item properties
+- [x] When creating new item, suggest editing an existing item if name already exists
 - [x] Remove "back to logo" when selecting the same screen
 - [ ] Requisition entry, automatically removes one count from an item
 - [x] See if sets exist in C++ or Qt, and store categories in a set
 - [ ] Remove context help from windows, or add helps to elements
 - [ ] Make DataConverter convert properties so that items don't have the "item_" in the key for each property of an item. It seems redundant to have an array of cadets and for each property of each cadet to start with "cadet_"
-- [ ] Turn all the methods with the huge switch statements into constant maps
-- [ ] Don't show a comma if there's no first name in cadet display
+- [x] Turn all the methods with the huge switch statements into constant maps
+- [x] Don't show a comma if there's no first name in cadet display
 
 ### Rewrite
 **Codebase is becoming unstable and needs a rewrite to accomodate extra features and better understanding of Qt**
