@@ -11,6 +11,88 @@
 #include "uuidgenerator.h"
 #include "changesmanager.h"
 
+QMap<Cadet::FLIGHT, QString> Cadet::_flightToStr {
+	{FLIGHT::ALPHA, "Alpha"},
+	{FLIGHT::BRAVO, "Bravo"},
+	{FLIGHT::CHARLIE, "Charlie"},
+	{FLIGHT::DELTA, "Delta"},
+	{FLIGHT::ECHO, "Echo"},
+	{FLIGHT::FOXTROT, "Foxtrot"},
+	{FLIGHT::GOLF, "Golf"},
+	{FLIGHT::HOTEL, "Hotel"},
+	{FLIGHT::INDIA, "India"},
+	{FLIGHT::JULIET, "Juliet"},
+	{FLIGHT::KILO, "Kilo"},
+	{FLIGHT::LIMA, "Lima"},
+	{FLIGHT::MIKE, "Mike"},
+	{FLIGHT::NOVEMBER, "November"},
+	{FLIGHT::OSCAR, "Oscar"},
+	{FLIGHT::PAPA, "Papa"},
+	{FLIGHT::QUEBEC, "Quebec"},
+	{FLIGHT::ROMEO, "Romeo"},
+	{FLIGHT::SIERRA, "Sierra"},
+	{FLIGHT::TANGO, "Tango"},
+	{FLIGHT::UNIFORM, "Uniform"},
+	{FLIGHT::VICTOR, "Victor"},
+	{FLIGHT::WHISKEY, "Whiskey"},
+	{FLIGHT::XRAY, "X-Ray"},
+	{FLIGHT::YANKEE, "Yankee"},
+	{FLIGHT::ZULU, "Zulu"},
+	{FLIGHT::TRAINING, "Training"},
+	{FLIGHT::STAFF, "Staff"},
+	{FLIGHT::UNASSIGNED, "Unassigned"}
+};
+
+QMap<Cadet::RANK, QString> Cadet::_rankToStr {
+	{RANK::BASIC, "Airman Basic"},
+	{RANK::AMN, "Airman"},
+	{RANK::A1C, "Airman 1st Class"},
+	{RANK::SRA, "Senior Airman"},
+	{RANK::SSGT, "Staff Sergeant"},
+	{RANK::TSGT, "Technical Sergeant"},
+	{RANK::MSGT, "Master Sergeant"},
+	{RANK::SMSGT, "Senior Master Sergeant"},
+	{RANK::CMSGT, "Chief Master Sergeant"},
+	{RANK::LT2ND, "2nd Lieutenant"},
+	{RANK::LT1ST, "1st Lieutenant"},
+	{RANK::CAPT, "Captain"},
+	{RANK::MAJ, "Major"},
+	{RANK::LTCOL, "Lieutenant Colonel"},
+	{RANK::COL, "Colonel"},
+	{RANK::SM, "Senior Member"},
+	{RANK::FO, "Flight Officer"},
+	{RANK::TFO, "Technical Flight Officer"},
+	{RANK::SFO, "Senior Flight Officer"},
+	{RANK::BRIGGEN, "Brigadier General"},
+	{RANK::MAJGEN, "Major General"},
+	{RANK::VISITOR, "Visitor"}
+};
+
+QMap<Cadet::RANK, QString> Cadet::_rankToShortStr {
+	{RANK::BASIC, "BASIC"},
+	{RANK::AMN, "Amn"},
+	{RANK::A1C, "A1C"},
+	{RANK::SRA, "SrA"},
+	{RANK::SSGT, "SSgt"},
+	{RANK::TSGT, "TSgt"},
+	{RANK::MSGT, "MSgt"},
+	{RANK::SMSGT, "SMSgt"},
+	{RANK::CMSGT, "CMSgt"},
+	{RANK::LT2ND, "2Lt"},
+	{RANK::LT1ST, "1Lt"},
+	{RANK::CAPT, "Capt"},
+	{RANK::MAJ, "Maj"},
+	{RANK::LTCOL, "LtCol"},
+	{RANK::COL, "Col"},
+	{RANK::SM, "SM"},
+	{RANK::FO, "FO"},
+	{RANK::TFO, "TFO"},
+	{RANK::SFO, "SFO"},
+	{RANK::BRIGGEN, "BrigGen"},
+	{RANK::MAJGEN, "MajGen"},
+	{RANK::VISITOR, "Visitor"}
+};
+
 void Cadet::takeSnapshot()
 {
 	ChangesManager::createSnapshot(
@@ -42,105 +124,15 @@ Cadet::Cadet(){
 }
 
 QString Cadet::getRankStr(RANK rank) {
-	switch(rank){
-		case RANK::BASIC:
-			return "Airman Basic";
-		case RANK::AMN:
-			return "Airman";
-		case RANK::A1C:
-			return "Airman 1st Class";
-		case RANK::SRA:
-			return "Senior Airman";
-		case RANK::SSGT:
-			return "Staff Sergeant";
-		case RANK::TSGT:
-			return "Technical Sergeant";
-		case RANK::MSGT:
-			return "Master Sergeant";
-		case RANK::SMSGT:
-			return "Senior Master Sergeant";
-		case RANK::CMSGT:
-			return "Chief Master Sergeant";
-		case RANK::LT2ND:
-			return "2nd Lieutenant";
-		case RANK::LT1ST:
-			return "1st Lieutenant";
-		case RANK::CAPT:
-			return "Captain";
-		case RANK::MAJ:
-			return "Major";
-		case RANK::LTCOL:
-			return "Lieutenant Colonel";
-		case RANK::COL:
-			return "Colonel";
-		case RANK::SM:
-			return "Senior Member";
-		case RANK::FO:
-			return "Flight Officer";
-		case RANK::TFO:
-			return "Technical Flight Officer";
-		case RANK::SFO:
-			return "Senior Flight Officer";
-		case RANK::BRIGGEN:
-			return "Brigadier General";
-		case RANK::MAJGEN:
-			return "Major General";
-		default:
-			return "Visitor";
-	}
+	return _rankToStr[rank];
 }
 
-QString Cadet::getRankStr() const{
+QString Cadet::getRankStr() const {
 	return getRankStr(this->rank);
 }
 
 QString Cadet::getShortRankStr(RANK rank) {
-	switch(rank){
-		case RANK::BASIC:
-			return "BASIC";
-		case RANK::AMN:
-			return "Amn";
-		case RANK::A1C:
-			return "A1C";
-		case RANK::SRA:
-			return "SrA";
-		case RANK::SSGT:
-			return "SSgt";
-		case RANK::TSGT:
-			return "TSgt";
-		case RANK::MSGT:
-			return "MSgt";
-		case RANK::SMSGT:
-			return "SMSgt";
-		case RANK::CMSGT:
-			return "CMSgt";
-		case RANK::LT2ND:
-			return "2Lt";
-		case RANK::LT1ST:
-			return "1Lt";
-		case RANK::CAPT:
-			return "Capt";
-		case RANK::MAJ:
-			return "Maj";
-		case RANK::LTCOL:
-			return "LtCol";
-		case RANK::COL:
-			return "Col";
-		case RANK::SM:
-			return "SM";
-		case RANK::FO:
-			return "FO";
-		case RANK::TFO:
-			return "TFO";
-		case RANK::SFO:
-			return "SFO";
-		case RANK::BRIGGEN:
-			return "BrigGen";
-		case RANK::MAJGEN:
-			return "MajGen";
-		default:
-			return "Visitor";
-	}
+	return _rankToShortStr[rank];
 }
 
 QString Cadet::getShortRankStr() const{
@@ -148,66 +140,7 @@ QString Cadet::getShortRankStr() const{
 }
 
 QString Cadet::getFlightStr(FLIGHT flight) {
-	switch (flight) {
-		case FLIGHT::ALPHA:
-			return "Alpha";
-		case FLIGHT::BRAVO:
-			return "Bravo";
-		case FLIGHT::CHARLIE:
-			return "Charlie";
-		case FLIGHT::DELTA:
-			return "Delta";
-		case FLIGHT::ECHO:
-			return "Echo";
-		case FLIGHT::FOXTROT:
-			return "Foxtrot";
-		case FLIGHT::GOLF:
-			return "Golf";
-		case FLIGHT::HOTEL:
-			return "Hotel";
-		case FLIGHT::INDIA:
-			return "India";
-		case FLIGHT::JULIET:
-			return "Juliet";
-		case FLIGHT::KILO:
-			return "Kilo";
-		case FLIGHT::LIMA:
-			return "Lima";
-		case FLIGHT::MIKE:
-			return "Mike";
-		case FLIGHT::NOVEMBER:
-			return "November";
-		case FLIGHT::OSCAR:
-			return "Oscar";
-		case FLIGHT::PAPA:
-			return "Papa";
-		case FLIGHT::QUEBEC:
-			return "Quebec";
-		case FLIGHT::ROMEO:
-			return "Romeo";
-		case FLIGHT::SIERRA:
-			return "Sierra";
-		case FLIGHT::TANGO:
-			return "Tango";
-		case FLIGHT::UNIFORM:
-			return "Uniform";
-		case FLIGHT::VICTOR:
-			return "Victor";
-		case FLIGHT::WHISKEY:
-			return "Whiskey";
-		case FLIGHT::XRAY:
-			return "X-Ray";
-		case FLIGHT::YANKEE:
-			return "Yankee";
-		case FLIGHT::ZULU:
-			return "Zulu";
-		case FLIGHT::TRAINING:
-			return "Training";
-		case FLIGHT::STAFF:
-			return "Staff";
-		default:
-			return "Unassigned";
-	}
+	return _flightToStr[flight];
 }
 
 QString Cadet::getFlightStr() const{
@@ -247,13 +180,13 @@ QString Cadet::getShortGradeStr(bool slash) const{
 QString Cadet::getFormattedName(NAMEFORMAT format) const{
 	switch (format) {
 		case NAMEFORMAT::FIRSTLAST:
-			return firstName+" "+lastName;
+			return firstName.length() != 0 ? firstName+" "+lastName : lastName;
 		case NAMEFORMAT::GRADEFIRSTLAST:
 			return getShortGradeStr()+getShortRankStr()+" "+getFormattedName(NAMEFORMAT::FIRSTLAST);
 		case NAMEFORMAT::GRADELASTFIRST:
 			return getShortGradeStr()+getShortRankStr()+" "+getFormattedName(NAMEFORMAT::LASTFIRST);
 		default: //NAMEFORMAT::LASTFIRST
-			return lastName+", "+firstName;
+			return firstName.length() != 0 ? lastName+", "+firstName : lastName;
 	}
 }
 
