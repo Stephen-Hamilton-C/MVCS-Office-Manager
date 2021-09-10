@@ -7,7 +7,10 @@
  * C/2Lt Stephen Hamilton, Civil Air Patrol
 */
 #include "changesmanager.h"
+#include "datamanager.h"
 #include "itemsnapshot.h"
+#include "cadet.h"
+#include "supplyitem.h"
 
 #include <QJsonArray>
 
@@ -53,6 +56,21 @@ void ChangesManager::read(const QJsonObject &json)
 			ItemSnapshot snapshot;
 			snapshot.read(json["changes"][i].toObject());
 			_snapshots.append(snapshot);
+		}
+	} else if(!json.contains("changes") ||
+			  (json.contains("changes") && json["changes"].isArray() && json["changes"].toArray().count() == 0)){
+		QMapIterator<QString, Cadet> i(DataManager::cadets);
+		while(i.hasNext()){
+			i.next();
+			Cadet* cadet = &DataManager::cadets[i.key()];
+			cadet->takeSnapshot();
+		}
+
+		QMapIterator<QString, SupplyItem> ii(DataManager::supplyItems);
+		while(ii.hasNext()){
+			ii.next();
+			SupplyItem* supplyItem = &DataManager::supplyItems[ii.key()];
+			supplyItem->takeSnapshot();
 		}
 	}
 
