@@ -20,6 +20,7 @@
 #include <QMessageBox>
 #include <QStandardItemModel>
 #include <QCloseEvent>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)

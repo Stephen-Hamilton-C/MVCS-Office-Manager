@@ -12,6 +12,7 @@
 #include "item.h"
 
 #include <QJsonObject>
+#include <QVariantMap>
 
 class SupplyItem: public Item {
 public:

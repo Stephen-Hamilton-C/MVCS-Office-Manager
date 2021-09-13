@@ -13,6 +13,7 @@
 #include "cadet.h"
 
 #include <QJsonObject>
+#include <QDate>
 
 /**
  * @brief Holds all data related to a single Inspection Log Entry

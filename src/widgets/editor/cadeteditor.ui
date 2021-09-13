@@ -134,6 +134,9 @@
          <pointsize>10</pointsize>
         </font>
        </property>
+       <property name="whatsThis">
+        <string>Notes you may have about the cadet. This may include information such as staff positions</string>
+       </property>
        <property name="placeholderText">
         <string>Notes</string>
        </property>

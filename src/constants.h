@@ -10,6 +10,8 @@
 #define CONSTANTS_H
 
 #include <QString>
+#include <QStringList>
+#include <QMap>
 #include "cadet.h"
 
 /**

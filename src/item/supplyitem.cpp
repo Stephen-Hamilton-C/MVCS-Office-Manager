@@ -10,6 +10,8 @@
 #include "uuidgenerator.h"
 #include "changesmanager.h"
 
+#include <QDebug>
+
 SupplyItem::SupplyItem(QString uuid, QString name, QString category, int count, int lowCountThreshold, QVariantMap properties){
 	this->uuid = uuid;
 	this->name = name;

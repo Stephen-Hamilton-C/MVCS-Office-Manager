@@ -11,6 +11,7 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QVariant>
 
 ItemSnapshot::ItemSnapshot()
 {

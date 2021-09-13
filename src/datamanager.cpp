@@ -21,6 +21,7 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QStandardPaths>
+#include <QDebug>
 
 //Initialize static vars
 QMap<QString, Cadet> DataManager::cadets = QMap<QString, Cadet>();

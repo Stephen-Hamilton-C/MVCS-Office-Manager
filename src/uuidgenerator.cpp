@@ -12,6 +12,8 @@
 #include "supplyitem.h"
 #include "inspectioncard.h"
 
+#include <QDebug>
+
 UUIDGenerator::UUIDGenerator()
 {
 
