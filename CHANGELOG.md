@@ -1,6 +1,6 @@
 # Change log
 
-## [Unreleased]
+## **[2021-09-16]**
 ### Fixed
 - New inspection window appearing with new supply item window
 - Dropdown appearance in new inspection window
