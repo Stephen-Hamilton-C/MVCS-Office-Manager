@@ -29,9 +29,16 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	DataManager::setMainWindow(this);
 
+	settings = new QSettings(settingsPath, QSettings::IniFormat);
+
 	this->setWindowTitle(Constants::name);
     this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 	this->showMaximized();
+
+	if(settings->contains(lastFileKey) && QFile::exists(settings->value(lastFileKey).toString())){
+		DataManager::readFromFile(settings->value(lastFileKey).toString());
+		updateEditorView();
+	}
 }
 
 MainWindow::~MainWindow()
@@ -40,6 +47,9 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::closeEvent(QCloseEvent *event){
+	settings->setValue(lastFileKey, DataManager::getFilePath());
+	settings->sync();
+
 	if(dataDirty){
 		event->ignore();
 

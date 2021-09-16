@@ -146,6 +146,7 @@ void DataManager::readFromFile() {
 		read(loadDoc.object());
 
 		mainWindow->showStatusMessage("Loaded from "+filePath);
+		mainWindow->setDirty(false);
 	} else {
 		QMessageBox::critical(mainWindow, "Unable to open", "An error occurred while trying to open file "+filePath);
 		mainWindow->showStatusMessage("Error occurred while opening file "+filePath);

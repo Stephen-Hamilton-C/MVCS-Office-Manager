@@ -10,6 +10,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSettings>
+#include <QStandardPaths>
+#include <QDir>
 
 class QItemSelectionModel;
 
@@ -75,6 +78,8 @@ public:
 
 	void editSupplyItem(QString id);
 
+	QSettings* settings;
+
 private slots:
 
 	void on_actionCadets_triggered();
@@ -134,5 +139,11 @@ private:
 	EDITORTYPE currentEditorType;
 
 	bool dataDirty = false;
+
+	const QString lastFileKey = "lastFile";
+	const QString settingsDirectory = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+	const QString settingsName = "config.ini";
+	const QString settingsPath = QDir::cleanPath(settingsDirectory + QDir::separator() + settingsName);
+
 };
 #endif // MAINWINDOW_H
