@@ -19,7 +19,7 @@ Needed and planned features will be placed into this file.
 - [x] Pass MainWindow to children rather than make it singleton
 
 ### QOL
-- [ ] Make DataManager automatically open last file if possible
+- [x] Make DataManager automatically open last file if possible
 - [x] Make header indicating what category editor is open
 - [x] Remove trailing newline in supply item properties
 - [x] When creating new item, suggest editing an existing item if name already exists
