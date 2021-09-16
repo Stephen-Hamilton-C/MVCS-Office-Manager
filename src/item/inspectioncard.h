@@ -9,15 +9,19 @@
 #ifndef INSPECTIONCARD_H
 #define INSPECTIONCARD_H
 
+#include "item.h"
 #include "cadet.h"
 
 #include <QJsonObject>
+#include <QDate>
 
 /**
  * @brief Holds all data related to a single Inspection Log Entry
  */
-class InspectionCard {
+class InspectionCard: public Item {
 public:
+
+	void takeSnapshot() override;
 
 	/**
 	 * @brief The three possible ratings a section can have.
@@ -39,12 +43,8 @@ public:
 	 */
 	InspectionCard(QString uuid, QString cadetUUID, QDate date,
 				   RATING appearanceScore, RATING garmentsScore, RATING accountrementsScore, RATING footwearScore, RATING bearingScore);
-    InspectionCard();
+	InspectionCard();
 
-	/**
-	 * @brief The identifier used in the `DataManager` that indexes this member.
-	 */
-	QString uuid;
 	/**
 	 * @brief The identifier of the cadet that received this inspection.
 	 */
@@ -60,14 +60,14 @@ public:
 	/**
 	 * @brief The date when this inspection was issued.
 	 */
-    QDate date;
+	QDate date;
 
 	//These are self-explanatory, no documentation needed.
-    RATING appearanceScore;
-    RATING garmentsScore;
-    RATING accountrementsScore;
-    RATING footwearScore;
-    RATING bearingScore;
+	RATING appearanceScore;
+	RATING garmentsScore;
+	RATING accountrementsScore;
+	RATING footwearScore;
+	RATING bearingScore;
 
 	/**
 	 * @brief Returns the numerical total points the cadet got on this inspection. Leadership phase does not affect the result.
@@ -99,20 +99,22 @@ public:
 
 
 	/**
-	 * @brief Sets all variables to values read from the QJsonObject, if they exist, supplied by the `DataManager`.
-	 * @param A reference to a QJsonObject read from a file.
+	 * @brief see Serializable::read
 	 */
-	void read(const QJsonObject& json);
+	void read(const QJsonObject& json) override;
 	/**
-	 * @brief Writes all variables to a QJsonObject to be written to a file later by the `DataManager`.
-	 * @param A reference to a QJsonObject that is to be written to a file.
+	 * @brief see Serializable::write
 	 */
-	void write(QJsonObject& json) const;
+	void write(QJsonObject& json) const override;
 
 	/**
 	 * @brief Debug purposes.
 	 */
-    QString toString();
+	QString toString();
+
+private:
+
+	static int _day;
 
 };
 

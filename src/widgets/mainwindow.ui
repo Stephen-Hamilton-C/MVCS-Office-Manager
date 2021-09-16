@@ -58,40 +58,7 @@
       </widget>
       <widget class="QWidget" name="editorPage">
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLineEdit" name="searchEdit">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="placeholderText">
-           <string>Search...</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="5">
-         <widget class="QTableView" name="editorView">
-          <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="2">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Preferred</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="2" column="4">
+        <item row="1" column="4">
          <widget class="QPushButton" name="editorNew">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -128,7 +95,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="2">
+        <item row="1" column="2">
          <widget class="QPushButton" name="editorDelete">
           <property name="minimumSize">
            <size>
@@ -150,7 +117,30 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="3">
+        <item row="1" column="0" colspan="2">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Preferred</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="0" colspan="5">
+         <widget class="QTableView" name="editorView">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
          <widget class="QPushButton" name="editorEdit">
           <property name="minimumSize">
            <size>
@@ -169,45 +159,18 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="searchButton">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>32</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>16777215</height>
-           </size>
-          </property>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="scoresPage">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
           <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>:/imgs/imgs/search.png</normaloff>:/imgs/imgs/search.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>32</width>
-            <height>32</height>
-           </size>
+           <string>Scores</string>
           </property>
          </widget>
         </item>
        </layout>
-      </widget>
-      <widget class="QWidget" name="supplyPage">
-       <layout class="QGridLayout" name="gridLayout_2"/>
       </widget>
       <widget class="QWidget" name="inspectionsPage">
        <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -241,13 +204,14 @@
      <x>0</x>
      <y>0</y>
      <width>758</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Save">
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="actionNew"/>
     <addaction name="action_Save"/>
     <addaction name="actionSave_as"/>
     <addaction name="action_Load"/>
@@ -259,7 +223,18 @@
     <addaction name="action_About"/>
     <addaction name="actionAbout_Qt"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="actionCadets"/>
+    <addaction name="actionSupply"/>
+    <addaction name="actionInspections"/>
+    <addaction name="actionFlights_Staff"/>
+    <addaction name="actionScores"/>
+   </widget>
    <addaction name="menu_Save"/>
+   <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
@@ -295,50 +270,6 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionCadets">
-   <property name="text">
-    <string>Cadets</string>
-   </property>
-   <property name="toolTip">
-    <string>(F1) View and manage Cadets and Senior Members</string>
-   </property>
-   <property name="shortcut">
-    <string>F1</string>
-   </property>
-  </action>
-  <action name="actionSupply">
-   <property name="text">
-    <string>Supply Items</string>
-   </property>
-   <property name="toolTip">
-    <string>(F2) View and manage squadron supply items</string>
-   </property>
-   <property name="shortcut">
-    <string>F2</string>
-   </property>
-  </action>
-  <action name="actionInspections">
-   <property name="text">
-    <string>Inspections</string>
-   </property>
-   <property name="toolTip">
-    <string>(F3) Look at inspection entries</string>
-   </property>
-   <property name="shortcut">
-    <string>F3</string>
-   </property>
-  </action>
-  <action name="actionFlights_Staff">
-   <property name="text">
-    <string>Flights &amp;&amp; Staff</string>
-   </property>
-   <property name="toolTip">
-    <string>(F4) Manage flights and their structure</string>
-   </property>
-   <property name="shortcut">
-    <string>F4</string>
-   </property>
-  </action>
   <action name="action_About">
    <property name="text">
     <string>&amp;About</string>
@@ -349,17 +280,6 @@
     <string>About &amp;Qt</string>
    </property>
   </action>
-  <action name="actionScores">
-   <property name="text">
-    <string>Scores</string>
-   </property>
-   <property name="toolTip">
-    <string>(F5) Scores</string>
-   </property>
-   <property name="shortcut">
-    <string>F5</string>
-   </property>
-  </action>
   <action name="actionSave_as">
    <property name="text">
     <string>Save &amp;as...</string>
@@ -368,6 +288,86 @@
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <actiongroup name="Views">
+   <action name="actionCadets">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Cadets</string>
+    </property>
+    <property name="toolTip">
+     <string>(F1) View and manage Cadets and Senior Members</string>
+    </property>
+    <property name="shortcut">
+     <string>F1</string>
+    </property>
+   </action>
+   <action name="actionSupply">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Supply Items</string>
+    </property>
+    <property name="toolTip">
+     <string>(F2) View and manage squadron supply items</string>
+    </property>
+    <property name="shortcut">
+     <string>F2</string>
+    </property>
+   </action>
+   <action name="actionInspections">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Inspections</string>
+    </property>
+    <property name="toolTip">
+     <string>(F3) Look at inspection entries</string>
+    </property>
+    <property name="shortcut">
+     <string>F3</string>
+    </property>
+   </action>
+   <action name="actionFlights_Staff">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Flights &amp;&amp; Staff</string>
+    </property>
+    <property name="toolTip">
+     <string>(F4) Manage flights and their structure</string>
+    </property>
+    <property name="shortcut">
+     <string>F4</string>
+    </property>
+   </action>
+   <action name="actionScores">
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Scores</string>
+    </property>
+    <property name="toolTip">
+     <string>(F5) Scores</string>
+    </property>
+    <property name="shortcut">
+     <string>F5</string>
+    </property>
+   </action>
+  </actiongroup>
  </widget>
  <resources>
   <include location="Resources.qrc"/>

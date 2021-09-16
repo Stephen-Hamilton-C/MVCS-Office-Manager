@@ -16,9 +16,9 @@ int main(int argc, char *argv[])
 	QCoreApplication::setApplicationName(Constants::name);
 	QCoreApplication::setApplicationVersion(Constants::version);
 
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+	QApplication a(argc, argv);
+	MainWindow w;
+	w.show();
 
-    return a.exec();
+	return a.exec();
 }

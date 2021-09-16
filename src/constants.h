@@ -10,6 +10,8 @@
 #define CONSTANTS_H
 
 #include <QString>
+#include <QStringList>
+#include <QMap>
 #include "cadet.h"
 
 /**
@@ -20,21 +22,21 @@ namespace Constants {
 	/**
 	 * @brief The display name of the application
 	 */
-    const QString name = "Office Manager";
+	const QString name = "Office Manager";
 	/**
 	 * @brief The current version of the application
 	 */
-	const QString version = "Alpha-2105";
+	const QString version = "Alpha-2107";
+	const int jsonVersion = 1;
 	/**
 	 * @brief The default name and extension that the data file is named
 	 */
-
 	const QString defaultSaveFileName = "MVCS-Manager-Data.json";
 
 	/**
-     * @brief The day of the week the squadron meets up. 1 = Monday, 7 = Sunday
-     */
-    const int meetingDay = 4;
+	 * @brief The day of the week the squadron meets up. 1 = Monday, 7 = Sunday
+	 */
+	const int meetingDay = 4;
 
 	/**
 	 * @brief The labels that show at the top of the cadet view
@@ -47,12 +49,12 @@ namespace Constants {
 	/**
 	 * @brief The labels that show at the top of the supply item view
 	 */
-    const QStringList itemTableHeader {"UUID", "Name", "Category", "Count", "Properties"};
+	const QStringList supplyTableHeader {"UUID", "Name", "Category", "Count", "Properties"};
 
 	/**
 	 * @brief The labels that show at the top of the properties view in the supply item editor
 	 */
-	const QStringList itemPropertyTableHeaders { "Name", "Value" };
+	const QStringList supplyPropertyTableHeaders { "Name", "Value" };
 
 	/**
 	  * @brief The display names for each cadet rank, in order.

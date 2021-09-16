@@ -11,6 +11,7 @@
 #include "mainwindow.h"
 #include "datamanager.h"
 #include "constants.h"
+#include "uuidgenerator.h"
 
 InspectionEditor::InspectionEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	QDialog(parent),
@@ -18,6 +19,7 @@ InspectionEditor::InspectionEditor(MainWindow *mainWindow, QWidget *parent, QStr
 {
 	ui->setupUi(this);
 	this->mainWindow = mainWindow;
+	this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 	//Setup flightBox selections
 	ui->flightBox->addItems(Constants::comboBox_Flight.keys());
@@ -25,7 +27,7 @@ InspectionEditor::InspectionEditor(MainWindow *mainWindow, QWidget *parent, QStr
 	//Setup cadetMap so cadets have a clean display name, yet can easily still find UUID from the formatted name.
 	cadetMap.clear();
 
-    //Generate the cadet combobox
+	//Generate the cadet combobox
 	cadetMap.insert("---Select One---", "");
 	QMapIterator<QString, Cadet> i(DataManager::cadets);
 	while(i.hasNext()){
@@ -33,24 +35,24 @@ InspectionEditor::InspectionEditor(MainWindow *mainWindow, QWidget *parent, QStr
 		cadetMap.insert(i.value().getFormattedName(Cadet::NAMEFORMAT::LASTFIRST), i.key());
 	}
 
-    //Update combobox with the map
+	//Update combobox with the map
 	ui->cadetBox->clear();
 	ui->cadetBox->addItems(cadetMap.keys());
 
 	if(id.isEmpty()){ //If creating a new log
-        //Set date selector to the last Thursday
-        QDate date = QDate::currentDate();
-        int dayOfWeek = date.dayOfWeek();
+		//Set date selector to the last Thursday
+		QDate date = QDate::currentDate();
+		int dayOfWeek = date.dayOfWeek();
 
-        if(dayOfWeek > Constants::meetingDay){
-            //It's still the same week, go back to the day
-            date = date.addDays(Constants::meetingDay - dayOfWeek);
-        } else if(dayOfWeek < Constants::meetingDay) {
-            //It's a week later, go back a week and forward to the day
-            date = date.addDays(-7 + Constants::meetingDay - dayOfWeek);
-        }
+		if(dayOfWeek > Constants::meetingDay){
+			//It's still the same week, go back to the day
+			date = date.addDays(Constants::meetingDay - dayOfWeek);
+		} else if(dayOfWeek < Constants::meetingDay) {
+			//It's a week later, go back a week and forward to the day
+			date = date.addDays(-7 + Constants::meetingDay - dayOfWeek);
+		}
 
-        ui->dateEdit->setDate(date);
+		ui->dateEdit->setDate(date);
 	} else if(DataManager::insCards.contains(id)){ //If editing an existing log
 		this->id = id;
 		InspectionCard* card = &DataManager::insCards[id];
@@ -60,7 +62,7 @@ InspectionEditor::InspectionEditor(MainWindow *mainWindow, QWidget *parent, QStr
 		ui->cadetBox->setCurrentText(card->getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
 		ui->dateEdit->setDate(card->date);
 
-        //Update radio buttons
+		//Update radio buttons
 		setRadioCheck("appearance", card->appearanceScore);
 		setRadioCheck("garments", card->garmentsScore);
 		setRadioCheck("accountrements", card->accountrementsScore);
@@ -68,7 +70,7 @@ InspectionEditor::InspectionEditor(MainWindow *mainWindow, QWidget *parent, QStr
 		setRadioCheck("bearing", card->bearingScore);
 	}
 
-    ui->cadetBox->setFocus(Qt::FocusReason::TabFocusReason);
+	ui->cadetBox->setFocus(Qt::FocusReason::TabFocusReason);
 
 }
 
@@ -173,7 +175,7 @@ void InspectionEditor::on_buttonBox_accepted() {
 	//If creating a new inspection log entry
 	if(id.isEmpty()){
 		//Create an inspection log object using a complete constructor and insert into the DataManager
-		InspectionCard card(QUuid::createUuid().toString(),
+		InspectionCard card(UUIDGenerator::generateUUID(UUIDGenerator::CARD),
 							cadetMap[ui->cadetBox->currentText()],
 							ui->dateEdit->date(),
 							getScoreFromRadio("appearance"),
@@ -206,6 +208,8 @@ void InspectionEditor::on_buttonBox_accepted() {
 
 		mainWindow->showStatusMessage("Edited inspection log for "+card->getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST)+".");
 	}
+
+	DataManager::setDirty();
 
 	//Refresh inspection log display and close editor window
 	mainWindow->updateEditorView(MainWindow::EDITORTYPE::INSPECTIONLOGS);
