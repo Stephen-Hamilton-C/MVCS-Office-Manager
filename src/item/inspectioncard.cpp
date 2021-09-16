@@ -11,6 +11,7 @@
 #include "uuidgenerator.h"
 
 #include <QJsonArray>
+#include <QDebug>
 
 InspectionCard::InspectionCard() {
 	qDebug() << "Creating empty Inspection Card";

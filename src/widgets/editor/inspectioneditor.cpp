@@ -19,6 +19,7 @@ InspectionEditor::InspectionEditor(MainWindow *mainWindow, QWidget *parent, QStr
 {
 	ui->setupUi(this);
 	this->mainWindow = mainWindow;
+	this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 	//Setup flightBox selections
 	ui->flightBox->addItems(Constants::comboBox_Flight.keys());

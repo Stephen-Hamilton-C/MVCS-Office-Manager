@@ -20,6 +20,7 @@
 #include <QMessageBox>
 #include <QStandardItemModel>
 #include <QCloseEvent>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -29,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
 	DataManager::setMainWindow(this);
 
 	this->setWindowTitle(Constants::name);
+    this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 	this->showMaximized();
 }
 

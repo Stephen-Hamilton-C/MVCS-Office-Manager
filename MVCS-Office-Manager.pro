@@ -5,7 +5,7 @@
 # Licensed under the GNU General Public License V3
 # C/2Lt Stephen Hamilton, Civil Air Patrol
 
-QT       += core gui charts
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

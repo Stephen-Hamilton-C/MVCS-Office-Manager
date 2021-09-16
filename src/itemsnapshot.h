@@ -12,6 +12,7 @@
 #include <QString>
 #include <QDateTime>
 #include <QJsonObject>
+#include <QMap>
 
 class ItemSnapshot
 {

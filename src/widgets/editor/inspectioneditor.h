@@ -12,6 +12,7 @@
 #include "inspectioncard.h"
 
 #include <QDialog>
+#include <QMap>
 
 class MainWindow;
 

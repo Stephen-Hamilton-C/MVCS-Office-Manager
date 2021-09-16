@@ -11,6 +11,8 @@
 #include "uuidgenerator.h"
 #include "changesmanager.h"
 
+#include <QDebug>
+
 QMap<Cadet::FLIGHT, QString> Cadet::_flightToStr {
 	{FLIGHT::ALPHA, "Alpha"},
 	{FLIGHT::BRAVO, "Bravo"},

@@ -7,7 +7,7 @@
  * C/2Lt Stephen Hamilton, Civil Air Patrol
 */
 #include "supplyeditor.h"
-#include "ui_itemeditor.h"
+#include "ui_supplyeditor.h"
 #include "datamanager.h"
 #include "mainwindow.h"
 #include "constants.h"
@@ -16,6 +16,7 @@
 
 #include <QStandardItemModel>
 #include <QMessageBox>
+#include <QDebug>
 
 SupplyEditor::SupplyEditor(MainWindow *mainWindow, QWidget *parent, QString id) :
 	QDialog(parent),
@@ -23,6 +24,7 @@ SupplyEditor::SupplyEditor(MainWindow *mainWindow, QWidget *parent, QString id) 
 {
 	ui->setupUi(this);
 	this->mainWindow = mainWindow;
+	this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 	qDebug() << "ID received:" << id;
 
