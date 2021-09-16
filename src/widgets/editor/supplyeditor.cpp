@@ -24,6 +24,7 @@ SupplyEditor::SupplyEditor(MainWindow *mainWindow, QWidget *parent, QString id) 
 {
 	ui->setupUi(this);
 	this->mainWindow = mainWindow;
+	this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
 	qDebug() << "ID received:" << id;
 

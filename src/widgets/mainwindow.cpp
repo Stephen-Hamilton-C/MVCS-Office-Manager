@@ -187,7 +187,6 @@ void MainWindow::on_editorEdit_clicked() {
 				cardEditorWindow = new InspectionEditor(this, this, id);
 				cardEditorWindow->show();
 				cardEditorWindow->setWindowTitle("Edit inspection log for "+DataManager::insCards[id].getCadet()->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
-                cardEditorWindow->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 				break;
 			}
 		}
@@ -199,14 +198,12 @@ void MainWindow::editCadet(QString id) {
 	cadetEditorWindow = new CadetEditor(this, this, id);
 	cadetEditorWindow->show();
 	cadetEditorWindow->setWindowTitle("Edit "+cadet->getFormattedName(Cadet::NAMEFORMAT::GRADEFIRSTLAST));
-    cadetEditorWindow->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 }
 
 void MainWindow::editSupplyItem(QString id){
 	supplyEditorWindow = new SupplyEditor(this, this, id);
 	supplyEditorWindow->show();
 	supplyEditorWindow->setWindowTitle("Edit "+DataManager::supplyItems[id].name);
-    supplyEditorWindow->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 }
 
 void MainWindow::on_editorDelete_clicked() {
