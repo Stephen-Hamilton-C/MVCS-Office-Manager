@@ -84,7 +84,7 @@ void InspectionEditor::setRadioCheck(QString radioName, int score){
 }
 
 InspectionCard::RATING InspectionEditor::getScoreFromRadio(QString radioName){
-	InspectionCard::RATING rating = InspectionCard::NEEDSIMPROVEMENT;
+    InspectionCard::RATING rating = InspectionCard::NOTENTERED;
 
 	//Checks through a set of radioButtons to see which is set.
 	for(int i = 0; i <= 2; i++){
@@ -126,46 +126,6 @@ void InspectionEditor::on_buttonBox_accepted() {
 		valid = false;
 	} else {
 		ui->dateEdit->setStyleSheet("");
-	}
-
-	//Does appearance have a score?
-	if(!radioHasScore("appearance")){
-		ui->appearanceLabel->setStyleSheet("color: rgb(200, 0, 0);");
-		valid = false;
-	} else {
-		ui->appearanceLabel->setStyleSheet("");
-	}
-
-	//Does garments have a score?
-	if(!radioHasScore("garments")){
-		ui->garmentsLabel->setStyleSheet("color: rgb(200, 0, 0);");
-		valid = false;
-	} else {
-		ui->garmentsLabel->setStyleSheet("");
-	}
-
-	//Does accountrements have a score?
-	if(!radioHasScore("accountrements")){
-		ui->accountrementsLabel->setStyleSheet("color: rgb(200, 0, 0);");
-		valid = false;
-	} else {
-		ui->accountrementsLabel->setStyleSheet("");
-	}
-
-	//Does footwear have a score?
-	if(!radioHasScore("footwear")){
-		ui->footwearLabel->setStyleSheet("color: rgb(200, 0, 0);");
-		valid = false;
-	} else {
-		ui->footwearLabel->setStyleSheet("");
-	}
-
-	//Does bearing have a score?
-	if(!radioHasScore("bearing")){
-		ui->bearingLabel->setStyleSheet("color: rgb(200, 0, 0);");
-		valid = false;
-	} else {
-		ui->bearingLabel->setStyleSheet("");
 	}
 
 	if(!valid){
