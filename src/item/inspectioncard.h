@@ -28,11 +28,13 @@ public:
 	 * NEEDSIMPROVEMENT: A score of 0.
 	 * SATISFACTORY: A score of 1.
 	 * EXCELLENT: A score of 2.
+     * NOTENTERED: No score given, do not account for this rating
 	 */
 	enum RATING {
 		NEEDSIMPROVEMENT = 0,
 		SATISFACTORY = 1,
-		EXCELLENT = 2
+        EXCELLENT = 2,
+        NOTENTERED = 3
 	};
 
 	/**
