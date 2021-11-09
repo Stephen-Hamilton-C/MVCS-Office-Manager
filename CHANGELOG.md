@@ -1,5 +1,9 @@
 # Change log
 
+## [Unreleased]
+### Changed
+- Inspections no longer require all fields to be entered
+
 ## **[2021-09-16]**
 ### Fixed
 - New inspection window appearing with new supply item window
