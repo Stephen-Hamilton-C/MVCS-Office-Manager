@@ -12,8 +12,6 @@
 #include "supplyitem.h"
 #include "inspectioncard.h"
 
-#include <QDebug>
-
 UUIDGenerator::UUIDGenerator()
 {
 
@@ -24,11 +22,9 @@ QString UUIDGenerator::generateUUID(IDType idType, QString uuid)
 	if(uuid.length() == 0){
 		uuid = QUuid::createUuid().toString();
 		removeBraces(uuid);
-	} else if(uuid.at(0) == "{"){
+    } else if(uuid.at(0) == '{'){
 		removeBraces(uuid);
 	}
-
-	qDebug() << uuid;
 
 	switch (idType) {
 		case IDType::STANDARD:
