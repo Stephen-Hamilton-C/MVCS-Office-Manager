@@ -1,3 +1,8 @@
+# Archived - 2026-09-17
+All repositories have been transferred to a personally-run repository.
+This remains up for legacy purposes.
+
+
 # MVCS-Office-Manager
 Currently under development. Development builds are in releases for testing purposes only. Do not use in a real environment or things *will* break when you update to another build.
 
